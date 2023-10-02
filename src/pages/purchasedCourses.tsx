@@ -1,7 +1,7 @@
 
 import axios from "axios";
-import CourseCard from "@/pages/CourseCard";
-import Footer from "@/pages/Footer";
+import CourseCard from "@/components/CourseCard";
+import Footer from "@/components/Footer";
 
 
 import { course } from "./api/user/interface";
@@ -10,6 +10,7 @@ import auth from "./api/user/auth";
 import InitUser from "@/components/InitUser";
 import Navbar from "@/components/navBar";
 import Link from "next/link";
+import { useState } from "react";
 export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
 
   let id,email,purchasedCourses;
@@ -60,8 +61,11 @@ try{
   }
 }
 
-export default function PurchasedCourses({purchasedCourses,email}:{purchasedCourses:course[],email:any}) {
-
+export default function PurchasedCourses({purchasedCourses,email}:{purchasedCourses:course[],email:string}) {
+  const [length,setLength]=useState<number>(purchasedCourses.length)
+  function remove(){
+    setLength(length-1)
+}
   return (
     <>
       <InitUser email={email}/>
@@ -111,6 +115,7 @@ export default function PurchasedCourses({purchasedCourses,email}:{purchasedCour
                 description={course.description}
                 name={course.name}
                 show="purchased"
+                remove={remove}
               />
             ))}
           </div>

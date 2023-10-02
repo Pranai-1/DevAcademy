@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
-
-import {  userSecretKey } from "@/pages/api/user/interface";
+import {config} from "dotenv"
 
 import { UserModel } from "@/lib/db"; 
 import jwt from 'jsonwebtoken';
@@ -21,6 +20,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  config()
   const body = await req.body;
   const parsedInput = userInput.safeParse(body);
   if (!parsedInput.success) {
@@ -31,6 +31,11 @@ export default async function handler(
   const user: any | null = await UserModel.findOne({ email,password });
  
   if (user) {
+    const userSecretKey = process.env.userSecretKey;
+    console.log(userSecretKey+"Hello") //getting undefined
+  if (!userSecretKey) {
+    return res.status(500).json({ message: "Server configuration error" });
+  }
     let userToken = jwt.sign({ id: user._id }, userSecretKey, { expiresIn: '1d' });
     res.setHeader("Set-Cookie", `token=${userToken}; HttpOnly; Secure; SameSite=Strict; Path=/`);
     const cookies = req.headers.cookie || ""; //this is one of the way to get the cookie

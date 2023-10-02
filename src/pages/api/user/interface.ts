@@ -17,7 +17,7 @@ export interface course {
       purchasedCourses:course[],
       cart:course[]
     }
- export const userSecretKey:string="secrectfornewusers12345"
+
 
  export interface DisplayCourse {
   id: string;
@@ -26,5 +26,5 @@ export interface course {
    description: string;
    name:string,
    show:string
-  
+  remove?():void
  }

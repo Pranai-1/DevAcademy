@@ -36,7 +36,13 @@ export async function ensureDbConnected() {
   }
 
   try {
-    await mongoose.connect('mongodb://127.0.0.1:27017/courses', {
+    // Use the environment variable for the MongoDB URI
+    const mongoUri = process.env.MONGODB_URI;
+    if (!mongoUri) {
+      throw new Error('MONGODB_URI is not defined in the environment variables.');
+    }
+
+    await mongoose.connect(mongoUri, {
       dbName: 'courses',
     });
 

@@ -1,8 +1,8 @@
 
 
-import Header from '@/pages/Header';
-import Footer from '@/pages/Footer';
-import CourseCard from '@/pages/CourseCard';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import CourseCard from '@/components/CourseCard';
 import { course } from './api/user/interface';
 import axios from 'axios';
 import { ensureDbConnected } from '@/lib/db';

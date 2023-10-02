@@ -5,10 +5,11 @@ import { RecoilRoot } from 'recoil'
 import 'tailwindcss/tailwind.css';
 
 import '@/styles/globals.css';
+import { ToastContainer } from 'react-toastify';
 
 export default function App({ Component, pageProps }: AppProps) {
   return <RecoilRoot>
-   
+    <ToastContainer position="top-center" />
    
      <Component {...pageProps} />
   </RecoilRoot>;

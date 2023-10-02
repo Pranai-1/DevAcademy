@@ -1,8 +1,8 @@
 
 import Navbar from "@/components/navBar";
 import { course } from "./api/user/interface";
-import CourseCard from "@/pages/CourseCard";
-import Footer from "@/pages/Footer";
+import CourseCard from "@/components/CourseCard";
+import Footer from "@/components/Footer";
 import axios from "axios";
 import { GetServerSideProps, NextApiRequest, NextApiResponse } from "next";
 import InitUser from "@/components/InitUser";

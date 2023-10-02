@@ -3,12 +3,13 @@
 import axios from "axios";
 
 import { course } from "./api/user/interface";
-import CourseCard from "./CourseCard";
-import Footer from "./Footer";
+import CourseCard from "../components/CourseCard";
+import Footer from "../components/Footer";
 import { NextApiRequest, NextApiResponse } from "next";
 import auth from "./api/user/auth";
 import InitUser from "@/components/InitUser";
 import Navbar from "@/components/navBar";
+import { useEffect, useState } from "react";
 
 export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
 
@@ -56,9 +57,12 @@ try{
 }
 
 
-  export default function cartCourses({cartCourses,email}:{cartCourses:course[],email:any}) { 
-   
-   
+  export default function cartCourses({cartCourses,email}:{cartCourses:course[],email:string}) { 
+    const [length,setLength]=useState<number>(cartCourses.length)
+
+    function remove(){
+       setLength(length-1)
+   }
   return(
     <>
     <InitUser email={email}/>
@@ -76,17 +80,20 @@ try{
       Log In
     </a>
   </div>
+ 
 </div>
-
+    
        </>
 
     ):(
       <>
-       {cartCourses.length==0?(
+       {length==0?(
           <>
-          <div className="h-screen w-screen flex  justify-center items-center ">
+          <div className="h-screen w-screen flex  justify-center items-center bg-white">
            <p className="text-2xl text-blue-600 font-bold h-max w-max  ">Cart is Empty</p>
+          
            </div>
+        
           </>
         ):(
         
@@ -108,6 +115,7 @@ try{
                 description={course.description}
                 name={course.name}
                 show="cart" 
+                remove={remove}
               />
             ))}
        

@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from 'react';
 import axios from 'axios';
+import { toast } from "react-toastify";
 
 function Signup() {
   const [email, setEmail] = useState('');
@@ -15,13 +16,13 @@ function Signup() {
       });
       const data = res.data;
       if (data.message === 'success') {
-        alert("Signup successful");
+        toast.success("Signup successful");
         router.push('/login');
       } else {
-        alert("Signup failed");
+        toast.error("Signup failed");
       }
     } catch (error) {
-      alert("Signup failed");
+      toast.error("Signup failed");
     }
   }
   

@@ -3,6 +3,7 @@ import {  useSetRecoilState } from 'recoil';
 import { UserState } from '@/store/atoms/user';
 import { useRouter } from "next/router";
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function Login() {
   const router = useRouter();
@@ -18,7 +19,7 @@ async function handleSubmit() {
      })
 
       if (res.data.message === 'success') {
-        alert("Login successful")
+        toast.success("Login successful")
           userState({
             userEmail:res.data.email,
             purchasedCourses:[],
@@ -28,11 +29,11 @@ async function handleSubmit() {
           router.push("/")
          
         } else {
-         alert("Login failed")
+          toast.error("Login failed")
          
         }
       }catch(e){
-        alert("Login failed")
+        toast.error("Login failed")
       }
       };
   

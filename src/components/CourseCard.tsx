@@ -1,13 +1,14 @@
 import axios from "axios";
 import { UserEmail } from "@/store/selectors/userDetails";
 import { useRecoilValue } from "recoil";
-import { DisplayCourse } from "./api/user/interface";
+import { DisplayCourse } from "../pages/api/user/interface";
 import router from "next/router";
-  
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function CourseCard(props:DisplayCourse){
 
 const userEmail=useRecoilValue(UserEmail)
-const{id,image,title,description,name,show}=props
+const{id,image,title,description,name,show,remove}=props
 
 
 async function Buynow(id:string,from:string){
@@ -18,16 +19,16 @@ async function Buynow(id:string,from:string){
    }
   try{
     const response= await axios.post(`http://localhost:3000/api/courses/purchaseitem`,body)
-       alert("Course purchased Successfully")
+    toast.success("Course purchased Successfully")
        if(from=="cart"){
         Remove(id);
        }
  }catch{
-    alert("Course Already Purchased")
+  toast.error("Course Already Purchased")
   }
  
 }else{
-        alert("login to continue")
+  toast.warning("login to continue")
        }
 }
   
@@ -40,12 +41,12 @@ async function Addtocart(id:string){
  }
  try{
     const response= await axios.post(`http://localhost:3000/api/courses/addToCart`,body)
-   alert("Added to cart")
+    toast.success('Added to cart');
   }catch{
-    alert("item is already present in the cart")
+    toast.error("item is already present in the cart")
 }
      }else{
-    alert("login to continue")
+    toast.warn("login to continue")
    }
 }
  
@@ -59,12 +60,15 @@ async function Addtocart(id:string){
             try{
                const response= await axios.post(`http://localhost:3000/api/courses/remove`,body)
                document.getElementById(id)?.remove()
-              alert("Item removed from cart")
+               toast.warning('Removed from cart');
+               if(remove)
+               remove()
              }catch{
-               alert("item is not present in the cart")
+              toast.error('Item is not present in the cart');
+              
            }
                 }else{
-               alert("login to continue")
+              toast.warn('Login to continue');
               }
     }
 
