@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { NEXT_URL } from "@/config";
 import Link from "next/link";
-import BuyPage from "@/pages/buy/[id]";
+import BuyPage from "@/components/buy/[id]";
 function CourseCard(props:DisplayCourse){
 
 const userEmail=useRecoilValue(UserEmail)
@@ -97,6 +97,7 @@ return(
             }
                
                 
+
                
             </div>
         </>
