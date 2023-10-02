@@ -1,0 +1,118 @@
+import axios from "axios";
+import { UserEmail } from "@/store/selectors/userDetails";
+import { useRecoilValue } from "recoil";
+import { DisplayCourse } from "./api/user/interface";
+import router from "next/router";
+  
+function CourseCard(props:DisplayCourse){
+
+const userEmail=useRecoilValue(UserEmail)
+const{id,image,title,description,name,show}=props
+
+
+async function Buynow(id:string,from:string){
+    router.push("/buy")
+    if(userEmail){
+   const body={
+      id
+   }
+  try{
+    const response= await axios.post(`http://localhost:3000/api/courses/purchaseitem`,body)
+       alert("Course purchased Successfully")
+       if(from=="cart"){
+        Remove(id);
+       }
+ }catch{
+    alert("Course Already Purchased")
+  }
+ 
+}else{
+        alert("login to continue")
+       }
+}
+  
+
+
+async function Addtocart(id:string){
+    if(userEmail){
+ const body={
+    id
+ }
+ try{
+    const response= await axios.post(`http://localhost:3000/api/courses/addToCart`,body)
+   alert("Added to cart")
+  }catch{
+    alert("item is already present in the cart")
+}
+     }else{
+    alert("login to continue")
+   }
+}
+ 
+    
+  async  function Remove(id: string) {
+
+        if(userEmail){
+            const body={
+               id
+            }
+            try{
+               const response= await axios.post(`http://localhost:3000/api/courses/remove`,body)
+               document.getElementById(id)?.remove()
+              alert("Item removed from cart")
+             }catch{
+               alert("item is not present in the cart")
+           }
+                }else{
+               alert("login to continue")
+              }
+    }
+
+return(
+        <>
+        <div id={id}  className="bg-white-200 m-10 h-[350px] w-[300px] rounded-lg overflow-hidden shadow-md ">
+              <img className="h-[160px] w-full object-cover" src={image} alt="Course" />
+              <div className="p-3 pb-0 h-[100px] m-0 border-orange-500">
+                <h2 className="font-bold w-full text-xl text-blue-700">{title}</h2>
+                <p className="font-medium text-xs text-gray-600 w-full h-[20px] overflow-auto m-2 ml-1">{description}</p>
+                <p className="font-medium text-m text-indigo-600 w-full h-[25px] overflow-auto">Author : {name}</p>
+                </div>
+                {show=="purchased" && 
+                <button className="bg-blue-600 text-white text-base p-2 pl-10 pr-10 m-4 ml-[70px] rounded-lg hover:bg-green-800 focus:outline-none">
+                Watch now
+               </button>
+                }
+                {show=="all" &&
+                    
+                    <div className="flex justify-evenly">
+                    <button className="h-max w-max bg-orange-600 text-white rounded-lg m-5 p-2 hover:bg-green-800" onClick={()=>{Buynow(id,"all")}}>Buy now</button>
+                    <button className="h-max w-max bg-indigo-500 text-white rounded-lg p-2 m-5 items-center hover:bg-indigo-800" onClick={()=>{Addtocart(id)}}>Add To cart</button>
+                    </div>
+               }
+                {show=="cart" &&
+                   <div className="flex justify-evenly">
+                   <button
+                     className="bg-blue-500 text-white text-sm py-2 px-4 m-4 mr-6 rounded hover:bg-blue-600 focus:outline-none"
+                     onClick={() => Buynow(id,"cart")}
+                   >
+                     Buy Now
+                   </button>
+                   <button onClick={()=>Remove(id)}
+                     className="bg-red-500 text-white text-sm py-2 px-4 m-4 ml-4 rounded hover:bg-red-600 focus:outline-none"
+                   >
+                     Remove
+                   </button>
+                 </div>
+                 
+            }
+               
+                
+               
+            </div>
+        </>
+    )
+}
+
+
+
+export default CourseCard
