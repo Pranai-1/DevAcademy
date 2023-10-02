@@ -1,6 +1,6 @@
 
 import Navbar from "@/components/navBar";
-import { course } from "./api/user/interface";
+import { body, course } from "./api/user/interface";
 import CourseCard from "@/components/CourseCard";
 import Footer from "@/components/Footer";
 import axios from "axios";
@@ -11,7 +11,7 @@ import auth from "./api/user/auth";
 
 
 
-function AllCourses({courses,email}:{courses:course[],email:any}) {
+function AllCourses({courses,email}:{courses:course[],email:string}) {
 
 
   return (
@@ -39,7 +39,7 @@ function AllCourses({courses,email}:{courses:course[],email:any}) {
      
       
           <div className=" flex flex-wrap justify-center">
-            {courses.map((course:any) => (
+            {courses.map((course:course) => (
               <CourseCard 
                 id={course._id}
                 image={course.image}
@@ -63,16 +63,19 @@ function AllCourses({courses,email}:{courses:course[],email:any}) {
 
 
   export const getServerSideProps = async ({ req, res }: { req: NextApiRequest, res: NextApiResponse }) => {
-    let id,email,courses;
+    let id:string | undefined,email:string | null,courses:course[] | [];
     try {
       await auth(req, res);
-      id = req.headers["userId"];
+   
+      id = req.headers["userId"] as string;
     } catch (error) {
       console.error("Authentication error:", error);
-      id = undefined; // Set id to undefined in case of an error
+      id = undefined; 
+      
+
     }
   
-    const body: any = {
+    const body: body = {
       id
     };
   

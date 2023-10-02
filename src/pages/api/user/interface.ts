@@ -14,8 +14,8 @@ export interface course {
       _id?:string,
       email: string,
       password: string,
-      purchasedCourses:course[],
-      cart:course[]
+      purchasedCourses:[],
+      cart:[]
     }
 
 
@@ -27,4 +27,8 @@ export interface course {
    name:string,
    show:string
   remove?():void
+ }
+
+ export interface body{
+  id:string | undefined
  }

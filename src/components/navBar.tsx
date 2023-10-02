@@ -6,7 +6,9 @@ import { UserEmail } from "@/store/selectors/userDetails";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import Sidebar from "./sideBar";
 import axios from "axios";
-
+import { useSession } from 'next-auth/react';
+import LoggedInUser from "./LoggedInUser";
+import LoggedOutUser from "./LoggedOutUser";
 
 
 function Navbar() {
@@ -14,7 +16,7 @@ function Navbar() {
   const [bar, setBar] = useState<boolean>(false);
   const userEmail = useRecoilValue(UserEmail);
   const userState = useSetRecoilState(UserState);
-
+ 
   function sidebar() {
     setBar((prev) => !prev);
   }
@@ -56,10 +58,8 @@ function Navbar() {
         
         <div className="md:hidden flex">
         <Link href="/cart" className="md:hidden mr-10 text-lg flex justify-between items-center cursor-pointer hover:text-blue-600">
-      
-            <i className="fa fa-shopping-cart"></i>
-         
-        </Link>
+         <i className="fa fa-shopping-cart"></i>
+         </Link>
         {userEmail && 
         <button
         onClick={logout}
@@ -98,30 +98,9 @@ function Navbar() {
         </ul>
 
         {userEmail ? (
-      <div className="hidden md:flex font-bold text-white justify-center mr-5 gap-5">
-        <p className="text-s mt-2 text-black mr-5 font-normal">{userEmail}</p>
-        <button
-          onClick={logout}
-          className="p-1 m-1 bg-indigo-600 rounded hover:bg-indigo-800 text-white cursor-pointer"
-        >
-          Logout
-        </button>
-      </div>
+           <LoggedInUser userEmail={userEmail} logout={logout}/>
     ) : (
-      <div className="hidden md:flex font-bold justify-start text-white w-[170px]">
-        <button
-          onClick={() => router.push('/login')}
-          className="p-2 mt-1 mr-2 h-max w-auto bg-indigo-600 rounded-2xl hover:bg-blue-600 text-white cursor-pointer"
-        >
-          Login
-        </button>
-        <button
-          onClick={() => router.push('/signup')}
-          className="p-2 mt-1 ml-2 h-max w-auto bg-indigo-600 rounded-2xl hover:bg-blue-600 text-white cursor-pointer"
-        >
-          Signup
-        </button>
-      </div>
+       <LoggedOutUser/>
     )}
       </div>
     </>

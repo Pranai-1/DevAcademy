@@ -3,7 +3,7 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CourseCard from '@/components/CourseCard';
-import { course } from './api/user/interface';
+import { body, course } from './api/user/interface';
 import axios from 'axios';
 import { ensureDbConnected } from '@/lib/db';
 import auth from './api/user/auth';
@@ -15,7 +15,7 @@ import InitUser from '@/components/InitUser';
 interface HomeProps {
   exploreCourses: course[];
   trendingCourses: course[];
-  email:any
+  email:string | null
 }
 
 function Home(props:HomeProps) {
@@ -73,19 +73,18 @@ function Home(props:HomeProps) {
 export async function getServerSideProps({ req, res }: { req: NextApiRequest; res: NextApiResponse }) {
   await ensureDbConnected();
   
-  let id,email;
+  let id:string | undefined,email:string | null;
   try {
     await auth(req, res);
-    id = req.headers["userId"];
+ 
+    id = req.headers["userId"] as string;
   } catch (error) {
     console.error("Authentication error:", error);
-    id = undefined; // Set id to undefined in case of an error
+    id = undefined; 
   }
-
-  const body: any = {
+const body: body = {
     id
   };
-
  
   try{
     const response2 = await axios.put("http://localhost:3000/api/user/email", body);
@@ -98,7 +97,7 @@ export async function getServerSideProps({ req, res }: { req: NextApiRequest; re
 
   const exploreCourses = getRandomCourses(courses, 3);
 
-  const remainingCourses = courses.filter((course: any) => !exploreCourses.includes(course));
+  const remainingCourses = courses.filter((course: course) => !exploreCourses.includes(course));
   const trendingCourses = getRandomCourses(remainingCourses, 3);
 
   return {

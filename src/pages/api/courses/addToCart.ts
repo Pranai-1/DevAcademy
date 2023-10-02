@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import auth from "../user/auth";
 import { CourseModel, UserModel } from "@/lib/db";
+import { course } from "../user/interface";
 
 export default async function handler(
     req:NextApiRequest,
@@ -8,8 +9,8 @@ export default async function handler(
 ){
    if(req.method==="POST"){
         await auth(req,res)
-       const id:any=req.body.id;
-       const userId = req.headers['userId'];
+       const id:string | undefined=req.body.id;
+       const userId = req.headers['userId'] as string ;
       const isCourse = await CourseModel.findById(id);
         if (!isCourse) {
               return res.status(404).json({ message: 'Course not found' });
@@ -18,7 +19,7 @@ export default async function handler(
        if (!userCheck) {
               return res.status(404).json({ message: 'User not found' });
             }
-      const indexOfCourse = userCheck.cart.findIndex((course):any =>course == id);
+      const indexOfCourse = userCheck.cart.findIndex((obj) =>obj == id);
     if (indexOfCourse === -1) {
               const updatedUser = await UserModel.findByIdAndUpdate(
                 userId,

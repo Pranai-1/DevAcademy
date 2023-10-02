@@ -2,64 +2,57 @@
 import axios from "axios";
 import CourseCard from "@/components/CourseCard";
 import Footer from "@/components/Footer";
-
-
-import { course } from "./api/user/interface";
+import { body, course } from "./api/user/interface";
 import { NextApiRequest, NextApiResponse } from "next";
 import auth from "./api/user/auth";
 import InitUser from "@/components/InitUser";
 import Navbar from "@/components/navBar";
 import Link from "next/link";
 import { useState } from "react";
-export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
-
-  let id,email,purchasedCourses;
-  try {
-    await auth(req, res);
-    id = req.headers["userId"];
-  } catch (error) {
-    console.error("Authentication error:", error);
-    id = undefined; // Set id to undefined in case of an error
-  }
-
-  const body: any = {
-    id
-  };
-
- 
-  try{
-    const response2 = await axios.put("http://localhost:3000/api/user/email", body);
-     email= response2.data.email;
-  }catch{
-  email=null;
-  }
-try{
-  const response = await axios.put("http://localhost:3000/api/courses/getPurchasedItems",body);
-   purchasedCourses = response.data.courses;
-}catch{
-  purchasedCourses=[]
-}
-  
- 
- 
 
 
-  if(purchasedCourses.length>0){
-   return{
-    props:{
-      purchasedCourses,
-      email
-    }
-   }
-  }else{
-    return{
-      props:{
-        purchasedCourses:[],
-        email
-      }
-     }
-  }
-}
+    export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
+       let id:string | undefined,email:string | null,purchasedCourses:course[] | [];
+       try {
+         await auth(req, res);
+      
+         id = req.headers["userId"] as string;
+       } catch (error) {
+         console.error("Authentication error:", error);
+         id = undefined; 
+         
+     
+       }
+     
+       const body: body = {
+         id
+       };
+          try{
+            const response2 = await axios.put("http://localhost:3000/api/user/email", body);
+            email= response2.data.email;
+          }catch{
+          email=null;
+          }
+        try{
+          const response = await axios.put("http://localhost:3000/api/courses/getPurchasedItems",body);
+          purchasedCourses = response.data.courses;
+        }catch{
+          purchasedCourses=[]
+        }
+          if(purchasedCourses.length>0){
+          return{
+            props:{
+              purchasedCourses,
+              email
+            }
+          }
+          }else{
+            return{
+              props:{
+                purchasedCourses:[],
+                email
+              }
+            } }}
 
 export default function PurchasedCourses({purchasedCourses,email}:{purchasedCourses:course[],email:string}) {
   const [length,setLength]=useState<number>(purchasedCourses.length)

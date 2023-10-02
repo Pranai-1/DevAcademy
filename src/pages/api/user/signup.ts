@@ -19,7 +19,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const body = await req.body;
-  console.log(body);
+
   const parsedInput = userInput.safeParse(body);
   if (!parsedInput.success) {
     return res.status(404).json({ message: "failed" });
@@ -28,7 +28,7 @@ export default async function handler(
   const password = parsedInput.data.password;
   const user: user | null = await UserModel.findOne({ email });
   if (user) {
-    console.log("exists");
+
     res.status(403).json({ message: 'User already exists' });
   } else {
     const newUser = new UserModel({ email, password });

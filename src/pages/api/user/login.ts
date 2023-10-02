@@ -4,6 +4,7 @@ import {config} from "dotenv"
 
 import { UserModel } from "@/lib/db"; 
 import jwt from 'jsonwebtoken';
+import { user } from "./interface";
 
 
 const userInput = z.object({
@@ -28,18 +29,18 @@ export default async function handler(
   }
   const email = parsedInput.data.email;
   const password = parsedInput.data.password;
-  const user: any | null = await UserModel.findOne({ email,password });
+  const user: user | null = await UserModel.findOne({ email,password });
  
   if (user) {
     const userSecretKey = process.env.userSecretKey;
-    console.log(userSecretKey+"Hello") //getting undefined
+  
   if (!userSecretKey) {
     return res.status(500).json({ message: "Server configuration error" });
   }
     let userToken = jwt.sign({ id: user._id }, userSecretKey, { expiresIn: '1d' });
     res.setHeader("Set-Cookie", `token=${userToken}; HttpOnly; Secure; SameSite=Strict; Path=/`);
     const cookies = req.headers.cookie || ""; //this is one of the way to get the cookie
-    console.log(cookies)
+ 
     const emailParts = user.email.split('@');
       const trimmedEmail = emailParts[0];
     return res.status(200).json({ message: "success",email:trimmedEmail});

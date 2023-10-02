@@ -4,7 +4,7 @@ import auth from "../user/auth";
 
 export default async function handler(req:NextApiRequest,res:NextApiResponse){
     await auth(req,res)
-    const id:any=req.body.id;
+    const id:string | undefined=req.body.id;
     const userId = req.headers['userId'];
     const userCheck = await UserModel.findById(userId);
     if (!userCheck) {

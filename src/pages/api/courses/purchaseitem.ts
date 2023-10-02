@@ -8,7 +8,7 @@ export default async function handler(
 ){
    if(req.method==="POST"){
         await auth(req,res)
-        const id:any=req.body.id;
+        const id:string | undefined=req.body.id;
         const userId = req.headers['userId'];
       const isCourse = await CourseModel.findById(id);
      if (!isCourse) {

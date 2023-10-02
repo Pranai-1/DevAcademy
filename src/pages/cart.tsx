@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-import { course } from "./api/user/interface";
+import { body, course } from "./api/user/interface";
 import CourseCard from "../components/CourseCard";
 import Footer from "../components/Footer";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -13,21 +13,22 @@ import { useEffect, useState } from "react";
 
 export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
 
-  let id,email,cartCourses;
+  let id:string | undefined,email:string | null,cartCourses : course[]|[];
   try {
     await auth(req, res);
-    id = req.headers["userId"];
+ 
+    id = req.headers["userId"] as string;
   } catch (error) {
     console.error("Authentication error:", error);
-    id = undefined; // Set id to undefined in case of an error
+    id = undefined; 
+    
+
   }
 
-  const body: any = {
+  const body: body = {
     id
   };
-
- 
-  try{
+ try{
     const response2 = await axios.put("http://localhost:3000/api/user/email", body);
      email= response2.data.email;
   }catch{
@@ -44,17 +45,12 @@ try{
     props:{
       cartCourses,
       email
-    }
-   }
-  }else{
+    }}}else{
     return{
       props:{
         cartCourses:[],
         email
-      }
-     }
-  }
-}
+      } }}}
 
 
   export default function cartCourses({cartCourses,email}:{cartCourses:course[],email:string}) { 

@@ -1,5 +1,6 @@
 import { UserModel, CourseModel } from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
+import { course } from "../user/interface";
 
 export default async function handler(
     req:NextApiRequest,
@@ -14,8 +15,8 @@ export default async function handler(
   const coursesId = userCheck.cart;
      if (coursesId.length > 0) {
     const courses = await Promise.all(
-      coursesId.map(async (course) => {
-        const cartCourses: any | null = await CourseModel.findById(course);
+      coursesId.map(async (courseId) => {
+        const cartCourses: course | null = await CourseModel.findById(courseId);
       return cartCourses;
       })
     );

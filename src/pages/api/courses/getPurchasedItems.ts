@@ -2,6 +2,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { CourseModel, UserModel } from "@/lib/db";
+import { course } from "../user/interface";
 
 export default async function handler(
     req:NextApiRequest,
@@ -17,8 +18,8 @@ if (!userCheck) {
 const coursesId = userCheck.purchasedCourses;
 if (coursesId.length > 0) {
 const courses = await Promise.all(
-  coursesId.map(async (course) => {
-    const purchasedCourses: any | null = await CourseModel.findById(course);
+  coursesId.map(async (courseId) => {
+    const purchasedCourses: course | null = await CourseModel.findById(courseId);
   return purchasedCourses;
   })
 );
