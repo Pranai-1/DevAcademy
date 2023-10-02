@@ -9,6 +9,7 @@ import InitUser from "@/components/InitUser";
 import Navbar from "@/components/navBar";
 import Link from "next/link";
 import { useState } from "react";
+import { NEXT_URL } from "@/config";
 
 
     export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
@@ -18,7 +19,7 @@ import { useState } from "react";
       
          id = req.headers["userId"] as string;
        } catch (error) {
-         console.error("Authentication error:", error);
+
          id = undefined; 
          
      
@@ -28,13 +29,13 @@ import { useState } from "react";
          id
        };
           try{
-            const response2 = await axios.put("http://localhost:3000/api/user/email", body);
+            const response2 = await axios.put(`${NEXT_URL}/api/user/email`, body);
             email= response2.data.email;
           }catch{
           email=null;
           }
         try{
-          const response = await axios.put("http://localhost:3000/api/courses/getPurchasedItems",body);
+          const response = await axios.put(`${NEXT_URL}/api/courses/getPurchasedItems`,body);
           purchasedCourses = response.data.courses;
         }catch{
           purchasedCourses=[]
@@ -109,6 +110,7 @@ export default function PurchasedCourses({purchasedCourses,email}:{purchasedCour
                 name={course.name}
                 show="purchased"
                 remove={remove}
+                price={course.price}
               />
             ))}
           </div>

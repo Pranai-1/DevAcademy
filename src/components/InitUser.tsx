@@ -1,6 +1,6 @@
-import auth from "@/pages/api/user/auth";
+
 import { UserState } from "@/store/atoms/user";
-import axios from "axios";
+
 import { NextApiRequest, NextApiResponse } from "next";
 import { useSetRecoilState } from "recoil";
 

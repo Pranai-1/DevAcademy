@@ -1,13 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import auth from "../user/auth";
 import { CourseModel, UserModel } from "@/lib/db";
-import { course } from "../user/interface";
 
-export default async function handler(
+
+export default async function POST(
     req:NextApiRequest,
     res:NextApiResponse
 ){
-   if(req.method==="POST"){
+   
         await auth(req,res)
        const id:string | undefined=req.body.id;
        const userId = req.headers['userId'] as string ;
@@ -36,5 +36,5 @@ export default async function handler(
               return res.status(400).json({ message: 'item present in cart' });
             }  
     
-        }
+        
 }

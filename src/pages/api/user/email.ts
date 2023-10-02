@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import {UserModel} from "@/lib/db"; 
-import auth from "@/pages/api/user/auth"
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

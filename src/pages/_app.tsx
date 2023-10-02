@@ -9,7 +9,7 @@ import { ToastContainer } from 'react-toastify';
 
 
 export default function App({ Component, pageProps,email }: AppProps & { email: string | null }) {
-  console.log(email)
+
   return <RecoilRoot>
     
    

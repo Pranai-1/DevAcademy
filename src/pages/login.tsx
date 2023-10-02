@@ -4,6 +4,7 @@ import { UserState } from '@/store/atoms/user';
 import { useRouter } from "next/router";
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { NEXT_URL } from '@/config';
 
 function Login() {
   const router = useRouter();
@@ -13,7 +14,7 @@ function Login() {
 
 async function handleSubmit() {
    try{
-   const res=await axios.post('http://localhost:3000/api/user/login', {
+   const res=await axios.post(`${NEXT_URL}/api/user/login`, {
         email: email,
         password: password
      })

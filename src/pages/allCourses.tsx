@@ -7,6 +7,7 @@ import axios from "axios";
 import { GetServerSideProps, NextApiRequest, NextApiResponse } from "next";
 import InitUser from "@/components/InitUser";
 import auth from "./api/user/auth";
+import { NEXT_URL } from "@/config";
 
 
 
@@ -46,7 +47,8 @@ function AllCourses({courses,email}:{courses:course[],email:string}) {
                 title={course.title}
                 description={course.description}
                 name={course.name}
-                show="all" 
+                show="all"
+                price={course.price} 
               />
             ))}
           </div>
@@ -69,7 +71,7 @@ function AllCourses({courses,email}:{courses:course[],email:string}) {
    
       id = req.headers["userId"] as string;
     } catch (error) {
-      console.error("Authentication error:", error);
+
       id = undefined; 
       
 
@@ -81,13 +83,13 @@ function AllCourses({courses,email}:{courses:course[],email:string}) {
   
    
     try{
-      const response2 = await axios.put("http://localhost:3000/api/user/email", body);
+      const response2 = await axios.put(`${NEXT_URL}/api/user/email`, body);
        email= response2.data.email;
     }catch{
     email=null;
     }
  
-    const response = await axios.get("http://localhost:3000/api/courses/all");
+    const response = await axios.get(`${NEXT_URL}/api/courses/all`);
     courses = response.data.courses;
   
     

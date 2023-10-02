@@ -26,9 +26,23 @@ export interface course {
    description: string;
    name:string,
    show:string
-  remove?():void
+  remove?():void,
+  price:number
  }
 
  export interface body{
   id:string | undefined
+ }
+
+ export interface buy{
+  title:string,
+  description:string,
+  price:number,
+  author:string
+ }
+ export interface card{
+  name:string,
+  cvv:number,
+  number:number
+ 
  }
