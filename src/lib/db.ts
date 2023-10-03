@@ -37,14 +37,12 @@ export async function ensureDbConnected() {
 
   try {
     // Use the environment variable for the MongoDB URI
-    const mongoUri = process.env.MONGODB_URI;
-    if (!mongoUri) {
-      throw new Error('MONGODB_URI is not defined in the environment variables.');
-    }
+    // const mongoUri = process.env.MONGODB_URI;
+    // if (!mongoUri) {
+    //   throw new Error('MONGODB_URI is not defined in the environment variables.');
+    // }
 
-    await mongoose.connect(mongoUri, {
-      dbName: 'courses',
-    });
+    await mongoose.connect('mongodb+srv://kirattechnologies:iRbi4XRDdM7JMMkl@cluster0.e95bnsi.mongodb.net/admin?authSource=admin&replicaSet=atlas-ue73sj-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true', {  dbName: "courses" });
 
     console.log('Connected to MongoDB');
     alreadyDone = true;
