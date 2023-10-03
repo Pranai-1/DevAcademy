@@ -77,27 +77,27 @@ export async function getServerSideProps({ req, res }: { req: NextApiRequest; re
   await ensureDbConnected();
   
   let id:string | undefined,email:string | null;
-  try {
-    await auth(req, res);
+//   try {
+//    // await auth(req, res);
  
-    id = req.headers["userId"] as string;
-  } catch (error) {
+//     id = req.headers["userId"] as string;
+//   } catch (error) {
  
-    id = undefined; 
-  }
-const body: body = {
-    id
-  };
+//     id = undefined; 
+//   }
+// const body: body = {
+//     id
+//   };
  
-  try{
-    const response2 = await axios.put(`${NEXT_URL}/api/user/email`, body);
-     email= response2.data.email;
-  }catch{
-  email=null;
-  }
-  const response = await axios.get(`${NEXT_URL}/api/courses/all`);
-  const courses: course[] = response.data.courses;
-
+//   try{
+//     const response2 = await axios.put(`${NEXT_URL}/api/user/email`, body);
+//      email= response2.data.email;
+//   }catch{
+//   email=null;
+//   }
+//   const response = await axios.get(`${NEXT_URL}/api/courses/all`);
+  const courses: course[] = [];
+email=null
   const exploreCourses = getRandomCourses(courses, 3);
 
   const remainingCourses = courses.filter((course: course) => !exploreCourses.includes(course));
