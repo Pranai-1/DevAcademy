@@ -13,7 +13,7 @@ export default async function GET(req: NextApiRequest, res: NextApiResponse) {
 
     const data = await CourseModel.find({ published: true });
     if (data) {
-      return res.status(200).json({ courses: data, message: 'success' });
+      return res.status(200).json({ courses: data, ok: true });
     } else {
       return res.status(404).json({ message: 'Course not found' });
     }
