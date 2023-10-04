@@ -97,7 +97,7 @@ const body: body = {
   }
   let courses: course[]
   try{
-  const response = await axios.get(`http://localhost:3000/api/courses/all`);
+    const response = await axios.get(`/api/courses/all`);
   courses = response.data.courses;
   }catch{
 courses=[]
