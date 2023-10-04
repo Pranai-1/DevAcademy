@@ -89,9 +89,14 @@ function AllCourses({courses,email}:{courses:course[],email:string}) {
     email=null;
     }
  
-    const response = await axios.get(`${NEXT_URL}/api/courses/all`);
-    courses = response.data.courses;
-  
+ 
+  try{
+  const response = await axios.get(`http://localhost:3000/api/courses/all`);
+  courses = response.data.courses;
+  }catch{
+courses=[]
+  }
+
     
     return { props: { courses,email } };
  
