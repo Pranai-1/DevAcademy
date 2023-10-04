@@ -37,8 +37,8 @@ export async function ensureDbConnected() {
 
   try {
     // Use the environment variable for the MongoDB URI
-    const mongoUri ="mongodb+srv://kirattechnologies:iRbi4XRDdM7JMMkl@cluster0.e95bnsi.mongodb.net/courses";
-   
+   // const mongoUri ="mongodb+srv://kirattechnologies:iRbi4XRDdM7JMMkl@cluster0.e95bnsi.mongodb.net/courses";
+   const mongoUri ="mongodb+srv://reddypranai:pranai123456@cluster0.mf65rxf.mongodb.net/"
     await mongoose.connect(mongoUri, {
       dbName: 'courses',
     });
