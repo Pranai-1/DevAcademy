@@ -32,7 +32,7 @@ export default async function handler(
   const user: user | null = await UserModel.findOne({ email,password });
  
   if (user) {
-    const userSecretKey = process.env.userSecretKey;
+    const userSecretKey = "secrectfornewudev-academysers12345";
   
   if (!userSecretKey) {
     return res.status(500).json({ message: "Server configuration error" });

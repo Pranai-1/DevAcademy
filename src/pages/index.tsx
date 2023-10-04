@@ -78,7 +78,7 @@ export async function getServerSideProps({ req, res }: { req: NextApiRequest; re
   
   let id:string | undefined,email:string | null;
   try {
-   // await auth(req, res);
+    await auth(req, res);
  
     id = req.headers["userId"] as string;
   } catch (error) {

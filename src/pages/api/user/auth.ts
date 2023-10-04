@@ -14,7 +14,7 @@ if (!token) {
     return 
   }
 try {
-  const userSecretKey = process.env.userSecretKey;
+  const userSecretKey ="secrectfornewudev-academysers12345";
   if (!userSecretKey) {
     return res.status(500).json({ message: "Server configuration error" });
   }
