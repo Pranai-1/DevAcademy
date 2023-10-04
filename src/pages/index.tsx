@@ -10,8 +10,6 @@ import auth from './api/user/auth';
 import {NextApiRequest, NextApiResponse } from 'next';
 import Navbar from '@/components/navBar';
 import InitUser from '@/components/InitUser';
-import router from 'next/router';
-import { useState, useEffect } from 'react';
 //import { NEXT_URL } from '@/config';
 
 
@@ -21,59 +19,8 @@ interface HomeProps {
   email:string | null
 }
 
-
-
 function Home(props:HomeProps) {
-  const [courses, setCourses] = useState<course[]>([]);
-
-  const [email, setEmail] = useState(null);
-
-  useEffect(() => {
-    // Ensure database connection
-    // async function dbConnected() {
-    //   await ensureDbConnected();
-    // }
-    // dbConnected();
-
-    let id;
-    try {
-      // Replace auth logic with router check for userId (assuming it's in query or params)
-      id = router.query.userId || undefined;
-    } catch (error) {
-      id = undefined;
-    }
-
-    const body = { id };
-
-   
-      async function fetchUserEmail() {
-        try {
-          const response2 = await axios.put(`/api/user/email`, body);
-          setEmail(response2.data.email);
-        } catch {
-          setEmail(null);
-        }
-      }
-      fetchUserEmail();
-   
-
-    // Fetch courses
-    async function fetchCourses() {
-      try {
-        const response = await axios.get(`/api/courses/all`);
-        const coursesData = response.data.courses;
-        setCourses(coursesData);
-      } catch {
-        setCourses([]);
-      }
-    }
-    fetchCourses();
-  }, []);
-  const exploreCourses = getRandomCourses(courses, 3);
-
-  const remainingCourses = courses.filter((course: course) => !exploreCourses.includes(course));
-  const trendingCourses = getRandomCourses(remainingCourses, 3);
-
+  const{ exploreCourses,trendingCourses,email}=props
   return (
     <div className="bg-white">
       <InitUser email={email}/>
@@ -126,55 +73,60 @@ function Home(props:HomeProps) {
 }
 
 
-export async function getServerSideProps({ req, res }: { req: NextApiRequest; res: NextApiResponse }) {
-  await ensureDbConnected();
-  
-  let id:string | undefined,email:string | null;
-  try {
-    await auth(req, res);
- 
-    id = req.headers["userId"] as string;
-  } catch (error) {
- 
-    id = undefined; 
-  }
-const body: body = {
-    id
-  };
- 
-  try{
-    const response2 = await axios.put(`http://localhost:3000/api/user/email`, body);
-     email= response2.data.email;
-  }catch{
-  email=null;
-  }
-  let courses:course[]
-  try{
-    const response = await axios.get(`http://localhost:3000/api/courses/all`);
-    courses = response.data.courses;
+  export async function getServerSideProps({ req, res }: { req: NextApiRequest; res: NextApiResponse }) {
+    try{
+      await ensureDbConnected();
     }catch{
-  courses=[]
+      return res.status(500)
     }
+   
+    
+    let id:string | undefined,email:string | null;
+    try {
+      await auth(req, res);
   
+      id = req.headers["userId"] as string;
+    } catch (error) {
+  
+      id = undefined; 
+    }
+  const body: body = {
+      id
+    };
+  
+    try{
+      const response2 = await axios.put(`http://localhost:3000/api/user/email`, body);
+      email= response2.data.email;
+    }catch{
+    email=null;
+    }
+    let courses:course[]
+    try{
+      const response = await axios.get(`http://localhost:3000/api/courses/all`);
+      courses = response.data.courses;
+      }catch{
+    courses=[]
+      }
+    
 
-  const exploreCourses = getRandomCourses(courses, 3);
+    const exploreCourses = getRandomCourses(courses, 3);
 
-  const remainingCourses = courses.filter((course: course) => !exploreCourses.includes(course));
-  const trendingCourses = getRandomCourses(remainingCourses, 3);
+    const remainingCourses = courses.filter((course: course) => !exploreCourses.includes(course));
+    const trendingCourses = getRandomCourses(remainingCourses, 3);
 
-  return {
-    props: {
-      exploreCourses,
-      trendingCourses,
-      email,
-    },
-  };
-}
+    return {
+      props: {
+        exploreCourses,
+        trendingCourses,
+        email,
+      },
+    };
+  }
 
-function getRandomCourses(courses: course[], count: number) {
-  const shuffled = courses.sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
-}
+  function getRandomCourses(courses: course[], count: number) {
+    const shuffled = courses.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  }
 
 
 export default Home;
