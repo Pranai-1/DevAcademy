@@ -95,8 +95,13 @@ const body: body = {
   }catch{
   email=null;
   }
+  let courses: course[]
+  try{
   const response = await axios.get(`http://localhost:3000/api/courses/all`);
-  const courses: course[] = response.data.courses;
+  courses = response.data.courses;
+  }catch{
+courses=[]
+  }
 
   const exploreCourses = getRandomCourses(courses, 3);
 
