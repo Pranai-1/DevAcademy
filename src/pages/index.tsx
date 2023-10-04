@@ -10,7 +10,7 @@ import auth from './api/user/auth';
 import {NextApiRequest, NextApiResponse } from 'next';
 import Navbar from '@/components/navBar';
 import InitUser from '@/components/InitUser';
-import { NEXT_URL } from '@/config';
+//import { NEXT_URL } from '@/config';
 
 
 interface HomeProps {
@@ -90,12 +90,12 @@ const body: body = {
   };
  
   try{
-    const response2 = await axios.put(`${NEXT_URL}/api/user/email`, body);
+    const response2 = await axios.put(`http://localhost:3000/api/user/email`, body);
      email= response2.data.email;
   }catch{
   email=null;
   }
-  const response = await axios.get(`${NEXT_URL}/api/courses/all`);
+  const response = await axios.get(`http://localhost:3000/api/courses/all`);
   const courses: course[] = response.data.courses;
 
   const exploreCourses = getRandomCourses(courses, 3);
