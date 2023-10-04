@@ -17,7 +17,7 @@ export default async function GET(req: NextApiRequest, res: NextApiResponse) {
     //     return res.status(404).json({ message: 'Course not found' });
     //   }
     // } catch (error) {
-      const courses=[{
+      const data=[{
         "_id": {
           "$oid": "64ca074ab150245703ec1696"
         },
@@ -211,7 +211,7 @@ export default async function GET(req: NextApiRequest, res: NextApiResponse) {
         "__v": 0
       }]
 
-      return res.status(500).json({ courses });
+      return res.status(200).json({ courses: data, message: 'success' });
    // }
   
 }
