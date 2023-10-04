@@ -3,6 +3,7 @@ import  InitUser  from '@/components/InitUser';
 import type { AppProps } from 'next/app'
 import { RecoilRoot } from 'recoil'
 import 'tailwindcss/tailwind.css';
+import 'styled-jsx/style'
 
 import '@/styles/globals.css';
 import { ToastContainer } from 'react-toastify';
