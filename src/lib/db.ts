@@ -42,9 +42,10 @@ export async function ensureDbConnected() {
     await mongoose.connect(mongoUri, {
       dbName: 'courses',
     });
-
-    console.log('Connected to MongoDB');
     alreadyDone = true;
+    console.log('Connected to MongoDB');
+ 
+   
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);
     throw error;

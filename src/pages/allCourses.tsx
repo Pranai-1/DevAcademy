@@ -8,12 +8,69 @@ import { GetServerSideProps, NextApiRequest, NextApiResponse } from "next";
 import InitUser from "@/components/InitUser";
 import auth from "./api/user/auth";
 import { NEXT_URL } from "@/config";
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+
+function getRandomCourses(courses:any, count:any) {
+  const shuffled = courses.sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+}
 
 
+function AllCourses() {
+  const [courses, setcourses] = useState([]);
+  const [exploreCourses, setExploreCourses] = useState([]);
+  const [trendingCourses, setTrendingCourses] = useState([]);
+  const [email, setEmail] = useState(null);
 
+  const router = useRouter();
 
-function AllCourses({courses,email}:{courses:course[],email:string}) {
+  useEffect(() => {
+   
 
+    let id;
+    try {
+      // Replace auth logic with router check for userId (assuming it's in query or params)
+      id = router.query.userId || undefined;
+    } catch (error) {
+      id = undefined;
+    }
+
+    const body = { id };
+
+      // Fetch user email
+      async function fetchUserEmail() {
+        try {
+          const response2 = await axios.put(`/api/user/email`, body);
+          setEmail(response2.data.email);
+        } catch {
+          setEmail(null);
+        }
+      }
+      fetchUserEmail();
+    
+
+    // Fetch courses
+    async function fetchCourses() {
+      try {
+        const response = await axios.get(`/api/courses/all`);
+        const coursesData = response.data.courses;
+        setcourses(coursesData)
+        // Shuffle and slice courses for explore and trending sections
+        const shuffledCourses = getRandomCourses(coursesData, 3);
+        setExploreCourses(shuffledCourses);
+        
+        const remainingCourses = coursesData.filter((course:any) => !shuffledCourses.includes(course));
+        const trendingShuffledCourses = getRandomCourses(remainingCourses, 3);
+        setTrendingCourses(trendingShuffledCourses);
+      } catch {
+        setExploreCourses([]);
+        setTrendingCourses([]);
+        setcourses([])
+      }
+    }
+    fetchCourses();
+  }, []);
 
   return (
     <>

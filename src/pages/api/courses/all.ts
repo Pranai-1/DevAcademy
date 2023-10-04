@@ -1,11 +1,11 @@
-import { CourseModel } from '@/lib/db'; 
+import { CourseModel, ensureDbConnected } from '@/lib/db'; 
 
 import { NextApiRequest, NextApiResponse } from 'next';
 
 
 
 export default async function GET(req: NextApiRequest, res: NextApiResponse) {
-
+  await ensureDbConnected();
  
     try {
       

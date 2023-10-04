@@ -74,8 +74,9 @@ function Home(props:HomeProps) {
 
 
   export async function getServerSideProps({ req, res }: { req: NextApiRequest; res: NextApiResponse }) {
+    let courses:course[]
     try{
-      await ensureDbConnected();
+    await ensureDbConnected();
     }catch{
       return res.status(500)
     }
@@ -100,7 +101,7 @@ function Home(props:HomeProps) {
     }catch{
     email=null;
     }
-    let courses:course[]
+   
     try{
       const response = await axios.get(`http://localhost:3000/api/courses/all`);
       courses = response.data.courses;
