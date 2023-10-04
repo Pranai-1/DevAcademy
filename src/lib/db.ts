@@ -38,10 +38,7 @@ export async function ensureDbConnected() {
   try {
     // Use the environment variable for the MongoDB URI
     const mongoUri ="mongodb+srv://kirattechnologies:iRbi4XRDdM7JMMkl@cluster0.e95bnsi.mongodb.net/courses";
-    if (!mongoUri) {
-      throw new Error('MONGODB_URI is not defined in the environment variables.');
-    }
-
+   
     await mongoose.connect(mongoUri, {
       dbName: 'courses',
     });

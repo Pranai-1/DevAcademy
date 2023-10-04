@@ -74,7 +74,7 @@ function Home(props:HomeProps) {
 
 
 export async function getServerSideProps({ req, res }: { req: NextApiRequest; res: NextApiResponse }) {
-  await ensureDbConnected();
+ // await ensureDbConnected();
   
   let id:string | undefined,email:string | null;
   try {
