@@ -30,10 +30,10 @@ function Home(props:HomeProps) {
 
   useEffect(() => {
     // Ensure database connection
-    async function dbConnected() {
-      await ensureDbConnected();
-    }
-    dbConnected();
+    // async function dbConnected() {
+    //   await ensureDbConnected();
+    // }
+    // dbConnected();
 
     let id;
     try {
