@@ -1,11 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 import {config} from "dotenv"
-
-import { UserModel } from "@/lib/db"; 
 import jwt from 'jsonwebtoken';
+import { PrismaClient } from "@prisma/client";
 
-
+const prisma=new PrismaClient()
 
 const userInput = z.object({
   email: z.string().min(10).max(40).email(),
@@ -29,6 +28,7 @@ export default async function handler(
   }
   const email = parsedInput.data.email;
   const password = parsedInput.data.password;
+  try{
   const user: user | null = await UserModel.findOne({ email,password });
  
   if (user) {
@@ -47,4 +47,9 @@ export default async function handler(
   } else {
     res.status(400).json({ message: 'failed' });
   }
+} catch (error) {
+  res.status(500).json({ message: "Internal server error" });
+}finally{
+  prisma.$disconnect();
+}
 }

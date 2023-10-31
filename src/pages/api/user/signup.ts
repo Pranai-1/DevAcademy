@@ -1,9 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
+import { Prisma, PrismaClient } from "@prisma/client";
 
-import { user } from "@/pages/api/user/interface";
-import { UserModel } from "@/lib/db";
-
+const prisma=new PrismaClient()
 const userInput = z.object({
   email: z.string().min(10).max(40).email(),
   password: z.string().min(5).max(40),
@@ -26,14 +25,24 @@ export default async function handler(
   }
   const email = parsedInput.data.email;
   const password = parsedInput.data.password;
-  const user: user | null = await UserModel.findOne({ email });
+  try{
+  const user= await prisma.user.findFirst({where:{email }});
   if (user) {
 
     res.status(403).json({ message: 'User already exists' });
   } else {
-    const newUser = new UserModel({ email, password });
-    newUser.save();
+    const newUser=await prisma.user.create({
+      data:{
+        email,
+        password
+      }
+    })
     res.setHeader("Set-Cookie", "token=; HttpOnly; Secure; SameSite=Strict; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT");
     return res.status(200).json({ message: "success" });
   }
+} catch (error) {
+  res.status(500).json({ message: "Internal server error" });
+}finally{
+  prisma.$disconnect();
+}
 }
