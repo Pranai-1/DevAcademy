@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { CourseModel } from "@/lib/db";
-import { course } from "../../user/interface";
 import auth from "../../user/auth";
+import { PrismaClient } from "@prisma/client";
 
+const prisma=new PrismaClient();
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -10,21 +10,18 @@ export default async function handler(
   await auth(req,res)
   try {
     console.log(req.query)
-    const courseId = req.query.id as string;
+    const courseId = Number(req.query.id);
      console.log(courseId)
-    if (!courseId) {
-      
+    if (!courseId) { 
       return res.status(400).json({ message: "Course ID is missing in the request" });
     }
-
-    const courseDetails: any= await CourseModel.findById(courseId);
-
+    const courseDetails: any= await prisma.courses.findFirst({where:{id:courseId}});
     if (courseDetails) {
       let requiredDetails = {
         title: courseDetails.title,
         description: courseDetails.description,
         price: courseDetails.price,
-        author: courseDetails.name // Use the correct property name from your schema
+        author: courseDetails.name 
       };
      
       return res.status(200).json({courses:requiredDetails}); // Sending the object directly without wrapping it in another object
@@ -34,5 +31,7 @@ export default async function handler(
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).json({ message: "Internal server error" }); // Handle internal server errors
+  }finally{
+    prisma.$disconnect();
   }
 }

@@ -20,7 +20,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  config()
   const body = await req.body;
   const parsedInput = userInput.safeParse(body);
   if (!parsedInput.success) {
@@ -29,7 +28,7 @@ export default async function handler(
   const email = parsedInput.data.email;
   const password = parsedInput.data.password;
   try{
-  const user: user | null = await UserModel.findOne({ email,password });
+  const user= await prisma.user.findFirst({where:{email,password} });
  
   if (user) {
     const userSecretKey = "secrectfornewudev-academysers12345";
@@ -37,7 +36,7 @@ export default async function handler(
   if (!userSecretKey) {
     return res.status(500).json({ message: "Server configuration error" });
   }
-    let userToken = jwt.sign({ id: user._id }, userSecretKey, { expiresIn: '1d' });
+    let userToken = jwt.sign({ id: user.id }, userSecretKey, { expiresIn: '1d' });
     res.setHeader("Set-Cookie", `token=${userToken}; HttpOnly; Secure; SameSite=Strict; Path=/`);
     const cookies = req.headers.cookie || ""; //this is one of the way to get the cookie
  
