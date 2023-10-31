@@ -1,5 +1,5 @@
 export interface course {
-    _id:string,
+      id:string,
       title: string;
       description: string;
       price: number;
@@ -10,13 +10,6 @@ export interface course {
     }
     
     
-    export interface user extends Document{
-      _id?:string,
-      email: string,
-      password: string,
-      purchasedCourses:[],
-      cart:[]
-    }
 
 
  export interface DisplayCourse {

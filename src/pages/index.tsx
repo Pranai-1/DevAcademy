@@ -1,3 +1,4 @@
+import 'styled-jsx/style'
 
 
 import Header from '@/components/Header';
@@ -10,6 +11,7 @@ import auth from './api/user/auth';
 import {NextApiRequest, NextApiResponse } from 'next';
 import Navbar from '@/components/navBar';
 import InitUser from '@/components/InitUser';
+// import helper from './api/courses/helper';
 //import { NEXT_URL } from '@/config';
 
 
@@ -75,6 +77,7 @@ function Home(props:HomeProps) {
 
   export async function getServerSideProps({ req, res }: { req: NextApiRequest; res: NextApiResponse }) {
     let courses:course[]
+  // await helper(req,res)
     try{
     await ensureDbConnected();
     }catch{

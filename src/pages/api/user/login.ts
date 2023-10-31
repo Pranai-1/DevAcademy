@@ -4,7 +4,7 @@ import {config} from "dotenv"
 
 import { UserModel } from "@/lib/db"; 
 import jwt from 'jsonwebtoken';
-import { user } from "./interface";
+
 
 
 const userInput = z.object({
