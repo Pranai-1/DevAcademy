@@ -9,7 +9,7 @@ import axios from "axios";
 import { useSession } from 'next-auth/react';
 import LoggedInUser from "./LoggedInUser";
 import LoggedOutUser from "./LoggedOutUser";
-import { NEXT_URL } from "@/config";
+
 
 
 function Navbar() {
@@ -27,7 +27,7 @@ function Navbar() {
   }
 
   async function logout() {
-   const res=await axios.get(`${NEXT_URL}/api/user/logout`)
+   const res=await axios.get(`/api/user/logout`)
     userState({
       userEmail: null,
       purchasedCourses: [],
