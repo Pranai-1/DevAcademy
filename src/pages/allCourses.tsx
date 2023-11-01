@@ -20,12 +20,7 @@ function getRandomCourses(courses:any, count:any) {
 
 
 function AllCourses({courses,email}:any) {
-
-
   const router = useRouter();
-
- 
-
   return (
     <>
     <InitUser email={email}/>

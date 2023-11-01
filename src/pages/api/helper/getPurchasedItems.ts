@@ -14,22 +14,22 @@ export default async function handler(
          return [];
         }
  
-        const cartCourses= await prisma.cartCourses.findMany({
+        const purchasedCourses= await prisma.purchasedCourses.findMany({
           where:{
             userId:id
           }
         });
-        if(cartCourses){
+        if(purchasedCourses){
         let courses=[]
-        for(let obj of cartCourses){
+        for(let obj of purchasedCourses){
            const x=await prisma.courses.findFirst({
             where:{
             id:obj.courseId
             }
            })
-      
+          
            courses.push(x)
-         
+          
       }
      
       return courses

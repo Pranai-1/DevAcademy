@@ -51,7 +51,7 @@ try{
 
   export default function cartCourses({cartCourses,email}:{cartCourses:course[],email:string}) { 
     const [length,setLength]=useState<number>(cartCourses.length)
-
+  console.log(cartCourses)
     function remove(){
        setLength(length-1)
    }

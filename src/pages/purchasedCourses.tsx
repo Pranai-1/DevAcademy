@@ -10,50 +10,44 @@ import Navbar from "@/components/navBar";
 import Link from "next/link";
 import { useState } from "react";
 import { NEXT_URL } from "@/config";
+import getPurchasedItems from "./api/helper/getPurchasedItems";
+import getEmail from "./api/helper/getEmail";
 
 
-    export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
-       let id:string | undefined,email:string | null,purchasedCourses:course[] | [];
-       try {
-         await auth(req, res);
-      
-         id = req.headers["userId"] as string;
-       } catch (error) {
+export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
+  let id,email:string | null,purchasedCourses : any;
+  try {
+    await auth(req, res);
+    id =Number(req.headers["userId"]);
+  } catch (error) {
+    id = undefined; 
+  }
 
-         id = undefined; 
-         
-     
-       }
-     
-       const body: body = {
-         id
-       };
-          try{
-            const response2 = await axios.put(`${NEXT_URL}/api/user/email`, body);
-            email= response2.data.email;
-          }catch{
-          email=null;
-          }
-        try{
-          const response = await axios.put(`${NEXT_URL}/api/courses/getPurchasedItems`,body);
-          purchasedCourses = response.data.courses;
-        }catch{
-          purchasedCourses=[]
-        }
-          if(purchasedCourses.length>0){
-          return{
-            props:{
-              purchasedCourses,
-              email
-            }
-          }
-          }else{
-            return{
-              props:{
-                purchasedCourses:[],
-                email
-              }
-            } }}
+  if(id){
+    email = await getEmail(id)
+ }else{
+ email=null;
+ }
+try{
+  if(id)
+  purchasedCourses = await getPurchasedItems(id);
+ else
+ purchasedCourses=[]
+}catch{
+  purchasedCourses=[]
+}
+  if(purchasedCourses.length>0){
+   return{
+    props:{
+      purchasedCourses,
+      email
+    }}}else{
+    return{
+      props:{
+        purchasedCourses:[],
+        email
+      } }}}
+
 
 export default function PurchasedCourses({purchasedCourses,email}:{purchasedCourses:course[],email:string}) {
   const [length,setLength]=useState<number>(purchasedCourses.length)
