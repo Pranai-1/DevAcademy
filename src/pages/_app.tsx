@@ -12,10 +12,7 @@ import { ToastContainer } from 'react-toastify';
 export default function App({ Component, pageProps,email }: AppProps & { email: string | null }) {
 
   return <RecoilRoot>
-    
-   
-    <ToastContainer position="top-center" />
-   
+    <ToastContainer />
      <Component {...pageProps} />
   </RecoilRoot>;
 }
