@@ -1,84 +1,135 @@
-import { useState } from 'react';
-import {  useSetRecoilState } from 'recoil';
-import { UserState } from '@/store/atoms/user';
+import axios from "axios";
+import { GetServerSideProps } from "next";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { z } from "zod";
+export default function Login() {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
 
-
-function Login() {
   const router = useRouter();
- const userState=useSetRecoilState(UserState)
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
-async function handleSubmit() {
-   try{
-   const res=await axios.post(`/api/user/login`, {
-        email: email,
-        password: password
-     })
 
-      if (res.data.message === 'success') {
-        toast.success("Login successful")
-          userState({
-            userEmail:res.data.email,
-            purchasedCourses:[],
-            cart:[]
 
-          })
-          router.push("/")
-         
-        } else {
-          toast.error("Login failed")
-         
-        }
-      }catch(e){
-        toast.error("Login failed")
-      }
+
+  const userInput = z.object({
+    email: z.string().min(11).max(40).email(),
+    password: z.string().min(8).max(25),
+  });
+
+  const handleChange = (value: any, type: string) => {
+    switch (type) {
+      case "Email":
+        setEmail(value);
+        break;
+      default:
+        setPassword(value);
+        break;
+    }
+  };
+
+  const HandleSubmit = async () => {
+    if (email.length <11) {
+      setEmailErrorMessage("Invalid Email");
+      return
+    }else{
+      setEmailErrorMessage("")
+    }
+    if (password.length <8) {
+      setPasswordErrorMessage("Password must contain 8 characters");
+      return
+    }else{
+      setPasswordErrorMessage("")
+    }
+
+   
+      const body = {
+        email,
+        password,
       };
-  
 
+      const parsedInput = userInput.safeParse(body);
+
+      if (!parsedInput.success) {
+        toast.error("Login failed");
+      } else {
+        const { email: parsedEmail, password: parsedPassword } =
+          parsedInput.data;
+try{
+        const response = await axios.post("/api/user/login", {
+          email: parsedEmail,
+          password: parsedPassword,
+        });
+        if (response?.status == 200) {
+          router.push("/");
+          toast.success("Login success");
+        
+        } else {
+          toast.error("Login failed");
+        }
+      }catch(error){
+        console.log(error)
+        toast.error("Login failed");
+      }
+      
+    }
+  };
   return (
-    <>
-      <div className="h-screen flex items-center justify-center bg-gray-150">
-      <div className="bg-white p-8 rounded-md shadow-md w-96">
-        <h2 className="text-2xl font-semibold text-indigo-700 mb-4">User Login</h2>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:border-indigo-500"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:border-indigo-500"
-        />
+    <div className=" h-full w-full bg-slate-100 absolute flex justify-center items-center flex-wrap">
+      <div className="bg-white w-[360px] md:w-[440px] flex flex-col gap-2 mb-5 p-5 rounded-xl justify-center">
+        <h1 className="font-bold text-center text-2xl text-orange-600">
+          Login to DevAcademy
+        </h1>
+        <p className="font-medium text-center text-gray-600">
+          Start your journey
+        </p>
+        <label className="block text-gray-700 text-sm font-bold mb-2 w-full">
+          Email<span className="text-red-500">*</span>
+          <input
+            title="Email"
+            required
+            placeholder="Enter Your Email"
+            onChange={(e) => handleChange(e.target.value, "Email")}
+            className="block w-full p-3 border rounded mt-1"
+          />
+        </label>
+        {emailErrorMessage.length>0 && (
+          <p className="text-red-500 text-sm">{emailErrorMessage}*</p>
+        )}
+        <label className="block text-gray-700 text-sm font-bold mb-2 w-full">
+          Password<span className="text-red-500">*</span>
+          <input
+            title="Password"
+            required
+            placeholder="Enter Your Password minlength-6"
+            onChange={(e) => handleChange(e.target.value, "Password")}
+            className="block w-full p-3 border rounded mt-1"
+          />
+        </label>
+        {passwordErrorMessage.length>0 && (
+          <p className="text-red-500 text-sm">{passwordErrorMessage}*</p>
+        )}
+
         <button
-          onClick={handleSubmit}
-          className="w-full bg-indigo-700 text-white font-medium text-lg py-2 rounded hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="p-2 font-medium text-xl bg-orange-500 rounded-xl text-white h-max pt-1 
+       items-center  text-center"
+          onClick={HandleSubmit}
         >
           Login
         </button>
-        <p className="text-sm mt-4">
-          New User?{' '}
-          <button
-            onClick={() => {
-              router.push("/signup")
-            }}
-            className="text-indigo-700 font-semibold focus:outline-none"
-          >
-            Signup now
-          </button>
-        </p>
+        <span>
+          {" "}
+          New User*?
+          <a href="/signup" className="text-blue-500 underline">
+            Register here
+          </a>
+        </span>
       </div>
     </div>
-    </>
   );
 }
 
-export default Login;
