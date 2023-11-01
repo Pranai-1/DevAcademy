@@ -9,7 +9,6 @@ import InitUser from "@/components/InitUser";
 import Navbar from "@/components/navBar";
 import Link from "next/link";
 import { useState } from "react";
-import { NEXT_URL } from "@/config";
 import getPurchasedItems from "./api/helper/getPurchasedItems";
 import getEmail from "./api/helper/getEmail";
 

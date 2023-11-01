@@ -10,7 +10,6 @@ import auth from "./api/user/auth";
 import InitUser from "@/components/InitUser";
 import Navbar from "@/components/navBar";
 import { useEffect, useState } from "react";
-import { NEXT_URL } from "@/config";
 import getEmail from "./api/helper/getEmail";
 import getCartItems from "./api/helper/getCartItems";
 

@@ -12,8 +12,7 @@ import Navbar from '@/components/navBar';
 import InitUser from '@/components/InitUser';
 import getEmail from './api/helper/getEmail';
 import allCourses from './api/helper/allCourses';
-// import helper from './api/courses/helper';
-//import { NEXT_URL } from '@/config';
+
 
 
 interface HomeProps {

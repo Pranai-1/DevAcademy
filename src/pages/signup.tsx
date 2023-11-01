@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { useState } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
-import { NEXT_URL } from "@/config";
 
 function Signup() {
   const [email, setEmail] = useState('');
@@ -11,7 +10,7 @@ function Signup() {
    
   async function handleSubmit() {
     try {
-      const res = await axios.post(`${NEXT_URL}/api/user/signup`, {
+      const res = await axios.post(`/api/user/signup`, {
         email: email,
         password: password,
       });
