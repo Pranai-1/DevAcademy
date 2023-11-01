@@ -6,11 +6,12 @@ import Footer from '@/components/Footer';
 import CourseCard from '@/components/CourseCard';
 import { body, course } from './api/user/interface';
 import axios from 'axios';
-import { ensureDbConnected } from '@/lib/db';
 import auth from './api/user/auth';
 import {NextApiRequest, NextApiResponse } from 'next';
 import Navbar from '@/components/navBar';
 import InitUser from '@/components/InitUser';
+import getEmail from './api/helper/getEmail';
+import allCourses from './api/helper/allCourses';
 // import helper from './api/courses/helper';
 //import { NEXT_URL } from '@/config';
 
@@ -31,23 +32,26 @@ function Home(props:HomeProps) {
       <div>
         <h1 className="text-2xl font-medium p-2 m-4 mb-0 ml-10 text-orange-600">Let's Explore New Launches </h1>
         <div className='w-screen flex flex-wrap justify-evenly p-2'>
-          {exploreCourses.map((course) => (
+          {exploreCourses.map((course,index) => (
             <CourseCard
-              id={course._id}
+            key={course.id} 
+              id={course.id}
               image={course.image}
               title={course.title}
               description={course.description}
               name={course.name}
               show="all"
               price={course.price} 
+              //index={index}
             />
           ))}
         </div>
         <h1 className='text-2xl font-medium p-2 m-4 mb-0 ml-10 text-orange-600'>Trending Courses</h1>
         <div className='w-screen flex flex-wrap justify-evenly p-5'>
-          {trendingCourses.map((course) => (
-            <CourseCard 
-              id={course._id}
+          {trendingCourses.map((course,index) => (
+            <CourseCard
+            key={course.id}  
+              id={course.id}
               image={course.image}
               title={course.title}
               description={course.description}
@@ -76,43 +80,30 @@ function Home(props:HomeProps) {
 
 
   export async function getServerSideProps({ req, res }: { req: NextApiRequest; res: NextApiResponse }) {
-    let courses:course[]
+    let courses:any 
   // await helper(req,res)
-    try{
-    await ensureDbConnected();
-    }catch{
-      return res.status(500)
-    }
+  
    
     
-    let id:string | undefined,email:string | null;
+    let id:number | undefined,email:string | null;
     try {
       await auth(req, res);
-  
-      id = req.headers["userId"] as string;
+      id = Number(req.headers["userId"]);
     } catch (error) {
-  
       id = undefined; 
     }
-  const body: body = {
-      id
-    };
   
-    try{
-      const response2 = await axios.put(`http://localhost:3000/api/user/email`, body);
-      email= response2.data.email;
-    }catch{
+    if(id){
+       email = await getEmail(id)
+    }else{
     email=null;
     }
-   
     try{
-      const response = await axios.get(`http://localhost:3000/api/courses/all`);
-      courses = response.data.courses;
+       courses = await allCourses();
       }catch{
     courses=[]
       }
     
-
     const exploreCourses = getRandomCourses(courses, 3);
 
     const remainingCourses = courses.filter((course: course) => !exploreCourses.includes(course));

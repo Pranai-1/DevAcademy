@@ -11,33 +11,28 @@ import InitUser from "@/components/InitUser";
 import Navbar from "@/components/navBar";
 import { useEffect, useState } from "react";
 import { NEXT_URL } from "@/config";
+import getEmail from "./api/helper/getEmail";
+import getCartItems from "./api/helper/getCartItems";
 
 export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
-
-  let id:string | undefined,email:string | null,cartCourses : course[]|[];
+  let id,email:string | null,cartCourses : any;
   try {
     await auth(req, res);
- 
-    id = req.headers["userId"] as string;
+    id =Number(req.headers["userId"]);
   } catch (error) {
-
     id = undefined; 
-    
-
   }
 
-  const body: body = {
-    id
-  };
- try{
-    const response2 = await axios.put(`${NEXT_URL}/api/user/email`, body);
-     email= response2.data.email;
-  }catch{
-  email=null;
-  }
+  if(id){
+    email = await getEmail(id)
+ }else{
+ email=null;
+ }
 try{
-  const response = await axios.put(`${NEXT_URL}/api/courses/getCartItems`,body);
-  cartCourses = response.data.courses;
+  if(id)
+  cartCourses = await getCartItems(id);
+ else
+ cartCourses=[]
 }catch{
   cartCourses=[]
 }
@@ -106,7 +101,8 @@ try{
          
              {cartCourses.map((course:course) => (
               <CourseCard 
-                id={course._id}
+              key={course.id} 
+                id={course.id}
                 image={course.image}
                 title={course.title}
                 description={course.description}

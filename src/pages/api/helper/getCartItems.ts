@@ -4,32 +4,29 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma=new PrismaClient()
 export default async function handler(
-    req:NextApiRequest,
-    res:NextApiResponse
-){
-
-    const userId = Number(req.body.id);
+   id:number
+){    
     try{
     const userCheck = await prisma.user.findFirst({where:{
-      id:userId
+      id
     }});
         if (!userCheck) {
-         return res.status(404).json({ message: 'User not found' });
+         return [];
         }
  
         const cartCourses= await prisma.cartCourses.findMany({
           where:{
-            userId
+            userId:id
           }
         });
         if(cartCourses)
- return res.status(200).json({ courses: cartCourses});
+ return cartCourses;
    else {
-    return res.status(200).json({ courses: [] });
+    return [];
   }
 }catch(error){
    console.log(error)
-   return res.status(404).json({ message: 'Error' });
+   return [];
   }
 finally{
   prisma.$disconnect();

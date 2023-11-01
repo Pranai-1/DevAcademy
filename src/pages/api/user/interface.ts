@@ -1,5 +1,5 @@
 export interface course {
-      id:string,
+      id:number,
       title: string;
       description: string;
       price: number;
@@ -7,20 +7,22 @@ export interface course {
       published: boolean;
       adminId: string;
       name: string;
+      key:number
     }
     
     
 
 
  export interface DisplayCourse {
-  id: string;
+  id: number;
    image: string;
    title: string;
    description: string;
    name:string,
    show:string
   remove?():void,
-  price:number
+  price:number,
+  key:number
  }
 
  export interface body{

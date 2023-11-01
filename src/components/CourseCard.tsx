@@ -17,7 +17,7 @@ const{id,image,title,description,name,show,remove,price}=props
 
 
 
-async function Addtocart(id:string){
+async function Addtocart(id:number){
     if(userEmail){
  const body={
     id
@@ -34,7 +34,7 @@ async function Addtocart(id:string){
 }
  
     
-  async  function Remove(id: string) {
+  async  function Remove(id: number) {
 
         if(userEmail){
             const body={
@@ -42,7 +42,7 @@ async function Addtocart(id:string){
             }
             try{
                const response= await axios.post(`${NEXT_URL}/api/courses/remove`,body)
-               document.getElementById(id)?.remove()
+               document.getElementById(id.toString())?.remove()
                toast.warning('Removed from cart');
                if(remove)
                remove()
@@ -57,7 +57,7 @@ async function Addtocart(id:string){
 
 return(
         <>
-        <div id={id}  className="bg-white-200 m-10 h-[350px] w-[300px] rounded-lg overflow-hidden shadow-md ">
+        <div id={id.toString()}  className="bg-white-200 m-10 h-[350px] w-[300px] rounded-lg overflow-hidden shadow-md ">
               <img className="h-[160px] w-full object-cover" src={image} alt="Course" />
               <div className="p-3 pb-0 h-[100px] m-0 border-orange-500">
                 <h2 className="font-bold w-full text-xl text-blue-700">{title}</h2>

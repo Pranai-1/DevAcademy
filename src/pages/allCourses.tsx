@@ -10,6 +10,8 @@ import auth from "./api/user/auth";
 import { NEXT_URL } from "@/config";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import allCourses from "./api/helper/allCourses";
+import getEmail from "./api/helper/getEmail";
 
 function getRandomCourses(courses:any, count:any) {
   const shuffled = courses.sort(() => 0.5 - Math.random());
@@ -17,60 +19,12 @@ function getRandomCourses(courses:any, count:any) {
 }
 
 
-function AllCourses() {
-  const [courses, setcourses] = useState([]);
-  const [exploreCourses, setExploreCourses] = useState([]);
-  const [trendingCourses, setTrendingCourses] = useState([]);
-  const [email, setEmail] = useState(null);
+function AllCourses({courses,email}:any) {
+
 
   const router = useRouter();
 
-  useEffect(() => {
-   
-
-    let id;
-    try {
-      // Replace auth logic with router check for userId (assuming it's in query or params)
-      id = router.query.userId || undefined;
-    } catch (error) {
-      id = undefined;
-    }
-
-    const body = { id };
-
-      // Fetch user email
-      async function fetchUserEmail() {
-        try {
-          const response2 = await axios.put(`/api/user/email`, body);
-          setEmail(response2.data.email);
-        } catch {
-          setEmail(null);
-        }
-      }
-      fetchUserEmail();
-    
-
-    // Fetch courses
-    async function fetchCourses() {
-      try {
-        const response = await axios.get(`/api/courses/all`);
-        const coursesData = response.data.courses;
-        setcourses(coursesData)
-        // Shuffle and slice courses for explore and trending sections
-        const shuffledCourses = getRandomCourses(coursesData, 3);
-        setExploreCourses(shuffledCourses);
-        
-        const remainingCourses = coursesData.filter((course:any) => !shuffledCourses.includes(course));
-        const trendingShuffledCourses = getRandomCourses(remainingCourses, 3);
-        setTrendingCourses(trendingShuffledCourses);
-      } catch {
-        setExploreCourses([]);
-        setTrendingCourses([]);
-        setcourses([])
-      }
-    }
-    fetchCourses();
-  }, []);
+ 
 
   return (
     <>
@@ -98,8 +52,9 @@ function AllCourses() {
       
           <div className=" flex flex-wrap justify-center">
             {courses.map((course:course) => (
-              <CourseCard 
-                id={course._id}
+              <CourseCard
+              key={course.id} 
+                id={course.id}
                 image={course.image}
                 title={course.title}
                 description={course.description}
@@ -119,44 +74,31 @@ function AllCourses() {
     </>
   );
 }
-
+export default AllCourses;
 
   export const getServerSideProps = async ({ req, res }: { req: NextApiRequest, res: NextApiResponse }) => {
-    let id:string | undefined,email:string | null,courses:course[] | [];
-    try {
-      await auth(req, res);
-   
-      id = req.headers["userId"] as string;
-    } catch (error) {
-
-      id = undefined; 
-      
-
-    }
-  
-    const body: body = {
-      id
-    };
-  
-   
-    try{
-      const response2 = await axios.put(`${NEXT_URL}/api/user/email`, body);
-       email= response2.data.email;
-    }catch{
-    email=null;
-    }
  
- 
-  try{
-  const response = await axios.get(`http://localhost:3000/api/courses/all`);
-  courses = response.data.courses;
-  }catch{
-courses=[]
+  let id:number | undefined,email:string | null,courses:any;
+  try {
+    await auth(req, res);
+    id = Number(req.headers["userId"]);
+  } catch (error) {
+    id = undefined; 
   }
 
-    
+  if(id){
+     email = await getEmail(id)
+  }else{
+  email=null;
+  }
+  try{
+     courses = await allCourses();
+    }catch{
+  courses=[]
+    }
     return { props: { courses,email } };
  
 };
 
-export default AllCourses;
+
+

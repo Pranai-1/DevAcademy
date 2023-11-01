@@ -103,7 +103,8 @@ export default function PurchasedCourses({purchasedCourses,email}:{purchasedCour
           <div className="p-3 flex flex-wrap justify-center">
             {purchasedCourses.map((course:course) => (
               <CourseCard
-                id={course._id}
+              key={course.id} 
+                id={course.id}
                 image={course.image}
                 title={course.title}
                 description={course.description}
