@@ -13,13 +13,13 @@ import { useState, useEffect } from "react";
 import allCourses from "./api/helper/allCourses";
 import getEmail from "./api/helper/getEmail";
 
-function getRandomCourses(courses:any, count:any) {
+function getRandomCourses(courses:course[], count:number) {
   const shuffled = courses.sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 }
 
 
-function AllCourses({courses,email}:any) {
+function AllCourses({courses,email}:{courses:course[],email:string}) {
   const router = useRouter();
   return (
     <>
@@ -73,7 +73,7 @@ export default AllCourses;
 
   export const getServerSideProps = async ({ req, res }: { req: NextApiRequest, res: NextApiResponse }) => {
  
-  let id:number | undefined,email:string | null,courses:any;
+  let id:number | undefined,email:string | null,courses:course[];
   try {
     await auth(req, res);
     id = Number(req.headers["userId"]);

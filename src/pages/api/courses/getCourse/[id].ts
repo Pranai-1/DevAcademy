@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import auth from "../../user/auth";
 import { PrismaClient } from "@prisma/client";
+import { course } from "../../user/interface";
 
 const prisma=new PrismaClient();
 export default async function handler(
@@ -15,7 +16,7 @@ export default async function handler(
     if (!courseId) { 
       return res.status(400).json({ message: "Course ID is missing in the request" });
     }
-    const courseDetails: any= await prisma.courses.findFirst({where:{id:courseId}});
+    const courseDetails: course | null= await prisma.courses.findFirst({where:{id:courseId}});
     if (courseDetails) {
       let requiredDetails = {
         title: courseDetails.title,

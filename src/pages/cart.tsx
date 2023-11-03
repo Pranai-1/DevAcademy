@@ -14,7 +14,7 @@ import getEmail from "./api/helper/getEmail";
 import getCartItems from "./api/helper/getCartItems";
 
 export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
-  let id,email:string | null,cartCourses : any;
+  let id,email:string | null,cartCourses : course[];
   try {
     await auth(req, res);
     id =Number(req.headers["userId"]);

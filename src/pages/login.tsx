@@ -21,7 +21,7 @@ export default function Login() {
     password: z.string().min(8).max(25),
   });
 
-  const handleChange = (value: any, type: string) => {
+  const handleChange = (value: string, type: string) => {
     switch (type) {
       case "Email":
         setEmail(value);

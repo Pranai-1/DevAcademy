@@ -14,7 +14,7 @@ import getEmail from "./api/helper/getEmail";
 
 
 export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
-  let id,email:string | null,purchasedCourses : any;
+  let id,email:string | null,purchasedCourses : course[];
   try {
     await auth(req, res);
     id =Number(req.headers["userId"]);
@@ -68,8 +68,7 @@ export default function PurchasedCourses({purchasedCourses,email}:{purchasedCour
     </Link>
   </div>
 </div>
-
-           <Footer />
+ <Footer />
        </>
 
     ):(

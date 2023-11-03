@@ -13,7 +13,7 @@ export default function Signup() {
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
   
-  const handleChange = (value: any, type: string) => {
+  const handleChange = (value: string, type: string) => {
     switch (type) {
       
       case "Email":

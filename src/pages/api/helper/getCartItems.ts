@@ -6,6 +6,7 @@ const prisma=new PrismaClient()
 export default async function handler(
    id:number
 ){    
+  let courses:course[]=[]
     try{
     const userCheck = await prisma.user.findFirst({where:{
       id
@@ -20,14 +21,14 @@ export default async function handler(
           }
         });
         if(cartCourses){
-        let courses=[]
+       
         for(let obj of cartCourses){
            const x=await prisma.courses.findFirst({
             where:{
             id:obj.courseId
             }
            })
-      
+         if(x)
            courses.push(x)
          
       }
@@ -36,11 +37,11 @@ export default async function handler(
 
     }
    else {
-    return [];
+    return courses;
   }
 }catch(error){
    console.log(error)
-   return [];
+   return courses;
   }
 finally{
   prisma.$disconnect();
