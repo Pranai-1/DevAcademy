@@ -14,7 +14,6 @@ import getEmail from './api/helper/getEmail';
 import allCourses from './api/helper/allCourses';
 
 
-
 interface HomeProps {
   exploreCourses: course[];
   trendingCourses: course[];
@@ -31,7 +30,7 @@ function Home(props:HomeProps) {
       <div>
         <h1 className="text-2xl font-medium p-2 m-4 mb-0 ml-10 text-orange-600">Let's Explore New Launches </h1>
         <div className='w-screen flex flex-wrap justify-evenly p-2'>
-          {exploreCourses.map((course,index) => (
+          {exploreCourses.map((course) => (
             <CourseCard
             key={course.id} 
               id={course.id}
@@ -41,7 +40,6 @@ function Home(props:HomeProps) {
               name={course.name}
               show="all"
               price={course.price} 
-              //index={index}
             />
           ))}
         </div>
@@ -79,11 +77,7 @@ function Home(props:HomeProps) {
 
 
   export async function getServerSideProps({ req, res }: { req: NextApiRequest; res: NextApiResponse }) {
-    let courses:any 
-  // await helper(req,res)
-  
-   
-    
+    let courses:course[]
     let id:number | undefined,email:string | null;
     try {
       await auth(req, res);
@@ -104,7 +98,6 @@ function Home(props:HomeProps) {
       }
     
     const exploreCourses = getRandomCourses(courses, 3);
-
     const remainingCourses = courses.filter((course: course) => !exploreCourses.includes(course));
     const trendingCourses = getRandomCourses(remainingCourses, 3);
 

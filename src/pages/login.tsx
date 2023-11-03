@@ -51,31 +51,27 @@ export default function Login() {
         email,
         password,
       };
-
       const parsedInput = userInput.safeParse(body);
-
       if (!parsedInput.success) {
         toast.error("Login failed");
       } else {
         const { email: parsedEmail, password: parsedPassword } =
           parsedInput.data;
-try{
+      try{
         const response = await axios.post("/api/user/login", {
           email: parsedEmail,
           password: parsedPassword,
         });
         if (response?.status == 200) {
           router.push("/");
-          toast.success("Login success");
-        
+          toast.success("Login success"); 
         } else {
           toast.error("Login failed");
         }
       }catch(error){
         console.log(error)
         toast.error("Login failed");
-      }
-      
+      }  
     }
   };
   return (

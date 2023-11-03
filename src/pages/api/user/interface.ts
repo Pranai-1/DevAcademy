@@ -5,9 +5,9 @@ export interface course {
       price: number;
       image: string;
       published: boolean;
-      adminId: string;
+      adminId: number;
       name: string;
-      key:number
+      key?:number
     }
     
     

@@ -7,7 +7,7 @@ import axios from "axios";
 import { GetServerSideProps, NextApiRequest, NextApiResponse } from "next";
 import InitUser from "@/components/InitUser";
 import auth from "./api/user/auth";
-import { NEXT_URL } from "@/config";
+
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import allCourses from "./api/helper/allCourses";
