@@ -20,7 +20,7 @@ async function Addtocart(id:number){
     id
  }
  try{
-    const response= await axios.post(`${NEXT_URL}/api/courses/addToCart`,body)
+    const response= await axios.post(`/api/courses/addToCart`,body)
     toast.success('Added to cart');
   }catch{
     toast.error("item is already present in the cart")
