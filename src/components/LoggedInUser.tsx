@@ -1,6 +1,5 @@
 export default function LoggedInUser({userEmail,logout}:{userEmail:string,logout():void}){
-    return(
-        
+    return(    
 <div className="hidden md:flex font-bold text-white justify-center mr-5 gap-5">
 <p className="text-s mt-2 text-black mr-5 font-normal">{userEmail}</p>
 <button

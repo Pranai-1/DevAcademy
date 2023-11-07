@@ -2,19 +2,16 @@ import axios from "axios";
 import { UserEmail } from "@/store/selectors/userDetails";
 import { useRecoilValue } from "recoil";
 import { DisplayCourse } from "../pages/api/user/interface";
-import router from "next/router";
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { NEXT_URL } from "@/config";
 import Link from "next/link";
-import BuyPage from "@/pages/buy/[id]";
-function CourseCard(props:DisplayCourse){
+import { toast } from "react-toastify";
 
+
+
+function CourseCard(props:DisplayCourse){
 const userEmail=useRecoilValue(UserEmail)
 const{id,image,title,description,name,show,remove,price}=props
-
-
-
 
 
 async function Addtocart(id:number){
@@ -55,7 +52,7 @@ async function Addtocart(id:number){
 
 return(
         <>
-        <div id={id.toString()}  className="bg-gray-200 m-10 h-[350px] w-[300px] rounded-lg overflow-hidden shadow-md ">
+        <div id={id.toString()}  className="bg-gray-200  h-[350px] w-[300px] rounded-lg overflow-hidden shadow-md ">
               <img className="h-[160px] w-full object-cover" src={image} alt="Course" />
               <div className="p-3 pb-0 h-[100px] m-0 border-orange-500">
                 <h2 className="font-bold w-full text-xl text-blue-700">{title}</h2>

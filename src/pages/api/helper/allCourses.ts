@@ -12,7 +12,6 @@ export default async function allCourses() {
        
         return [];
       }
-    
     } catch (error) {
       console.log(error);
         return [];
