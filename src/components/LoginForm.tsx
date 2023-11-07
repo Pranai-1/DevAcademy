@@ -60,15 +60,14 @@ export default function LoginForm({ onLoginSuccess, onLoginFailure }:{onLoginSuc
 
         if (response?.status === 200) {
           onLoginSuccess(); 
-          toast.success("Login success");
+          
         } else {
           onLoginFailure(); 
-          toast.error("Login failed");
+       
         }
       } catch (error) {
         console.log(error);
         onLoginFailure();
-        toast.error("Login failed");
       }
     }
   };
