@@ -53,7 +53,7 @@ export default function BuyPage() {
    }
   try{
     const response= await axios.post(`/api/courses/purchaseitem`,body)
-   // toast.success("Course purchased Successfully")
+    toast.success("Course purchased Successfully")
     router.push("/purchasedCourses")
       
  }catch{
