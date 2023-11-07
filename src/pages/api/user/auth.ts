@@ -2,6 +2,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
 import { config } from "dotenv";
+import { env } from "process";
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,7 +14,8 @@ if (!token) {
     return 
   }
 try {
-  const userSecretKey ="secrectfornewudev-academysers12345";
+
+  const userSecretKey =process.env.secretKey;;
   if (!userSecretKey) {
     return res.status(500).json({ message: "Server configuration error" });
   }
