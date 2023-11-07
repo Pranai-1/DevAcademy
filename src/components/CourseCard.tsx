@@ -39,8 +39,7 @@ async function Remove(id: number) {
       const response = await axios.post(`/api/courses/remove`, body);
       const elementToRemove = document.getElementById(id.toString());
       if (elementToRemove) {
-        elementToRemove.remove(); // Only remove if the element exists
-     
+        elementToRemove.remove(); 
         toast.warning('Removed from cart');
       } else {
         toast.error('Item is not present in the cart');

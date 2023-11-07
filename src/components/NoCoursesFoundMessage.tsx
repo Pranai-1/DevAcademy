@@ -21,7 +21,7 @@ export default function NoCoursesFoundMessage({type}:{type:string}){
                  </div>
                
             )}
-           {type=='purchase'&& (
+           {type=='purchased'&& (
                <div className="flex flex-col flex-wrap justify-center gap-1 overflow-auto mt-5 items-center h-[400px] w-full">
                <div className="p-2 font-medium  text-blue-400 text-3xl">You haven't purchased any courses</div>
                <a
