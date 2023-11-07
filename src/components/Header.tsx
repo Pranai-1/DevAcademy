@@ -26,15 +26,15 @@ function Header() {
   return (
     <>
       {userEmail ? (
-        <h1 className="font-bold text-2xl text-center text-gray-800 py-4">
+        <h1 className="font-bold text-2xl text-center text-orange-600 py-4">
           Welcome to Dev Academy, {name}!
         </h1>
       ) : (
-        <h1 className="font-bold text-2xl text-center text-gray-800 py-4">
+        <h1 className="font-bold text-2xl text-center text-orange-600 py-4">
           Welcome to Dev Academy
         </h1>
       )}
-      <p className="text-center text-gray-600 ">
+      <p className="text-center text-white">
         We're thrilled to have you as part of our learning community.
       </p>
       <div className="relative flex justify-center pt-4">

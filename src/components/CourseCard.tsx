@@ -35,36 +35,34 @@ async function Addtocart(id:number){
  
     
   async  function Remove(id: number) {
-
         if(userEmail){
             const body={
                id
-            }
-            try{
+        }
+         try{
                const response= await axios.post(`${NEXT_URL}/api/courses/remove`,body)
                document.getElementById(id.toString())?.remove()
                toast.warning('Removed from cart');
-               if(remove)
-               remove()
-             }catch{
-              toast.error('Item is not present in the cart');
-              
-           }
-                }else{
-              toast.warn('Login to continue');
-              }
+              if(remove)
+              remove()
+         }catch{
+             toast.error('Item is not present in the cart');  
+         }
+       }else{
+          toast.warn('Login to continue');
+       }
     }
 
 return(
         <>
-        <div id={id.toString()}  className="bg-white-200 m-10 h-[350px] w-[300px] rounded-lg overflow-hidden shadow-md ">
+        <div id={id.toString()}  className="bg-gray-200 m-10 h-[350px] w-[300px] rounded-lg overflow-hidden shadow-md ">
               <img className="h-[160px] w-full object-cover" src={image} alt="Course" />
               <div className="p-3 pb-0 h-[100px] m-0 border-orange-500">
                 <h2 className="font-bold w-full text-xl text-blue-700">{title}</h2>
                 <p className="font-medium text-xs text-gray-600 w-full h-[20px] overflow-auto m-2 ml-1">{description}</p>
                 <div className="flex justify-evenly">
                 <p className="font-medium text-m text-indigo-500 w-full h-[25px] overflow-auto">Author : {name}  </p>
-                <p className="font-medium text-m text-red-600 w-full h-[25px] overflow-auto">Price : {price} ₹  </p>
+                <p className="font-medium text-m text-red-600 w-full h-[25px] overflow-auto">Price : ₹ {price} </p>
                 </div>
                 </div>
                 {show=="purchased" && 

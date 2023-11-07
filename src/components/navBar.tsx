@@ -46,7 +46,7 @@ function Navbar() {
 
   return (
     <>
-      <div className="w-screen h-[45px] bg-gray-100 flex justify-between relative">
+      <div className="w-screen h-[45px] bg-gray-200 flex justify-between relative">
         <Sidebar
           bar={bar}
           userEmail={userEmail}
