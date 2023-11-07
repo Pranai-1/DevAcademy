@@ -11,7 +11,7 @@ function Header() {
   const userEmail = useRecoilValue(UserEmail);
   const name = userEmail?.split("@")[0];
 
-  const images: any = [image1, image2, image3, image4, image5];
+  const images = [image1, image2, image3, image4, image5];
 
   const [imageIndex, setImageIndex] = useState(0);
 
@@ -34,7 +34,6 @@ function Header() {
           Welcome to Dev Academy
         </h1>
       )}
-
       <p className="text-center text-gray-600 ">
         We're thrilled to have you as part of our learning community.
       </p>
