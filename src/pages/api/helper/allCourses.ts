@@ -4,7 +4,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma=new PrismaClient()
 export default async function allCourses() {
-  console.log("hi")
     try {
       const data = await prisma.courses.findMany({where:{published: true} });
       if (data) {
