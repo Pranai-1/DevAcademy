@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 
 function CourseCard(props:DisplayCourse){
 const userEmail=useRecoilValue(UserEmail)
-const{id,image,title,description,name,show,remove,price}=props
+const{id,image,title,description,name,show,price}=props
 
 
 async function Addtocart(id:number){
@@ -30,25 +30,29 @@ async function Addtocart(id:number){
    }
 }
  
-    
-  async  function Remove(id: number) {
-        if(userEmail){
-            const body={
-               id
-        }
-         try{
-               const response= await axios.post(`${NEXT_URL}/api/courses/remove`,body)
-               document.getElementById(id.toString())?.remove()
-               toast.warning('Removed from cart');
-              if(remove)
-              remove()
-         }catch{
-             toast.error('Item is not present in the cart');  
-         }
-       }else{
-          toast.warn('Login to continue');
-       }
+async function Remove(id: number) {
+  if (userEmail) {
+    const body = {
+      id,
+    };
+    try {
+      const response = await axios.post(`/api/courses/remove`, body);
+      const elementToRemove = document.getElementById(id.toString());
+      if (elementToRemove) {
+        elementToRemove.remove(); // Only remove if the element exists
+     
+        toast.warning('Removed from cart');
+      } else {
+        toast.error('Item is not present in the cart');
+      }
+    } catch {
+      toast.error('Error occurred while removing from cart');
     }
+  } else {
+    toast.warn('Login to continue');
+  }
+}
+
 
 return(
         <>

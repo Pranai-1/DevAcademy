@@ -12,121 +12,97 @@ import Navbar from "@/components/navBar";
 import { useEffect, useState } from "react";
 import getEmail from "./api/helper/getEmail";
 import getCartItems from "./api/helper/getCartItems";
+import CourseParameters from "@/components/CourseParameters";
+import LoadingIndicator from "@/components/LoadingIndicator";
+import NoCoursesFoundMessage from "@/components/NoCoursesFoundMessage";
+import allCourses from "./allCourses";
 
 export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
-  let id,email:string | null,cartCourses : course[];
+  let id:number | undefined,email:string | null
+  
   try {
     await auth(req, res);
-    id =Number(req.headers["userId"]);
+    id=Number(req.headers["userId"])
   } catch (error) {
     id = undefined; 
   }
-
   if(id){
     email = await getEmail(id)
  }else{
- email=null;
+  return {
+    redirect: {
+      destination: "/",
+      permanent: false,
+    },
+  };
  }
-try{
-  if(id)
-  cartCourses = await getCartItems(id);
- else
- cartCourses=[]
-}catch{
-  cartCourses=[]
-}
-  if(cartCourses.length>0){
    return{
     props:{
-      cartCourses,
       email
-    }}}else{
-    return{
-      props:{
-        cartCourses:[],
-        email
-      } }}}
+    
+    }}
+  }
 
-
-  export default function cartCourses({cartCourses,email}:{cartCourses:course[],email:string}) { 
-    const [length,setLength]=useState<number>(cartCourses.length)
-  console.log(cartCourses)
-    function remove(){
-       setLength(length-1)
-   }
+  export default function cartCourses({email}:{email:string}) { 
+   
+    const[cartCourses,setCartCourses]=useState<any>();
+    const[loading,setLoading]=useState<boolean>(true);
+    const [length,setLength]=useState<number>(0)
+    useEffect(()=>{
+      const getCourses=async()=>{
+       let courses:course[]=[]
+       try{
+        const response=await axios.get("/api/courses/cartCourses")
+        courses=response.data.courses
+        }catch{
+      courses=[]
+        }
+        setLength(courses.length)
+        console.log(courses.length)
+        setCartCourses(courses)
+         setLoading(false)
+       
+        
+       
+      }
+   getCourses();
+   
+     },[])
   return(
     <>
     <InitUser email={email}/>
-    <Navbar/>
-    {email==null ?(
-       <>
-      <div className="h-screen w-screen flex justify-center items-center bg-white">
-  <div className="text-center">
-    <h1 className="text-4xl font-bold text-indigo-600 mb-4">Login to Access Your Cart</h1>
-    <p className="text-lg text-gray-600 mb-8">Please log in to view and manage your shopping cart.</p>
-    <a
-      href="/login" 
-      className="bg-indigo-600 text-white px-6 py-3 rounded-full hover:bg-indigo-700 focus:outline-none text-lg"
-    >
-      Log In
-    </a>
-  </div>
- 
-</div>
-    
-       </>
-
-    ):(
-      <>
-       {length==0?(
-          <>
-          <div className="h-screen w-screen flex  justify-center items-center bg-white">
-           <p className="text-2xl text-blue-600 font-bold h-max w-max  ">Cart is Empty</p>
-          
-           </div>
-        
-          </>
-        ):(
-        
-      <div className=" w-screen h-auto bg-white ">
-        <p className="text-xl text-blue-600 font-bold pt-5 w-screen flex justify-center">Cart Items</p>
-        <p className="hidden md:text-gray-600 md:flex justify-center font-medium p-2">
-        Welcome to your shopping cart. Here, you can review and manage the
-        courses you've added to your cart.
+        <div className=" bg-black w-screen">
+          <p className="text-2xl text-orange-600 font-bold  w-screen pt-5  flex justify-center">
+           Cart Courses
+          </p>
+          <p className="hidden md:flex justify-center font-medium p-2 text-slate-300">
+          Welcome to your shopping cart. Here, you can review and manage the
+          courses you've added to your cart.
       </p>
-      
-      
-        <div className=" p-3 flex flex-wrap justify-center">
-         
-             {cartCourses.map((course:course) => (
-              <CourseCard 
-              key={course.id} 
-                id={course.id}
-                image={course.image}
-                title={course.title}
-                description={course.description}
-                name={course.name}
-                show="cart" 
-                remove={remove}
-                price={course.price} 
-              />
-            ))}
-       
+          <div className="h-[600px] flex flex-wrap justify-center gap-10 overflow-auto mt-5">
+          {loading ? (
+            <LoadingIndicator /> 
+        ) : (
+          cartCourses && length > 0 ? (
+          <CourseParameters courses={cartCourses} type='cart' setLength={setLength}/>
+          ) : (
+            <NoCoursesFoundMessage type="cart" /> 
+          )
+        )}
+          </div>
+          <p className="text-gray-400 mb-4 flex justify-center">
+        Don't hesitate to reach out if you have any questions or need guidance
+        in choosing the right course for you.
+      </p>
+          <Footer/>
         </div>
-        <p className="text-gray-600 mb-4 flex justify-center">
-        If you have any questions or need assistance with your order, our
-        support team is here to help.
-      </p>
-        <Footer/>
-      </div>
-)}
-      </>
-    )
-    }
-    
     </>
   )
 
 
 }
+
+
+
+
 

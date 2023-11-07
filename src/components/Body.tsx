@@ -10,7 +10,7 @@ export default function Body(){
 const[exploreCourses,setExploreCourses]=useState<course[]>();
   const[trendingCourses,setTrendingCourses]=useState<course[]>();
   const[loading,setLoading]=useState<boolean>(true);
-
+  const [length,setLength]=useState<number>(0)
 
   useEffect(()=>{
    const getCourses=async()=>{
@@ -47,9 +47,9 @@ getCourses();
             <LoadingIndicator /> 
         ) : (
           exploreCourses && exploreCourses.length > 0 ? (
-          <CourseParameters courses={exploreCourses} type='all'/>
+          <CourseParameters courses={exploreCourses} type='all' setLength={setLength}/>
           ) : (
-            <NoCoursesFoundMessage /> 
+            <NoCoursesFoundMessage type='all'/> 
           )
         )}
 
@@ -60,9 +60,9 @@ getCourses();
               <LoadingIndicator /> 
           ) : (
             trendingCourses && trendingCourses.length > 0 ? (
-            <CourseParameters courses={trendingCourses} type='all'/>
+            <CourseParameters courses={trendingCourses} type='all' setLength={setLength}/>
             ) : (
-              <NoCoursesFoundMessage /> 
+              <NoCoursesFoundMessage type='all'/> 
             )
           )}
         </div>
@@ -72,7 +72,7 @@ getCourses();
           Discover a world of learning opportunities with Dev Academy.
         </p>
         <a
-          href="/user/courses/all"
+          href="/allCourses"
           className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-full w-max text-center ml-36 mb-4 hover:bg-blue-600 transition duration-300"
         >
           Explore Courses

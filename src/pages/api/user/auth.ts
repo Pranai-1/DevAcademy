@@ -8,8 +8,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
  config();
- const token = req.cookies.token; ///
-
+ const token = req.cookies.token;
 if (!token) {
     return 
   }

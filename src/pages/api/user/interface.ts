@@ -20,9 +20,9 @@ export interface course {
    description: string;
    name:string,
    show:string
-  remove?():void,
   price:number,
   key:number
+
  }
 
  export interface body{

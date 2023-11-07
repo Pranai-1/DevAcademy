@@ -1,7 +1,9 @@
 import SignupForm from "@/components/SignupForm";
+import { NextApiRequest, NextApiResponse } from "next";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import auth from "./api/user/auth";
 
 
 export default function Signup() {
@@ -33,3 +35,26 @@ export default function Signup() {
     </div>
   );
 }
+
+export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
+  let id:number | undefined,email:string | null
+  try {
+    await auth(req, res);
+    id =Number(req.headers["userId"]);
+  } catch (error) {
+    id = undefined; 
+  }
+
+  if(id){
+  return {
+    redirect: {
+      destination: "/",
+      permanent: false,
+    },
+  };
+ } return {
+  props: {},
+};
+
+   
+  }

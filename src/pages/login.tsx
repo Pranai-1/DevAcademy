@@ -3,6 +3,9 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import axios from "axios";
 import LoginForm from "@/components/LoginForm";
+import { NextApiRequest, NextApiResponse } from "next";
+import getEmail from "./api/helper/getEmail";
+import auth from "./api/user/auth";
 
 export default function Login() {
   const router = useRouter();
@@ -37,3 +40,27 @@ export default function Login() {
     </div>
   );
 }
+
+
+export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
+  let id:number | undefined
+  try {
+    await auth(req, res);
+    id =Number(req.headers["userId"]);
+  } catch (error) {
+    id = undefined; 
+  }
+
+  if(id){
+  return {
+    redirect: {
+      destination: "/",
+      permanent: false,
+    },
+  };
+ }
+ return {
+  props: {},
+};
+
+  }

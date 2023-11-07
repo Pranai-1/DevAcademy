@@ -21,7 +21,7 @@ function AllCourses({email}:{email:string}) {
 
   const[allCourses,setAllCourses]=useState<course[]>();
   const[loading,setLoading]=useState<boolean>(true);
-
+  const [length,setLength]=useState<number>(0)
   useEffect(()=>{
     const getCourses=async()=>{
      let courses:course[]=[]
@@ -51,14 +51,14 @@ function AllCourses({email}:{email:string}) {
         Welcome to our extensive collection of courses. Discover a world of
         knowledge and opportunities to learn and grow.
       </p>
-          <div className="h-[1200px] flex flex-wrap justify-center gap-10 overflow-auto">
+          <div className="h-[1200px] flex flex-wrap justify-center gap-10 overflow-auto mt-5">
           {loading ? (
             <LoadingIndicator /> 
         ) : (
           allCourses && allCourses.length > 0 ? (
-          <CourseParameters courses={allCourses} type='all'/>
+          <CourseParameters courses={allCourses} type='all' setLength={setLength}/>
           ) : (
-            <NoCoursesFoundMessage /> 
+            <NoCoursesFoundMessage type='all'/> 
           )
         )}
           </div>
