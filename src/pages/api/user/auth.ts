@@ -8,14 +8,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
- config();
  const token = req.cookies.token;
 if (!token) {
     return 
   }
 try {
 
-  const userSecretKey =process.env.secretKey;;
+  const userSecretKey =process.env.secretKey;
   if (!userSecretKey) {
     return res.status(500).json({ message: "Server configuration error" });
   }
@@ -25,6 +24,7 @@ try {
    }
 
 } catch (error) {
+  console.log(error)
     return res.status(403).json({ message: "Invalid token" });
   }
 }

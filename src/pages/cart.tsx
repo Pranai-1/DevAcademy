@@ -19,7 +19,6 @@ import allCourses from "./allCourses";
 
 export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
   let id:number | undefined,email:string | null
-  
   try {
     await auth(req, res);
     id=Number(req.headers["userId"])

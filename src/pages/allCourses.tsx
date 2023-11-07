@@ -79,6 +79,7 @@ export default AllCourses;
   try {
     await auth(req, res);
     id = Number(req.headers["userId"]);
+    console.log("id")
   } catch (error) {
     id = undefined; 
   }
@@ -88,7 +89,7 @@ export default AllCourses;
   }else{
   email=null;
   }
- 
+ console.log(email)
     return { props: { email } };
  
 };
