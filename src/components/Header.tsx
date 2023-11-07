@@ -11,7 +11,7 @@ function Header() {
   const userEmail = useRecoilValue(UserEmail);
   const name = userEmail?.split("@")[0];
 
-  const images = [image1, image2, image3, image4, image5];
+  const images = [image5, image4, image3, image2, image1];
 
   const [imageIndex, setImageIndex] = useState(0);
 
