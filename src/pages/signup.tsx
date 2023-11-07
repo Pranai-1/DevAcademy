@@ -7,16 +7,7 @@ import auth from "./api/user/auth";
 
 
 export default function Signup() {
-  const router = useRouter();
 
-  const handleSignupSuccess=()=>{
-    toast.success("signup successful");
-    router.push("/login");
-  }
-
-  const handleSignupFailure=()=>{
-    toast.error("signup failed");
-  }
 
   return (
     <div className=" h-full w-full bg-black absolute flex justify-center items-center">
@@ -27,10 +18,7 @@ export default function Signup() {
         <p className="font-medium text-center text-gray-600">
           Start your journey
         </p>
-       <SignupForm
-       onSignupSuccess={handleSignupSuccess}
-       onSignupFailure={handleSignupFailure}
-       />
+       <SignupForm/>
       </div>
     </div>
   );

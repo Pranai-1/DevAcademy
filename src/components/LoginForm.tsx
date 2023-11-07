@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { z } from "zod";
+import { useRouter } from "next/router";
 
-export default function LoginForm({ onLoginSuccess, onLoginFailure }:{onLoginSuccess:()=>void,onLoginFailure:()=>void}) {
+export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
 
+  const router=useRouter()
   const userInput = z.object({
     email: z.string().min(11).max(40).email(),
     password: z.string().min(8).max(25),
@@ -59,15 +61,16 @@ export default function LoginForm({ onLoginSuccess, onLoginFailure }:{onLoginSuc
         });
 
         if (response?.status === 200) {
-          onLoginSuccess(); 
+          router.push("/");
+          toast.success("Login success");
           
         } else {
-          onLoginFailure(); 
+          toast.error("Login failed");
        
         }
       } catch (error) {
         console.log(error);
-        onLoginFailure();
+        toast.error("Login failed");
       }
     }
   };

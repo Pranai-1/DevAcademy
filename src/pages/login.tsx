@@ -10,14 +10,7 @@ import auth from "./api/user/auth";
 export default function Login() {
   const router = useRouter();
 
-  const handleLoginSuccess = () => {
-    router.push("/");
-    toast.success("Login success");
-  };
 
-  const handleLoginFailure = () => {
-    toast.error("Login failed");
-  };
 
   return (
     <div className="h-full w-full bg-black absolute flex justify-center items-center flex-wrap">
@@ -26,10 +19,7 @@ export default function Login() {
           Login to DevAcademy
         </h1>
         <p className="font-medium text-center text-gray-600">Start your journey</p>
-        <LoginForm
-          onLoginSuccess={handleLoginSuccess}
-          onLoginFailure={handleLoginFailure}
-        />
+        <LoginForm />
         <span>
           New User*?
           <a href="/signup" className="text-blue-500 underline">

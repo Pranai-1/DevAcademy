@@ -1,15 +1,17 @@
 import axios from "axios";
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-export default function SignupForm({onSignupSuccess,onSignupFailure}:{onSignupSuccess:()=>void,onSignupFailure:()=>void}){
+export default function SignupForm(){
 
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
     const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
-    
+    const router = useRouter();
+
+  
     const handleChange = (value: string, type: string) => {
       switch (type) {     
         case "Email":
@@ -42,9 +44,10 @@ export default function SignupForm({onSignupSuccess,onSignupFailure}:{onSignupSu
         };
         try {
           const response = await axios.post("/api/user/signup", body);
-          onSignupSuccess()
+          toast.success("signup successful");
+      router.push("/login");
         } catch {
-            onSignupFailure()
+          toast.error("signup failed");
         }
     };
 
