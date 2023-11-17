@@ -1,7 +1,7 @@
 import Link from 'next/link'; 
 import { useRouter } from 'next/router';
-import LoggedInUserSidebar from './LoggedInUserSidebar';
-import LoggedOutUserSidebar from './LoggedOutUserSidebar';
+import LoggedInUserSidebar from '../User/LoggedInUserSidebar';
+import LoggedOutUserSidebar from '../User/LoggedOutUserSidebar';
 
 interface Props {
   bar: boolean;

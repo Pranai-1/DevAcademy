@@ -3,18 +3,18 @@
 import axios from "axios";
 
 import { body, course } from "./api/user/interface";
-import CourseCard from "../components/CourseCard";
-import Footer from "../components/Footer";
+import CourseCard from "../components/Course/CourseCard";
+import Footer from "../components/Base/Footer";
 import { NextApiRequest, NextApiResponse } from "next";
 import auth from "./api/user/auth";
 import InitUser from "@/components/InitUser";
-import Navbar from "@/components/navBar";
+import Navbar from "@/components/Base/navBar";
 import { useEffect, useState } from "react";
 import getEmail from "./api/helper/getEmail";
 import getCartItems from "./api/helper/getCartItems";
-import CourseParameters from "@/components/CourseParameters";
+import CourseParameters from "@/components/Course/CourseParameters";
 import LoadingIndicator from "@/components/LoadingIndicator";
-import NoCoursesFoundMessage from "@/components/NoCoursesFoundMessage";
+import NoCoursesFoundMessage from "@/components/Course/NoCoursesFoundMessage";
 import allCourses from "./allCourses";
 
 export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
@@ -70,14 +70,14 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
   return(
     <>
     <InitUser email={email}/>
-        <div className=" bg-black w-screen">
-          <p className="text-2xl text-orange-600 font-bold  w-screen pt-5  flex justify-center">
+        <div className=" bg-black w-full">
+          <p className="text-2xl text-orange-600 font-bold  pt-5  flex justify-center">
            Purchased Courses
           </p>
           <p className="hidden md:flex justify-center font-medium p-2 text-slate-300">
           Welcome to your courses section. Happy Learning
       </p>
-          <div className="h-[600px] flex flex-wrap justify-center gap-10 overflow-auto mt-5">
+          <div className="h-max flex flex-wrap justify-center gap-10 overflow-auto mt-5">
           {loading ? (
             <LoadingIndicator /> 
         ) : (

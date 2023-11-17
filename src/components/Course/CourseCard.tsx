@@ -1,7 +1,7 @@
 import axios from "axios";
 import { UserEmail } from "@/store/selectors/userDetails";
 import { useRecoilValue } from "recoil";
-import { DisplayCourse } from "../pages/api/user/interface";
+import { DisplayCourse } from "../../pages/api/user/interface";
 import 'react-toastify/dist/ReactToastify.css';
 import { NEXT_URL } from "@/config";
 import Link from "next/link";

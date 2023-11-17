@@ -1,9 +1,9 @@
 import { course } from "@/pages/api/user/interface";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import CourseParameters from "./CourseParameters";
+import CourseParameters from "./Course/CourseParameters";
 import LoadingIndicator from "./LoadingIndicator";
-import NoCoursesFoundMessage from "./NoCoursesFoundMessage";
+import NoCoursesFoundMessage from "./Course/NoCoursesFoundMessage";
 
 export default function Body(){
 
@@ -40,9 +40,9 @@ getCourses();
 
     return(
         <>
-        <div>
+        <div className="h-full w-full">
         <h1 className="text-2xl font-medium p-2 m-4 mb-0 ml-10 text-orange-600">Let's Explore New Launches </h1>
-        <div className='w-screen flex flex-wrap justify-evenly p-2'>
+        <div className=' flex flex-wrap justify-evenly p-2'>
         {loading ? (
             <LoadingIndicator /> 
         ) : (
@@ -55,7 +55,7 @@ getCourses();
 
         </div>
         <h1 className='text-2xl font-medium p-2 m-4 mb-0 ml-10 text-orange-600'>Trending Courses</h1>
-        <div className='w-screen flex flex-wrap justify-evenly p-5'>
+        <div className=' flex flex-wrap justify-evenly p-5'>
           {loading ? (
               <LoadingIndicator /> 
           ) : (

@@ -1,8 +1,8 @@
 
-import Navbar from "@/components/navBar";
+import Navbar from "@/components/Base/navBar";
 import { body, course } from "./api/user/interface";
-import CourseCard from "@/components/CourseCard";
-import Footer from "@/components/Footer";
+import CourseCard from "@/components/Course/CourseCard";
+import Footer from "@/components/Base/Footer";
 import axios from "axios";
 import {  NextApiRequest, NextApiResponse } from "next";
 import InitUser from "@/components/InitUser";
@@ -12,8 +12,8 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import getEmail from "./api/helper/getEmail";
 import LoadingIndicator from "@/components/LoadingIndicator";
-import CourseParameters from "@/components/CourseParameters";
-import NoCoursesFoundMessage from "@/components/NoCoursesFoundMessage";
+import CourseParameters from "@/components/Course/CourseParameters";
+import NoCoursesFoundMessage from "@/components/Course/NoCoursesFoundMessage";
 
 
 

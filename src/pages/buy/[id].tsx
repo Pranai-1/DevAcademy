@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { body, buy, card } from "@/pages/api/user/interface";
 import axios from "axios";
 import { NEXT_URL } from "@/config";
-import Header from "@/components/Header";
+import Header from "@/components/Base/Header";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import CourseDetails from "@/components/courseDetails";

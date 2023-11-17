@@ -1,6 +1,6 @@
 import 'styled-jsx/style'
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Header from '@/components/Base/Header';
+import Footer from '@/components/Base/Footer';
 import auth from './api/user/auth';
 import {NextApiRequest, NextApiResponse } from 'next';
 import InitUser from '@/components/InitUser';

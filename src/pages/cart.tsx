@@ -1,21 +1,15 @@
-
-
-import axios from "axios";
-
-import { body, course } from "./api/user/interface";
-import CourseCard from "../components/CourseCard";
-import Footer from "../components/Footer";
-import { NextApiRequest, NextApiResponse } from "next";
-import auth from "./api/user/auth";
+import Footer from "@/components/Base/Footer";
+import CourseParameters from "@/components/Course/CourseParameters";
+import NoCoursesFoundMessage from "@/components/Course/NoCoursesFoundMessage";
 import InitUser from "@/components/InitUser";
-import Navbar from "@/components/navBar";
-import { useEffect, useState } from "react";
-import getEmail from "./api/helper/getEmail";
-import getCartItems from "./api/helper/getCartItems";
-import CourseParameters from "@/components/CourseParameters";
 import LoadingIndicator from "@/components/LoadingIndicator";
-import NoCoursesFoundMessage from "@/components/NoCoursesFoundMessage";
-import allCourses from "./allCourses";
+import axios from "axios";
+import { NextApiRequest, NextApiResponse } from "next";
+import { useState, useEffect } from "react";
+import getEmail from "./api/helper/getEmail";
+import auth from "./api/user/auth";
+import { course } from "./api/user/interface";
+
 
 export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
   let id:number | undefined,email:string | null
@@ -43,11 +37,11 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
   }
 
   export default function cartCourses({email}:{email:string}) { 
-   
     const[cartCourses,setCartCourses]=useState<any>();
     const[loading,setLoading]=useState<boolean>(true);
     const [length,setLength]=useState<number>(0)
     useEffect(()=>{
+      console.log("Hello")
       const getCourses=async()=>{
        let courses:course[]=[]
        try{
@@ -60,25 +54,21 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
         console.log(courses.length)
         setCartCourses(courses)
          setLoading(false)
-       
-        
-       
       }
    getCourses();
-   
      },[])
   return(
     <>
     <InitUser email={email}/>
-        <div className=" bg-black w-screen">
-          <p className="text-2xl text-orange-600 font-bold  w-screen pt-5  flex justify-center">
+        <div className=" bg-black w-full">
+          <p className="text-2xl text-orange-600 font-bold  pt-5  flex justify-center">
            Cart Courses
           </p>
           <p className="hidden md:flex justify-center font-medium p-2 text-slate-300">
           Welcome to your shopping cart. Here, you can review and manage the
           courses you've added to your cart.
       </p>
-          <div className="h-[600px] flex flex-wrap justify-center gap-10 overflow-auto mt-5">
+          <div className="h-max flex flex-wrap justify-center gap-10 overflow-auto mt-5">
           {loading ? (
             <LoadingIndicator /> 
         ) : (

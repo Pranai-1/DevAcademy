@@ -1,4 +1,4 @@
-import Navbar from '@/components/navBar';
+import Navbar from '@/components/Base/navBar';
 import  InitUser  from '@/components/InitUser';
 import type { AppProps } from 'next/app'
 import { RecoilRoot, useSetRecoilState } from 'recoil'

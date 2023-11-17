@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link"; 
 import { UserState } from "@/store/atoms/user";
 import { UserEmail } from "@/store/selectors/userDetails";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import Sidebar from "./sideBar";
 import axios from "axios";
-import { useSession } from 'next-auth/react';
-import LoggedInUser from "./LoggedInUser";
-import LoggedOutUser from "./LoggedOutUser";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import LoggedInUser from "../User/LoggedInUser";
+import LoggedOutUser from "../User/LoggedOutUser";
+import Sidebar from "./sideBar";
+
 
 
 
@@ -46,7 +46,7 @@ function Navbar() {
 
   return (
     <>
-      <div className="w-screen h-[45px] bg-gray-200 flex justify-between relative">
+      <div className="w-full h-[45px] bg-gray-200 flex justify-between relative">
         <Sidebar
           bar={bar}
           userEmail={userEmail}
