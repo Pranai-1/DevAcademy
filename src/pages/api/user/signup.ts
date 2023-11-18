@@ -7,7 +7,6 @@ const userInput = z.object({
   email: z.string().min(10).max(40).email(),
   password: z.string().min(6).max(40),
 });
-
 type Data = {
   message: string;
   cookie?: string;
@@ -37,6 +36,7 @@ export default async function handler(
         password
       }
     })
+    if(newUser)
     res.setHeader("Set-Cookie", "token=; HttpOnly; Secure; SameSite=Strict; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT");
     return res.status(200).json({ message: "success" });
   }
