@@ -5,7 +5,7 @@ import { Prisma, PrismaClient } from "@prisma/client";
 const prisma=new PrismaClient()
 const userInput = z.object({
   email: z.string().min(10).max(40).email(),
-  password: z.string().min(5).max(40),
+  password: z.string().min(6).max(40),
 });
 
 type Data = {

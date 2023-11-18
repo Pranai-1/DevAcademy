@@ -1,6 +1,7 @@
 import axios from "axios";
 import router, { useRouter } from "next/router";
 import { useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import { toast } from "react-toastify";
 
 export default function SignupForm(){
@@ -9,8 +10,9 @@ export default function SignupForm(){
     const [password, setPassword] = useState<string>("");
     const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
     const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
+    const[captcha,setCaptcha]=useState<string|null>();
     const router = useRouter();
-
+    const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
   
     const handleChange = (value: string, type: string) => {
       switch (type) {     
@@ -32,12 +34,15 @@ export default function SignupForm(){
       }else{
         setEmailErrorMessage("")
       }
-      if (password.length <8) {
-        setPasswordErrorMessage("Password must contain 8 characters");
+      if (password.length <6) {
+        setPasswordErrorMessage("Password must contain 6 characters");
         return
       } else{
         setPasswordErrorMessage("")
       }
+      console.log(captcha)
+      if(!captcha)
+      return
         const body = {
           email,
           password,
@@ -64,7 +69,7 @@ export default function SignupForm(){
           />
         </label>
         {emailErrorMessage.length>0 && (
-          <p className="text-red-500 text-sm">Email is required*</p>
+          <p className="text-red-500 text-sm">{emailErrorMessage}</p>
         )}
         <label className="block text-gray-700 text-sm font-bold mb-2 w-full">
           Password<span className="text-red-500">*</span>
@@ -77,9 +82,9 @@ export default function SignupForm(){
           />
         </label>
         {passwordErrorMessage.length>0 && (
-          <p className="text-red-500 text-sm">Password is required*</p>
+          <p className="text-red-500 text-sm">{passwordErrorMessage}</p>
         )}
-        
+        <ReCAPTCHA sitekey={RECAPTCHA_SITE_KEY!} onChange={setCaptcha} className="mx-1"/>
         <button
           className="p-2 font-medium text-xl bg-orange-500 rounded-xl text-white h-max pt-1 
        items-center  text-center"

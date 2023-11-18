@@ -13,7 +13,7 @@ export default function LoginForm() {
   const router=useRouter()
   const userInput = z.object({
     email: z.string().min(11).max(40).email(),
-    password: z.string().min(8).max(25),
+    password: z.string().min(6).max(25),
   });
 
   const handleChange = (value: React.SetStateAction<string>, type: string) => {
@@ -35,8 +35,8 @@ export default function LoginForm() {
       setEmailErrorMessage("");
     }
 
-    if (password.length < 8) {
-      setPasswordErrorMessage("Password must contain 8 characters");
+    if (password.length < 6) {
+      setPasswordErrorMessage("Password must contain 6 characters");
       return;
     } else {
       setPasswordErrorMessage("");
