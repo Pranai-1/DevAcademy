@@ -6,8 +6,8 @@ import { NEXT_URL } from "@/config";
 import Header from "@/components/Base/Header";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import CourseDetails from "@/components/courseDetails";
-import CardDetails from "@/components/CardDetails";
+import CourseDetails from "@/components/Course/courseDetails";
+import CardDetails from "@/components/Course/CardDetails";
 
 export default function BuyPage() {
   const router = useRouter();

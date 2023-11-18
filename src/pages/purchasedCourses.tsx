@@ -45,7 +45,7 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
 
   export default function PurchasedCourses({email}:{email:string}) { 
    
-    const[purchasedCourses,setPurchasedCourses]=useState<any>();
+    const[purchasedCourses,setPurchasedCourses]=useState<course[]>();
     const[loading,setLoading]=useState<boolean>(true);
     const [length,setLength]=useState<number>(0)
     

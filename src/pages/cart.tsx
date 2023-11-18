@@ -37,7 +37,7 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
   }
 
   export default function cartCourses({email}:{email:string}) { 
-    const[cartCourses,setCartCourses]=useState<any>();
+    const[cartCourses,setCartCourses]=useState<course[]>();
     const[loading,setLoading]=useState<boolean>(true);
     const [length,setLength]=useState<number>(0)
     useEffect(()=>{

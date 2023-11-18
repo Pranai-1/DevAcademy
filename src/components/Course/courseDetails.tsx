@@ -1,6 +1,11 @@
-import { course } from "@/pages/api/user/interface";
+interface props{
+  title: string,
+  description:string,
+  price: number,
+  author: string
+}
 
-export default function CourseDetails({courseDetails}:{courseDetails:any}){
+export default function CourseDetails({courseDetails}:{courseDetails:props}){
     return(
         <>
         <label htmlFor="title" className="block text-lg font-semibold mb-1">
