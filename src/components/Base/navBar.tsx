@@ -55,7 +55,7 @@ function Navbar() {
           closeSidebar={closeSidebar}
         />
 
-        <Link href="/" className="font-bold text-xl p-2 ml-2 text-red-600 ">Dev Academy</Link>
+        <Link href="/" className="font-bold text-xl flex items-center justify-center ml-2 text-red-600 ">Dev Academy</Link>
         
         <div className="md:hidden flex">
         <Link href="/cart" className="md:hidden mr-10 text-lg flex justify-between items-center cursor-pointer hover:text-blue-600">

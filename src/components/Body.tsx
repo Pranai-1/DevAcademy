@@ -42,7 +42,7 @@ getCourses();
         <>
         <div className="h-full w-full">
         <h1 className="text-2xl font-medium p-2 m-4 mb-0 ml-10 text-orange-600">Let's Explore New Launches </h1>
-        <div className=' flex flex-wrap justify-evenly p-2'>
+        <div className=' flex flex-wrap justify-evenly p-2 gap-2 mt-2'>
         {loading ? (
             <LoadingIndicator /> 
         ) : (
@@ -55,7 +55,7 @@ getCourses();
 
         </div>
         <h1 className='text-2xl font-medium p-2 m-4 mb-0 ml-10 text-orange-600'>Trending Courses</h1>
-        <div className=' flex flex-wrap justify-evenly p-5'>
+        <div className=' flex flex-wrap justify-evenly p-5 mt-2'>
           {loading ? (
               <LoadingIndicator /> 
           ) : (

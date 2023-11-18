@@ -37,10 +37,10 @@ function Header() {
       <p className="text-center text-white">
         We're thrilled to have you as part of our learning community.
       </p>
-      <div className="relative flex justify-center pt-4">
+      <div className="relative flex justify-center pt-4 z-0">
         <button
           className=" bg-gray-800 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold 
-       absolute top-24 md:top-28  left-12 md:left-56 hover:bg-gray-600"
+       absolute top-16 md:top-28  left-12 md:left-56 hover:bg-gray-600"
           onClick={handleLeftClick}
         >
           &lt;
@@ -48,11 +48,11 @@ function Header() {
         <img
           src={images[imageIndex].src}
           alt="header-image1"
-          className="h-[180px] w-1/2 md:h-[320px] flex justify-center items-center"
+          className="h-[140px] w-1/2 md:h-[320px] flex justify-center items-center"
         />
         <button
           className=" bg-gray-800 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold 
-       absolute top-24 md:top-28  right-12 md:right-56 hover:bg-gray-600"
+       absolute top-16 md:top-28  right-12 md:right-56 hover:bg-gray-600"
           onClick={handleRightClick}
         >
           &gt;

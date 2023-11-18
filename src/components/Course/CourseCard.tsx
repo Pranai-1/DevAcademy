@@ -55,7 +55,7 @@ async function Remove(id: number) {
 
 return(
         <>
-        <div id={id.toString()}  className="bg-gray-200  h-[350px] w-[300px] rounded-lg overflow-hidden shadow-md ">
+        <div id={id.toString()}  className="bg-gray-200  h-[350px] w-[300px] rounded-lg overflow-hidden shadow-md mt-1">
               <img className="h-[160px] w-full object-cover" src={image} alt="Course" />
               <div className="p-3 pb-0 h-[100px] m-0 border-orange-500">
                 <h2 className="font-bold w-full text-xl text-blue-700">{title}</h2>

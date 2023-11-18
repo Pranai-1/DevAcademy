@@ -17,7 +17,7 @@ const Sidebar = (props: Props) => {
  
  
   return (
-    <div className="md:hidden">
+    <div className="md:hidden z-10">
       <button
         className="font-bold text-3xl ml-2 cursor-pointer"
         onClick={sidebar}
