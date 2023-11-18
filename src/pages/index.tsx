@@ -7,12 +7,9 @@ import InitUser from '@/components/InitUser';
 import getEmail from './api/helper/getEmail';
 import Body from '@/components/Body';
 
-interface HomeProps {
-  email:string | null
-}
 
-function Home(props:HomeProps) {
-  const{email}=props
+function Home({email}:{email:string | null}) {
+
 
   return (
     <div className=" bg-black">

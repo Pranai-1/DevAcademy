@@ -10,8 +10,8 @@ export default function SignupForm(){
     const [password, setPassword] = useState<string>("");
     const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
     const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
-    const[captcha,setCaptcha]=useState<string|null>();
     const router = useRouter();
+    const[captcha,setCaptcha]=useState<string|null>();
     const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
   
     const handleChange = (value: string, type: string) => {
@@ -40,7 +40,7 @@ export default function SignupForm(){
       } else{
         setPasswordErrorMessage("")
       }
-      console.log(captcha)
+ 
       if(!captcha)
       return
         const body = {
