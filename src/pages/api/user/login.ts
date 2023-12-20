@@ -31,7 +31,8 @@ export default async function handler(
   const user= await prisma.user.findFirst({where:{email,password} });
  
   if (user) {
-    const userSecretKey = "secrectfornewudev-academysers12345";
+  
+    const userSecretKey =process.env.secretKey;
   
   if (!userSecretKey) {
     return res.status(500).json({ message: "Server configuration error" });
