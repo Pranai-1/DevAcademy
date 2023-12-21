@@ -11,14 +11,19 @@ import { UserState } from '@/store/atoms/user';
 import { useEffect } from 'react';
 import getEmail from './api/helper/getEmail';
 import auth from './api/user/auth';
+import { AppContextProvider } from '@/components/AppContextProvider';
+import Footer from '@/components/Base/Footer';
 
 
 export default function App({ Component, pageProps,email }: AppProps & { email: string | null }) {
-  return <RecoilRoot>
+  return <AppContextProvider>
+  <RecoilRoot>
     <ToastContainer />
     <Navbar/>
      <Component {...pageProps} />
-  </RecoilRoot>;
+     <Footer />
+  </RecoilRoot>
+  </AppContextProvider>
 }
 
 

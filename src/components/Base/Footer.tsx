@@ -1,6 +1,6 @@
 function Footer() {
     return (
-      <footer className="bg-gray-800 text-white py-8">
+      <div className="bg-gray-800 text-white py-8">
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-center md:text-left mb-4 md:mb-0 ml-2">
@@ -61,9 +61,9 @@ function Footer() {
             &copy; {new Date().getFullYear()} Dev Academy. All Rights Reserved.
           </p>
         </div>
-      </footer>
-    );
+        </div>
+    )
   }
   
-  export default Footer;
+  export default Footer
   

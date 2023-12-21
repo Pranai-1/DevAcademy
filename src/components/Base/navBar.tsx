@@ -3,11 +3,12 @@ import { UserEmail } from "@/store/selectors/userDetails";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import LoggedInUser from "../User/LoggedInUser";
 import LoggedOutUser from "../User/LoggedOutUser";
 import Sidebar from "./sideBar";
+import { CourseContext } from "../AppContextProvider";
 
 
 
@@ -15,9 +16,9 @@ import Sidebar from "./sideBar";
 function Navbar() {
   const router = useRouter();
   const [bar, setBar] = useState<boolean>(false);
-  const userEmail = useRecoilValue(UserEmail);
-  const userState = useSetRecoilState(UserState);
- 
+  const {email,setEmail} = useContext(CourseContext);
+
+ console.log(email)
   function sidebar() {
     setBar((prev) => !prev);
   }
@@ -28,15 +29,8 @@ function Navbar() {
 
   async function logout() {
    const res=await axios.get(`/api/user/logout`)
-    userState({
-      userEmail: null,
-      purchasedCourses: [],
-      cart: [],
-    });
-   
+   setEmail(null)
       router.push("/");
-    
-    
     closeSidebar();
   }
 
@@ -49,7 +43,7 @@ function Navbar() {
       <div className="w-full h-[45px] bg-gray-200 flex justify-between relative">
         <Sidebar
           bar={bar}
-          userEmail={userEmail}
+          userEmail={email}
           sidebar={sidebar}
           logout={logout}
           closeSidebar={closeSidebar}
@@ -61,7 +55,7 @@ function Navbar() {
         <Link href="/cart" className="md:hidden mr-10 text-lg flex justify-between items-center cursor-pointer hover:text-blue-600">
          <i className="fa fa-shopping-cart"></i>
          </Link>
-        {userEmail && 
+        {email && 
         <button
         onClick={logout}
         className="md:hidden p-1 m-1 mr-5 bg-indigo-600 rounded hover:bg-indigo-800 text-white cursor-pointer"
@@ -98,8 +92,8 @@ function Navbar() {
           </li>
         </ul>
 
-        {userEmail ? (
-           <LoggedInUser userEmail={userEmail} logout={logout}/>
+        {email ? (
+           <LoggedInUser userEmail={email} logout={logout}/>
     ) : (
        <LoggedOutUser/>
     )}

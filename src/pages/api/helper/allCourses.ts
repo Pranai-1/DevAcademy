@@ -18,7 +18,5 @@ export default async function allCourses() {
 
     }finally{
       prisma.$disconnect();
-    }
-  
-  
+    }  
 }

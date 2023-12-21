@@ -68,9 +68,7 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
    
      },[])
   return(
-    <>
-    <InitUser email={email}/>
-        <div className=" bg-black w-full">
+        <div className=" bg-black w-full p-2">
           <p className="text-2xl text-orange-600 font-bold  pt-5  flex justify-center">
            Purchased Courses
           </p>
@@ -82,7 +80,7 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
             <LoadingIndicator /> 
         ) : (
           purchasedCourses && purchasedCourses.length > 0 ? (
-          <CourseParameters courses={purchasedCourses} type='purchased' setLength={setLength}/>
+          <CourseParameters courses={purchasedCourses} type='purchased' />
           ) : (
             <NoCoursesFoundMessage type="purchased" /> 
           )
@@ -92,12 +90,8 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
         Don't hesitate to reach out if you have any questions or need guidance
         in choosing the right course for you.
       </p>
-          <Footer/>
         </div>
-    </>
   )
-
-
 }
 
 

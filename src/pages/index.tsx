@@ -12,35 +12,33 @@ function Home({email}:{email:string | null}) {
 
 
   return (
-    <div className=" bg-black">
-      <InitUser email={email}/>
+    <div className="h-full bg-black p-2">
       <Header />
        <Body/>
-      <Footer />
     </div>
-  );
+  )
 }
 
 
-  export async function getServerSideProps({ req, res }: { req: NextApiRequest; res: NextApiResponse }) {
-    let id:number | undefined,email:string | null;
-    try {
-      await auth(req, res);
-      id = Number(req.headers["userId"]);
-    } catch (error) {
-      id = undefined; 
-    }
-    if(id){
-       email = await getEmail(id)
-    }else{
-    email=null;
-    }
-    return {
-      props: {
-        email,
-      },
-    };
-  }
+  // export async function getServerSideProps({ req, res }: { req: NextApiRequest; res: NextApiResponse }) {
+  //   let id:number | undefined,email:string | null;
+  //   try {
+  //     await auth(req, res);
+  //     id = Number(req.headers["userId"]);
+  //   } catch (error) {
+  //     id = undefined; 
+  //   }
+  //   if(id){
+  //      email = await getEmail(id)
+  //   }else{
+  //   email=null;
+  //   }
+  //   return {
+  //     props: {
+  //       email,
+  //     },
+  //   };
+  // }
 
 
 

@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from '@prisma/client';
+import auth from "./auth";
 
 const prisma = new PrismaClient();
 
@@ -9,8 +10,9 @@ export default async function handler(
 ) {
  
   try {
-    const userId =Number(req.body.id);
-const user = await prisma.user.findFirst({where:{ id: userId} });
+    await auth(req,res)
+   const id = Number(req.headers["userId"]);
+const user = await prisma.user.findFirst({where:{ id} });
  if (user) {
       res.status(200).json({ email: user.email });
     } else {

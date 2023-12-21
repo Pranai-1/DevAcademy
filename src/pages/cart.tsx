@@ -58,9 +58,7 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
    getCourses();
      },[])
   return(
-    <>
-    <InitUser email={email}/>
-        <div className=" bg-black w-full">
+        <div className=" bg-black w-full p-2">
           <p className="text-2xl text-orange-600 font-bold  pt-5  flex justify-center">
            Cart Courses
           </p>
@@ -73,7 +71,7 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
             <LoadingIndicator /> 
         ) : (
           cartCourses && length > 0 ? (
-          <CourseParameters courses={cartCourses} type='cart' setLength={setLength}/>
+          <CourseParameters courses={cartCourses} type='cart'/>
           ) : (
             <NoCoursesFoundMessage type="cart" /> 
           )
@@ -83,9 +81,7 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
         Don't hesitate to reach out if you have any questions or need guidance
         in choosing the right course for you.
       </p>
-          <Footer/>
         </div>
-    </>
   )
 
 
