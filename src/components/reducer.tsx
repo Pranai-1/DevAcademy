@@ -18,7 +18,21 @@ export function reducer(state: any,action: any){
                         }
     case "ALL_COURSES_ERROR":{
                             return{
-                                ...state,isAllCoursesError:true
+                                ...state,isAllCoursesError:true,isLoading:false
+                            }
+                        }
+    case "SINGLE_COURSE_LOADING":
+                            return{
+                                ...state,isSingleCourseLoading:true
+                            }
+    case "SINGLE_COURSE":
+                        const singleCourse=action.payload
+                        return{
+                            ...state,isLoading:false,singleCourse
+                        }
+    case "SINGLE_COURSE_ERROR":{
+                            return{
+                                ...state,isSingleCourseError:true,isSingleCourseLoading:false
                             }
                         }
     default:return state

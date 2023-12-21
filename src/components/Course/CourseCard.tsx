@@ -14,22 +14,7 @@ const userEmail=useRecoilValue(UserEmail)
 const{id,image,title,description,name,show,price}=props
 
 
-async function Addtocart(id:number){
-    if(userEmail){
- const body={
-    id
- }
- try{
-    const response= await axios.post(`/api/courses/addToCart`,body)
-    toast.success('Added to cart');
-  }catch{
-    toast.error("item is already present in the cart")
-}
-     }else{
-    toast.warn("login to continue")
-   }
-}
- 
+
 async function Remove(id: number) {
   if (userEmail) {
     const body = {
@@ -73,8 +58,9 @@ return(
                 {show=="all" &&
                     
                     <div className="flex justify-evenly">
-                   <Link href={`/buy/${id}`} className="h-max w-max bg-orange-600 text-white rounded-lg m-5 p-2 hover:bg-green-800" >Buy now</Link>
-                    <button className="h-max w-max bg-indigo-500 text-white rounded-lg p-2 m-5 items-center hover:bg-indigo-800" onClick={()=>{Addtocart(id)}}>Add To cart</button>
+                   {/* <Link href={`/buy/${id}`} className="h-max w-max bg-orange-600 text-white rounded-lg m-5 p-2 hover:bg-green-800" >Buy now</Link>
+                    <button className="h-max w-max bg-indigo-500 text-white rounded-lg p-2 m-5 items-center hover:bg-indigo-800" onClick={()=>{Addtocart(id)}}>Add To cart</button> */}
+                   <Link href={`/viewCourse/${id}`} className="h-max w-max bg-orange-600 text-white rounded-lg m-5 p-2 hover:bg-green-800" >View More</Link>
                     </div>
                }
                 {show=="cart" &&

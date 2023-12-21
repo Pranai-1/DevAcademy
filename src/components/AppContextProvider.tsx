@@ -14,10 +14,14 @@ function AppContextProvider({children}:{children:any}){
         isAllCoursesError:false,
         newCourses:[],
         trendingCourses:[],
-        singleCourse:{}
-    }//we can get singlecourse data if we want,write a backend and use dispatch thats it
+        singleCourse:{},
+        isSingleCourseLoading:false,
+        isSingleCourseError:false,
+    }
+
     const[state,dispatch]=useReducer(reducer,initialState)
- const[email,setEmail]=useState<string|null>()
+    const[email,setEmail]=useState<string|null>()
+
     async function getAllCourses() {
         let courses:course[]=[]
         dispatch({type:"ALL_COURSES_LOADING"})
@@ -27,14 +31,26 @@ function AppContextProvider({children}:{children:any}){
         
          dispatch({type:"ALL_COURSES",payload:courses})
          }catch{
-       courses=[]
          dispatch({type:"ALL_COURSES_ERROR",payload:[]})
          } 
     }
     
+    async function getSingleCourse(url:any){
+      let singleCourse={}
+      dispatch({type:"SINGLE_COURSE_LOADING"})
+        try{
+         const response=await axios.get(`${url}`)
+         singleCourse=response.data.course
+        
+         dispatch({type:"SINGLE_COURSE",payload:singleCourse})
+         }catch{
+         dispatch({type:"SINGLE_COURSE_ERROR",payload:{}})
+         } 
+    }
+
   useEffect(()=>{
- getAllCourses()
- getEmail()
+    getAllCourses()
+    getEmail()
   },[])
   async function getEmail() {
     try{
@@ -45,7 +61,7 @@ function AppContextProvider({children}:{children:any}){
         } 
 }
     return(
-        <CourseContext.Provider value={{state,email,setEmail}}>{children}</CourseContext.Provider>
+        <CourseContext.Provider value={{state,email,setEmail,getSingleCourse}}>{children}</CourseContext.Provider>
     )
 }
 

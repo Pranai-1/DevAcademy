@@ -22,10 +22,11 @@ export default async function handler(
         title: courseDetails.title,
         description: courseDetails.description,
         price: courseDetails.price,
-        author: courseDetails.name 
+        author: courseDetails.name ,
+        image:courseDetails.image
       };
      
-      return res.status(200).json({courses:requiredDetails}); // Sending the object directly without wrapping it in another object
+      return res.status(200).json({course:requiredDetails}); // Sending the object directly without wrapping it in another object
     } else {
       return res.status(404).json({ message: "Course not found" }); // Changed status code to 404 for "not found" case
     }

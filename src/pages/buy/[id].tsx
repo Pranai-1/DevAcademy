@@ -27,24 +27,8 @@ export default function BuyPage() {
   });
 
   useEffect(() => {
-    async function helper() {
-      if (!id) {
-        toast.error("Course ID is missing in the query parameters");
-        return;
-      }
-      const body: body = {
-        id
-      };
-      try {
-        const response = await axios.get(`/api/courses/getCourse/${id}`);
-        console.log(response.data.courses);
-        setCourseDetails(response.data.courses);
-      } catch (error) {
-        toast.error("Login to continue");
-      }
-    }
-
-    helper();
+    if (id) 
+      helper(); 
   }, [id]); 
 
   async function Buynow(id:string){
@@ -62,11 +46,22 @@ export default function BuyPage() {
   }
  
 }
-
-
+async function helper() {
+  const body: body = {
+    id
+  };
+  try {
+    const response = await axios.get(`/api/courses/getCourse/${id}`);
+    console.log(response.data.course);
+    setCourseDetails(response.data.course);
+  } catch (error) {
+    toast.error("Login to continue");
+  
+}
+}
 
 return (
-  <div className="h-screen w-screen bg-black">
+  <div className="h-screen w-full bg-black">
     <div className="flex items-center justify-evenly p-3">
       <div className="bg-white p-6 rounded-lg shadow-md max-w-lg w-full mt-10">
         <CourseDetails courseDetails={courseDetails}/>
@@ -76,12 +71,14 @@ return (
         <CardDetails cardDetails={cardDetails}/>
       </div>
     </div>
-    <button className="font-bold bg-orange-600 rounded-xl p-2 ml-[750px] mt-6 mb-[50px]" onClick={() => Buynow(id as string)}>
+    <div className=" flex justify-center gap-20 mt-10">
+    <button className="font-bold bg-orange-600 rounded-xl p-2 " onClick={() => Buynow(id as string)}>
       Buynow
     </button>
-    <Link href="/allCourses" className="font-bold bg-blue-600 rounded-xl p-2 ml-[740px]">
+    <Link href="/allCourses" className="font-bold bg-blue-600 rounded-xl p-2 ">
       Go to courses
     </Link>
+    </div>
   </div>
 );
 
