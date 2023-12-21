@@ -15,7 +15,7 @@ function AppContextProvider({children}:{children:any}){
         newCourses:[],
         trendingCourses:[],
         singleCourse:{}
-    }
+    }//we can get singlecourse data if we want,write a backend and use dispatch thats it
     const[state,dispatch]=useReducer(reducer,initialState)
  const[email,setEmail]=useState<string|null>()
     async function getAllCourses() {
