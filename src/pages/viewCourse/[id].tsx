@@ -1,22 +1,40 @@
 import { CourseContext } from "@/components/AppContextProvider";
 import { cartContext } from "@/components/CartContextProvider";
-
+import {useDispatch} from "react-redux"
+import {addToCart} from "../features/cart/cartSlice"
 import axios from "axios";
 import { useParams } from "next/navigation";
 import { useContext, useEffect } from "react";
 import { toast } from "react-toastify";
+import { emailContext } from "@/components/EmailContextProvider";
 
 export default function ViewCourse() {
     const { id } = useParams() || {};
     console.log("ID:", id);
-  const { state, getSingleCourse,email } = useContext(CourseContext);
-  const{Addtocart}=useContext(cartContext)
-  
+  const { state, getSingleCourse } = useContext(CourseContext);
+const dispatch=useDispatch()
+  const {emailState}=useContext(emailContext)
   useEffect(() => {
     if(id)
     getSingleCourse(`/api/courses/getCourse/${id}`);
   }, [id]);
 
+  async function Addtocart(id:any,title: any,author: any,description: any,price: any,image: any){ 
+    if(emailState.email){
+    if(id && title && author && description && price && image){
+        const courseDetails={
+            id,title,author,description,price,image
+        }
+        console.log("adding")
+        dispatch(addToCart(courseDetails));   
+          toast.success('Added to cart');
+    }else{
+        toast.error("item is already present in the cart")  //fix this functionality
+    }
+ }else{
+    toast.warn("login to continue")
+   }
+}
   const { author, description, price, title, image } = state.singleCourse;
 
   return (

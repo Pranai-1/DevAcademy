@@ -10,6 +10,7 @@ import getEmail from "./api/helper/getEmail";
 import auth from "./api/user/auth";
 import { course } from "./api/user/interface";
 import { cartContext } from "@/components/CartContextProvider";
+import { useSelector,useDispatch } from "react-redux";
 
 
 export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
@@ -41,8 +42,10 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
     const[cartCourses,setCartCourses]=useState<course[]>();
     const[loading,setLoading]=useState<boolean>(true);
     const [length,setLength]=useState<number>(0)
-    const{cart}=useContext(cartContext)
-    console.log(cart.cartCourses)
+    // const{cart}=useContext(cartContext)
+    // console.log(cart.cartCourses)
+    const cart=useSelector((state:any)=>state.cartCourses)
+    console.log(cart)
     useEffect(()=>{
       console.log("Hello")
       const getCourses=async()=>{

@@ -64,4 +64,3 @@ const useCoursesContext=()=>{
 
 export {AppContextProvider,CourseContext}
 
-

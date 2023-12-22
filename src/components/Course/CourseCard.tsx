@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { NEXT_URL } from "@/config";
 import Link from "next/link";
 import { toast } from "react-toastify";
-
+import {removeFromCart} from "../../../src/pages/features/cart/cartSlice"
 
 
 function CourseCard(props:DisplayCourse){
@@ -24,7 +24,8 @@ async function Remove(id: number) {
       const response = await axios.post(`/api/courses/remove`, body);
       const elementToRemove = document.getElementById(id.toString());
       if (elementToRemove) {
-        elementToRemove.remove(); 
+        elementToRemove.remove();
+        removeFromCart(id)
         toast.warning('Removed from cart');
       } else {
         toast.error('Item is not present in the cart');

@@ -15,10 +15,12 @@ import { AppContextProvider } from '@/components/AppContextProvider';
 import Footer from '@/components/Base/Footer';
 import { CartContextProvider } from '@/components/CartContextProvider';
 import { EmailContextProvider } from '@/components/EmailContextProvider';
-
-
+import { Provider} from 'react-redux';
+import {store} from "./redux/reduxStore"
 export default function App({ Component, pageProps,email }: AppProps & { email: string | null }) {
-  return <EmailContextProvider>
+  return (
+    <Provider store={store}>
+  <EmailContextProvider>
   <AppContextProvider>
     <CartContextProvider>
   <RecoilRoot>
@@ -30,6 +32,8 @@ export default function App({ Component, pageProps,email }: AppProps & { email: 
   </CartContextProvider>
   </AppContextProvider>
   </EmailContextProvider>
+  </Provider>
+  )
 }
 
 

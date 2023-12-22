@@ -11,6 +11,7 @@ import Sidebar from "./sideBar";
 import { CourseContext } from "../AppContextProvider";
 import { emailContext } from "../EmailContextProvider";
 import { cartContext } from "../CartContextProvider";
+import { useSelector } from "react-redux";
 
 
 
@@ -18,10 +19,10 @@ import { cartContext } from "../CartContextProvider";
 function Navbar() {
   const router = useRouter();
   const [bar, setBar] = useState<boolean>(false);
-  const {state} = useContext(emailContext);
+  const {emailState} = useContext(emailContext);
   const{updateEmailStatus}=useContext(emailContext)
-  const{cart}=useContext(cartContext)
-  console.log(state.email)
+  const cart=useSelector((state:any)=>state.cartCourses)
+  console.log(emailState.email)
   function sidebar() {
     setBar((prev) => !prev);
   }
@@ -46,7 +47,7 @@ function Navbar() {
       <div className="w-full h-[45px] bg-gray-200 flex justify-between relative">
         <Sidebar
           bar={bar}
-          userEmail={state.email}
+          userEmail={emailState.email}
           sidebar={sidebar}
           logout={logout}
           closeSidebar={closeSidebar}
@@ -58,7 +59,7 @@ function Navbar() {
         <Link href="/cart" className="md:hidden mr-10 text-lg flex justify-between items-center cursor-pointer hover:text-blue-600">
          <i className="fa fa-shopping-cart"></i>
          </Link>
-        {state.email && 
+        {emailState.email && 
         <button
         onClick={logout}
         className="md:hidden p-1 m-1 mr-5 bg-indigo-600 rounded hover:bg-indigo-800 text-white cursor-pointer"
@@ -82,7 +83,7 @@ function Navbar() {
             <Link href="/cart" className={`md:font-medium cursor-pointer hover:text-blue-600 ${isActive('/cart')}`}>
           
                 <i className="fa fa-shopping-cart "></i>
-                <span >Cart({cart.cartCourses.length})</span>
+                <span >Cart({cart.length})</span>
           
             </Link>
           </li>
@@ -95,8 +96,8 @@ function Navbar() {
           </li>
         </ul>
 
-        {state.email ? (
-           <LoggedInUser userEmail={state.email} logout={logout}/>
+        {emailState.email ? (
+           <LoggedInUser userEmail={emailState.email} logout={logout}/>
     ) : (
        <LoggedOutUser/>
     )}

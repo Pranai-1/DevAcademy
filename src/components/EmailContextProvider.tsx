@@ -8,7 +8,7 @@ const EmailContextProvider=({children}:{children:any})=>{
         isEmailLoading:false,
         email:null
     }
-    const[state,dispatch]=useReducer(EmailReducer,initialState)
+    const[emailState,dispatch]=useReducer(EmailReducer,initialState)
     useEffect(()=>{
          getEmail()
     },[])
@@ -31,7 +31,7 @@ const EmailContextProvider=({children}:{children:any})=>{
       }
     }
     return(
-<emailContext.Provider value={{state,updateEmailStatus}}>{children}</emailContext.Provider>
+<emailContext.Provider value={{emailState,updateEmailStatus}}>{children}</emailContext.Provider>
     )
 }
 
