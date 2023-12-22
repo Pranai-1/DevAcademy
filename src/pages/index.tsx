@@ -11,11 +11,11 @@ import { emailContext } from '@/components/EmailContextProvider';
 
 
 function Home({email}:{email:string | null}) {
-  const{updateEmailStatus}=useContext(emailContext)
-useEffect(()=>{
-  updateEmailStatus(email)   //we have to update here as well because,in the navbar we have handled for login and logout but we
-  //didn't handle if user closes the page and comesback.
-},[email])
+  // const{updateEmailStatus}=useContext(emailContext)
+// useEffect(()=>{
+//   updateEmailStatus(email)   //we have to update here as well because,in the navbar we have handled for login and logout but we
+//   //didn't handle if user closes the page and comesback.
+// },[email])
 
   return (
     <div className="h-full bg-black p-2">
@@ -26,25 +26,25 @@ useEffect(()=>{
 }
 
 
-  export async function getServerSideProps({ req, res }: { req: NextApiRequest; res: NextApiResponse }) {
-    let id:number | undefined,email:string | null;
-    try {
-      await auth(req, res);
-      id = Number(req.headers["userId"]);
-    } catch (error) {
-      id = undefined; 
-    }
-    if(id){
-       email = await getEmail(id)
-    }else{
-    email=null;
-    }
-    return {
-      props: {
-        email,
-      },
-    };
-  }
+  // export async function getServerSideProps({ req, res }: { req: NextApiRequest; res: NextApiResponse }) {
+  //   let id:number | undefined,email:string | null;
+  //   try {
+  //     await auth(req, res);
+  //     id = Number(req.headers["userId"]);
+  //   } catch (error) {
+  //     id = undefined; 
+  //   }
+  //   if(id){
+  //      email = await getEmail(id)
+  //   }else{
+  //   email=null;
+  //   }
+  //   return {
+  //     props: {
+  //       email,
+  //     },
+  //   };
+  // }
 
 
 
