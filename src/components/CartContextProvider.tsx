@@ -15,6 +15,7 @@ const CartContextProvider=({children}:{children:any})=>{
     const {state}=useContext(emailContext)
 
     async function Addtocart(id:any,title: any,author: any,description: any,price: any,image: any){
+      
         if(state.email){
         if(id && title && author && description && price && image){
             const courseDetails={

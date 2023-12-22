@@ -41,7 +41,13 @@ export default function ViewCourse() {
     </div>
   );
 }
-
+// function helper() {
+//   const courseDetails={
+//     id,title,author,description,price,image
+// }
+// let arr
+//   Addtocart(id,title,author,description,price,image)
+// }
 
 //In react we use <NavLink to={`/viewCourse/${id}`}></NavLink> and <Route path="/viewCourse/:id" this can be acheived by react router dom
 //then we need to create viewCourse.tsx file

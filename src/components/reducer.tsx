@@ -50,8 +50,11 @@ export function courseReducer(state: any,action: any){
     switch(action.type){
         case "ADD_TO_CART":
                                 const cartItems=state.cartCourses
-                                cartItems.push(action.payload)
                                 console.log(cartItems)
+                                const {id}=action.payload
+                               const isPresent=cartItems.find((item:any)=>item.id==id)
+                               if(!isPresent)
+                                cartItems.push(action.payload)
                                 return{
                                     ...state,isLoading:false,cartCourses:cartItems
                                 }
