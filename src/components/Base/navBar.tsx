@@ -10,6 +10,7 @@ import LoggedOutUser from "../User/LoggedOutUser";
 import Sidebar from "./sideBar";
 import { CourseContext } from "../AppContextProvider";
 import { emailContext } from "../EmailContextProvider";
+import { cartContext } from "../CartContextProvider";
 
 
 
@@ -19,6 +20,7 @@ function Navbar() {
   const [bar, setBar] = useState<boolean>(false);
   const {state} = useContext(emailContext);
   const{updateEmailStatus}=useContext(emailContext)
+  const{cart}=useContext(cartContext)
   console.log(state.email)
   function sidebar() {
     setBar((prev) => !prev);
@@ -80,7 +82,7 @@ function Navbar() {
             <Link href="/cart" className={`md:font-medium cursor-pointer hover:text-blue-600 ${isActive('/cart')}`}>
           
                 <i className="fa fa-shopping-cart "></i>
-                <span >Cart</span>
+                <span >Cart({cart.cartCourses.length})</span>
           
             </Link>
           </li>
