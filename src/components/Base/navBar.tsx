@@ -19,7 +19,7 @@ function Navbar() {
   const [bar, setBar] = useState<boolean>(false);
   const {state} = useContext(emailContext);
   const{updateEmailStatus}=useContext(emailContext)
-
+  console.log(state.email)
   function sidebar() {
     setBar((prev) => !prev);
   }

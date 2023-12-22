@@ -1,4 +1,5 @@
 import { course } from "@/pages/api/user/interface";
+import cartCourses from "@/pages/cart";
 
 export function courseReducer(state: any,action: any){
     console.log("HI")
@@ -47,39 +48,14 @@ export function courseReducer(state: any,action: any){
 
   export function cartReducer(state: any,action: any){
     switch(action.type){
-        case "ALL_COURSES_LOADING":
+        case "ADD_TO_CART":
+                                const cartItems=state.cartCourses
+                                cartItems.push(action.payload)
+                                console.log(cartItems)
                                 return{
-                                    ...state,isLoading:true
+                                    ...state,isLoading:false,cartCourses:cartItems
                                 }
-        case "ALL_COURSES":
-                            const courses=action.payload
-                            const newCourses=getRandomCourses(courses, 3)
-                            const remainingCourses = courses.filter((course: course) => !newCourses?.includes(course));
-                            const trendingCourses=getRandomCourses(remainingCourses, 3)
-                        
-                            return{
-                                ...state,isLoading:false,allCourses:[...courses],newCourses:[...newCourses],trendingCourses:[...trendingCourses]
-                            }
-        case "ALL_COURSES_ERROR":{
-                                return{
-                                    ...state,isAllCoursesError:true,isLoading:false
-                                }
-                            }
-        case "SINGLE_COURSE_LOADING":
-                                return{
-                                    ...state,isSingleCourseLoading:true
-                                }
-        case "SINGLE_COURSE":
-                            const singleCourse=action.payload
-                            return{
-                                ...state,isLoading:false,singleCourse
-                            }
-        case "SINGLE_COURSE_ERROR":{
-                                return{
-                                    ...state,isSingleCourseError:true,isSingleCourseLoading:false
-                                }
-                            }
-        default:return state
+        default: return state
                
        }
   }

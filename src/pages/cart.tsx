@@ -5,10 +5,11 @@ import InitUser from "@/components/InitUser";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import getEmail from "./api/helper/getEmail";
 import auth from "./api/user/auth";
 import { course } from "./api/user/interface";
+import { cartContext } from "@/components/CartContextProvider";
 
 
 export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
@@ -40,6 +41,8 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
     const[cartCourses,setCartCourses]=useState<course[]>();
     const[loading,setLoading]=useState<boolean>(true);
     const [length,setLength]=useState<number>(0)
+    const{cart}=useContext(cartContext)
+    console.log(cart.cartCourses)
     useEffect(()=>{
       console.log("Hello")
       const getCourses=async()=>{

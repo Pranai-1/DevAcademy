@@ -9,9 +9,6 @@ import auth from "./api/user/auth";
 
 export default function Login() {
   const router = useRouter();
-
-
-
   return (
     <div className="h-full w-full bg-black absolute flex justify-center items-center flex-wrap">
       <div className="bg-white w-[360px] md:w-[440px] flex flex-col gap-2 mb-5 p-5 rounded-xl justify-center">
