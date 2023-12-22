@@ -76,8 +76,8 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
           {loading ? (
             <LoadingIndicator /> 
         ) : (
-          cartCourses && length > 0 ? (
-          <CourseParameters courses={cartCourses} type='cart'/>
+          cart.length > 0 ? (
+          <CourseParameters courses={cart} type='cart'/>
           ) : (
             <NoCoursesFoundMessage type="cart" /> 
           )

@@ -1,6 +1,6 @@
 import { CourseContext } from "@/components/AppContextProvider";
 import { cartContext } from "@/components/CartContextProvider";
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {addToCart} from "../features/cart/cartSlice"
 import axios from "axios";
 import { useParams } from "next/navigation";
@@ -13,6 +13,7 @@ export default function ViewCourse() {
     console.log("ID:", id);
   const { state, getSingleCourse } = useContext(CourseContext);
 const dispatch=useDispatch()
+const cart=useSelector((state:any)=>state.cartCourses)
   const {emailState}=useContext(emailContext)
   useEffect(() => {
     if(id)
@@ -25,12 +26,25 @@ const dispatch=useDispatch()
         const courseDetails={
             id,title,author,description,price,image
         }
-        console.log("adding")
-        dispatch(addToCart(courseDetails));   
-          toast.success('Added to cart');
-    }else{
-        toast.error("item is already present in the cart")  //fix this functionality
+        const isPresent=cart.find((course:any)=>course.id==id)
+        if(!isPresent){
+          const body={
+            id
+          }
+          try{
+          const response=await axios.post("/api/courses/addToCart",body)
+              dispatch(addToCart(courseDetails));   
+              toast.success('Added to cart');
+          }catch{
+            toast.error("item is already present in the cart") 
+          }
+        }
+    else{
+        toast.error("item is already present in the cart")  
     }
+  }else{
+    toast.error("Error Occured try again") 
+  }
  }else{
     toast.warn("login to continue")
    }

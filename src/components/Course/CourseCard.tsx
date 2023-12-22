@@ -7,29 +7,31 @@ import { NEXT_URL } from "@/config";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import {removeFromCart} from "../../../src/pages/features/cart/cartSlice"
+import { useDispatch, useSelector } from "react-redux";
+import { useContext } from "react";
+import { emailContext } from "../EmailContextProvider";
 
 
 function CourseCard(props:DisplayCourse){
-const userEmail=useRecoilValue(UserEmail)
+const {emailState}=useContext(emailContext)
 const{id,image,title,description,name,show,price}=props
-
-
+const dispatch=useDispatch()
+const cart=useSelector((state:any)=>state.cartCourses)
 
 async function Remove(id: number) {
-  if (userEmail) {
+  console.log(id)
+  if (emailState.email) {
     const body = {
       id,
     };
     try {
       const response = await axios.post(`/api/courses/remove`, body);
-      const elementToRemove = document.getElementById(id.toString());
-      if (elementToRemove) {
-        elementToRemove.remove();
-        removeFromCart(id)
+      //const elementToRemove = document.getElementById(id.toString());
+      // if (elementToRemove) {
+      //   elementToRemove.remove();
+        dispatch(removeFromCart(id))
         toast.warning('Removed from cart');
-      } else {
-        toast.error('Item is not present in the cart');
-      }
+     
     } catch {
       toast.error('Error occurred while removing from cart');
     }

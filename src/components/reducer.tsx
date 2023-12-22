@@ -48,16 +48,21 @@ export function courseReducer(state: any,action: any){
 
   export function cartReducer(state: any,action: any){
     switch(action.type){
-        case "ADD_TO_CART":
-                                const cartItems=state.cartCourses
-                                console.log(cartItems)
-                                const {id}=action.payload
-                               const isPresent=cartItems.find((item:any)=>item.id==id)
-                               if(!isPresent)
-                                cartItems.push(action.payload)
-                                return{
-                                    ...state,isLoading:false,cartCourses:cartItems
-                                }
+        // case "ADD_TO_CART":
+        //                         const cartItems=state.cartCourses
+        //                         console.log(cartItems)
+        //                         const {id}=action.payload
+        //                        const isPresent=cartItems.find((item:any)=>item.id==id)
+        //                        if(!isPresent)
+        //                         cartItems.push(action.payload)
+        //                         return{
+        //                             ...state,isLoading:false,cartCourses:cartItems
+        //                         }
+        case "CART_COURSES":
+            
+            return{
+            ...state,isLoading:false,cartCourses:action.payload
+        }
         default: return state
                
        }

@@ -1,13 +1,19 @@
+import { cartContext } from "@/components/CartContextProvider";
 import { createSlice, nanoid } from "@reduxjs/toolkit";
+import axios from "axios";
+import { useContext } from "react";
 
 const initialState = {
-  cartCourses: [],
+  cartCourses:[],
 };
 
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    setCart:(state, action) => {
+      state.cartCourses=action.payload
+    },
     addToCart: (state, action) => {
       const cartItems = state.cartCourses;
       const { id } = action.payload;
@@ -22,5 +28,6 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+
+export const { addToCart, removeFromCart,setCart } = cartSlice.actions;
 export default cartSlice.reducer;
