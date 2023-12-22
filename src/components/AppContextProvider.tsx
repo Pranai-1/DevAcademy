@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useReducer, useState } from "react";
-import { reducer } from "./reducer";
+import { courseReducer } from "./reducer";
 import { course } from "@/pages/api/user/interface";
 import axios from "axios";
 import InitUser from "./InitUser";
@@ -19,8 +19,8 @@ function AppContextProvider({children}:{children:any}){
         isSingleCourseError:false,
     }
 
-    const[state,dispatch]=useReducer(reducer,initialState)
-    const[email,setEmail]=useState<string|null>()
+    const[state,dispatch]=useReducer(courseReducer,initialState)
+ 
 
     async function getAllCourses() {
         let courses:course[]=[]
@@ -50,18 +50,11 @@ function AppContextProvider({children}:{children:any}){
 
   useEffect(()=>{
     getAllCourses()
-    getEmail()
+   
   },[])
-  async function getEmail() {
-    try{
-        const response=await axios.get("/api/user/email")
-        setEmail(response.data.email)
-        }catch{
-         setEmail(null)
-        } 
-}
+
     return(
-        <CourseContext.Provider value={{state,email,setEmail,getSingleCourse}}>{children}</CourseContext.Provider>
+        <CourseContext.Provider value={{state,getSingleCourse}}>{children}</CourseContext.Provider>
     )
 }
 

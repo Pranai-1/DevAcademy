@@ -1,4 +1,6 @@
 import { CourseContext } from "@/components/AppContextProvider";
+import { cartContext } from "@/components/CartContextProvider";
+
 import axios from "axios";
 import { useParams } from "next/navigation";
 import { useContext, useEffect } from "react";
@@ -8,22 +10,8 @@ export default function ViewCourse() {
     const { id } = useParams() || {};
     console.log("ID:", id);
   const { state, getSingleCourse,email } = useContext(CourseContext);
-
-  async function Addtocart(id:any){
-    if(email){
- const body={
-    id
- }
- try{
-    const response= await axios.post(`/api/courses/addToCart`,body)
-    toast.success('Added to cart');
-  }catch{
-    toast.error("item is already present in the cart")
-}
-     }else{
-    toast.warn("login to continue")
-   }
-}
+  const{Addtocart}=useContext(cartContext)
+  
   useEffect(() => {
     if(id)
     getSingleCourse(`/api/courses/getCourse/${id}`);
@@ -47,7 +35,7 @@ export default function ViewCourse() {
         <div className="flex items-center justify-between">
           <p className="text-2xl font-bold">&#x20B9;{price}</p>
         <button className="h-max w-max bg-indigo-500 text-white rounded-lg p-2 m-5 items-center hover:bg-indigo-800" 
-        onClick={()=>{Addtocart(id)}}>Add To cart</button> 
+        onClick={()=>{Addtocart(id,title,author,description,price,image)}}>Add To cart</button> 
         </div>
       </div>
     </div>

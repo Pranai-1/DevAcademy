@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { z } from "zod";
 import { useRouter } from "next/router";
+import { emailContext } from "./EmailContextProvider";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
-
+const{updateEmailStatus}=useContext(emailContext)
   const router=useRouter()
   const userInput = z.object({
     email: z.string().min(11).max(40).email(),
@@ -62,13 +63,16 @@ export default function LoginForm() {
 
         if (response?.status === 200) {
           router.push("/");
+          updateEmailStatus(email)
           toast.success("Login success");
           
         } else {
+          updateEmailStatus(null)
           toast.error("Login failed");
        
         }
       } catch (error) {
+        updateEmailStatus(null)
         console.log(error);
         toast.error("Login failed");
       }

@@ -51,7 +51,7 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
       courses=[]
         }
         setLength(courses.length)
-        console.log(courses.length)
+    
         setCartCourses(courses)
          setLoading(false)
       }

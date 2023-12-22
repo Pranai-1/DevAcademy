@@ -13,17 +13,23 @@ import getEmail from './api/helper/getEmail';
 import auth from './api/user/auth';
 import { AppContextProvider } from '@/components/AppContextProvider';
 import Footer from '@/components/Base/Footer';
+import { CartContextProvider } from '@/components/CartContextProvider';
+import { EmailContextProvider } from '@/components/EmailContextProvider';
 
 
 export default function App({ Component, pageProps,email }: AppProps & { email: string | null }) {
-  return <AppContextProvider>
+  return <EmailContextProvider>
+  <AppContextProvider>
+    <CartContextProvider>
   <RecoilRoot>
     <ToastContainer />
     <Navbar/>
      <Component {...pageProps} />
      <Footer />
   </RecoilRoot>
+  </CartContextProvider>
   </AppContextProvider>
+  </EmailContextProvider>
 }
 
 
