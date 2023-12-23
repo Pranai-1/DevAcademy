@@ -10,12 +10,12 @@ import auth from "./api/user/auth";
 import InitUser from "@/components/InitUser";
 import Navbar from "@/components/Base/navBar";
 import { useEffect, useState } from "react";
-import getEmail from "./api/helper/getEmail";
-import getCartItems from "./api/helper/getCartItems";
+
 import CourseParameters from "@/components/Course/CourseParameters";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import NoCoursesFoundMessage from "@/components/Course/NoCoursesFoundMessage";
 import allCourses from "./allCourses";
+import getEmail from "./api/helper/getEmail";
 
 export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
   let id:number | undefined,email:string | null
