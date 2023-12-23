@@ -58,8 +58,7 @@ export function courseReducer(state: any,action: any){
         //                         return{
         //                             ...state,isLoading:false,cartCourses:cartItems
         //                         }
-        case "CART_COURSES":
-            
+        case "CART_COURSES":   //This is used to set the initial cart courses for the redux setCart reducer ,check cartContext provider
             return{
             ...state,isLoading:false,cartCourses:action.payload
         }

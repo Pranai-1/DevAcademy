@@ -18,13 +18,14 @@ const CartContextProvider=({children}:{children:any})=>{
     useEffect(()=>{
         
      getCartCourses()
-     dispatch(setCart(cart.cartCourses))
+     dispatch(setCart(cart.cartCourses)) //here we are setting cartCourses after a refresh or a login
     },[])
 
     async function getCartCourses(){
         const response=await axios.get("/api/courses/cartCourses")
         const cartCourses=response.data.courses
-        dispatch11({type:"CART_COURSES",payload:cartCourses})
+        dispatch11({type:"CART_COURSES",payload:cartCourses})  //this is for the cartContext state with the help of this we can set the
+        //initial cart courses that we set in 21  
         }
     // async function Addtocart(id:any,title: any,author: any,description: any,price: any,image: any){
       
