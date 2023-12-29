@@ -16,7 +16,6 @@ interface CourseState {
     isLoading: boolean;
     isError: boolean;
 }
-
 export function courseReducer(state: CourseState,action: any){
     console.log("HI")
    switch(action.type){
