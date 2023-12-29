@@ -12,6 +12,7 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     setCart:(state, action) => {
+      //console.log(action.payload)
       state.cartCourses=action.payload
     },
     addToCart: (state, action) => {

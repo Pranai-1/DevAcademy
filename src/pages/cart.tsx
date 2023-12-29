@@ -45,9 +45,9 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
     // const{cart}=useContext(cartContext)
     // console.log(cart.cartCourses)
     const cart=useSelector((state:any)=>state.cartCourses)
-    console.log(cart)
+   // console.log(cart)
     useEffect(()=>{
-      console.log("Hello")
+     // console.log("Hello")
       const getCourses=async()=>{
        let courses:course[]=[]
        try{

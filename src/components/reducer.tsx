@@ -17,7 +17,7 @@ interface CourseState {
     isError: boolean;
 }
 export function courseReducer(state: CourseState,action: any){
-    console.log("HI")
+    //console.log("HI")
    switch(action.type){
     case "ALL_COURSES_LOADING":
                             return{
@@ -44,7 +44,7 @@ export function courseReducer(state: CourseState,action: any){
     case "SINGLE_COURSE":
                         const singleCourse=action.payload
                         return{
-                            ...state,isLoading:false,singleCourse
+                            ...state,isLoading:false,singleCourse,isSingleCourseLoading:false
                         }
     case "SINGLE_COURSE_ERROR":{
                             return{
@@ -61,7 +61,7 @@ export function courseReducer(state: CourseState,action: any){
     return shuffled.slice(0, count);
   }
 
-  export function cartReducer(state: CartState,action: any){
+  export function cartReducer(state: any,action: any){
     switch(action.type){
         // case "ADD_TO_CART":
         //                         const cartItems=state.cartCourses

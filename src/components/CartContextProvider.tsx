@@ -15,13 +15,13 @@ const CartContextProvider=({children}:{children:any})=>{
         isError:false
     }
     const[cart,dispatch11]=useReducer(cartReducer,initialState)
+    //console.log(cart.cartCourses)
     const dispatch=useDispatch()
     const {state}=useContext(emailContext)
     useEffect(()=>{
-        
      getCartCourses()
      dispatch(setCart(cart.cartCourses)) //here we are setting cartCourses after a refresh or a login
-    },[])
+    },[cart.cartCourses.length])
 
     async function getCartCourses(){
         const response=await axios.get("/api/courses/cartCourses")

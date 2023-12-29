@@ -7,14 +7,16 @@ import { useParams } from "next/navigation";
 import { useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 import { emailContext } from "@/components/EmailContextProvider";
+import LoadingIndicator from "@/components/LoadingIndicator";
 
 export default function ViewCourse() {
     const { id } = useParams() || {};
     console.log("ID:", id);
   const { state, getSingleCourse } = useContext(CourseContext);
+  console.log(state)
 const dispatch=useDispatch()
-const cart=useSelector((state:any)=>state.cartCourses)
-  const {emailState}=useContext(emailContext)
+ const cart=useSelector((state:any)=>state.cartCourses)
+   const {emailState}=useContext(emailContext)
   useEffect(() => {
     if(id)
     getSingleCourse(`/api/courses/getCourse/${id}`);
@@ -35,7 +37,8 @@ const cart=useSelector((state:any)=>state.cartCourses)
           const response=await axios.post("/api/courses/addToCart",body)
               dispatch(addToCart(courseDetails));   
               toast.success('Added to cart');
-          }catch{
+          }catch(error){
+            console.log(error)
             toast.error("item is already present in the cart") 
           }
         }
@@ -53,6 +56,11 @@ const cart=useSelector((state:any)=>state.cartCourses)
 
   return (
     <div className="h-screen w-full bg-black text-white p-8">
+      {state.isSingleCourseLoading ?(
+       <div>
+        <LoadingIndicator /> 
+        </div>
+      ):(
       <div className="max-w-2xl mx-auto bg-slate-100 p-4 text-blue-500 rounded-lg">
         <div className="mb-8 w-full flex justify-center items-center p-2">
           <img
@@ -70,7 +78,9 @@ const cart=useSelector((state:any)=>state.cartCourses)
         onClick={()=>{Addtocart(id,title,author,description,price,image)}}>Add To cart</button> 
         </div>
       </div>
-    </div>
+
+    )}
+        </div>
   );
 }
 // function helper() {
