@@ -17,6 +17,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tailwind.config.js", "tailwind.config.js", "src/pages/[...buy.tsx]", "src/pages/features/cart/cartSlice.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tailwind.config.js", "tailwind.config.js", "src/pages/[...buy.tsx]", "src/features/cart/cartSlice.js"],
   "exclude": ["node_modules"]
 }

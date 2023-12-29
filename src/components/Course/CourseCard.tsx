@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { NEXT_URL } from "@/config";
 import Link from "next/link";
 import { toast } from "react-toastify";
-import {removeFromCart} from "../../../src/pages/features/cart/cartSlice"
+import {removeFromCart} from "../../features/cart/cartSlice"
 import { useDispatch, useSelector } from "react-redux";
 import { useContext } from "react";
 import { emailContext } from "../EmailContextProvider";

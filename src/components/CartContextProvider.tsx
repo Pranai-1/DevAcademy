@@ -4,9 +4,11 @@ import { toast } from "react-toastify"
 import { emailContext } from "./EmailContextProvider"
 import axios from "axios"
 import { useDispatch } from "react-redux"
-import { setCart } from "@/pages/features/cart/cartSlice"
+import { setCart } from "@/features/cart/cartSlice"
+
+
 const cartContext=createContext<any>([])
-const CartContextProvider=({children}:{children: React.ReactNode })=>{
+const CartContextProvider=({children}:{children:any})=>{
     const initialState={
         cartCourses:[],
         isLoading:false,

@@ -1,7 +1,7 @@
 import { CourseContext } from "@/components/AppContextProvider";
 import { cartContext } from "@/components/CartContextProvider";
 import {useDispatch, useSelector} from "react-redux"
-import {addToCart} from "../features/cart/cartSlice"
+import {addToCart} from "../../features/cart/cartSlice"
 import axios from "axios";
 import { useParams } from "next/navigation";
 import { useContext, useEffect } from "react";
