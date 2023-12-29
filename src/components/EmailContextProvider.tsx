@@ -22,7 +22,7 @@ const EmailContextProvider=({children}:{children: React.ReactNode })=>{
         }
 
     }
-    const updateEmailStatus=(email:string|null)=>{
+    const updateEmailStatus=(email:string|null)=>{  // we can use useCallback here as well
       dispatch({type:"EMAIL_LOADING"})
       if(email){
         dispatch({type:"EMAIL_VALUE",payload:email})
