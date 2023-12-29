@@ -6,7 +6,7 @@ import axios from "axios"
 import { useDispatch } from "react-redux"
 import { setCart } from "@/pages/features/cart/cartSlice"
 const cartContext=createContext<any>([])
-const CartContextProvider=({children}:{children:any})=>{
+const CartContextProvider=({children}:{children: React.ReactNode })=>{
     const initialState={
         cartCourses:[],
         isLoading:false,

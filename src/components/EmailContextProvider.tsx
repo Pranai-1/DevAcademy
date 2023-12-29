@@ -3,7 +3,7 @@ import { EmailReducer } from "./reducer"
 import axios from "axios"
 
 const emailContext=createContext<any>([])
-const EmailContextProvider=({children}:{children:any})=>{
+const EmailContextProvider=({children}:{children: React.ReactNode })=>{
     const initialState={
         isEmailLoading:false,
         email:null

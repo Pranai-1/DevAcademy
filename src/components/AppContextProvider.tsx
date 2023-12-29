@@ -2,12 +2,12 @@ import { createContext, useContext, useEffect, useReducer, useState } from "reac
 import { courseReducer } from "./reducer";
 import { course } from "@/pages/api/user/interface";
 import axios from "axios";
-import InitUser from "./InitUser";
+
 
 
 const CourseContext=createContext<any>([])
 
-function AppContextProvider({children}:{children:any}){
+function AppContextProvider({children}:{children: React.ReactNode }){
     const initialState={
         isLoading:false,
         allCourses:[],
@@ -35,7 +35,7 @@ function AppContextProvider({children}:{children:any}){
          } 
     }
     
-    async function getSingleCourse(url:any){
+    async function getSingleCourse(url:string){
       let singleCourse={}
       dispatch({type:"SINGLE_COURSE_LOADING"})
         try{

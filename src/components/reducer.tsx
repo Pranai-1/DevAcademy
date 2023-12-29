@@ -1,7 +1,23 @@
-import { course } from "@/pages/api/user/interface";
-import cartCourses from "@/pages/cart";
 
-export function courseReducer(state: any,action: any){
+import { course } from "@/pages/api/user/interface";
+
+interface CourseState {
+    isLoading: boolean;
+    allCourses: course[];
+    isAllCoursesError: boolean;
+    newCourses: course[];
+    trendingCourses: course[];
+    singleCourse:course | {};
+    isSingleCourseLoading: boolean;
+    isSingleCourseError: boolean;
+  }
+  interface CartState {
+    cartCourses: course[];
+    isLoading: boolean;
+    isError: boolean;
+}
+
+export function courseReducer(state: CourseState,action: any){
     console.log("HI")
    switch(action.type){
     case "ALL_COURSES_LOADING":
@@ -46,7 +62,7 @@ export function courseReducer(state: any,action: any){
     return shuffled.slice(0, count);
   }
 
-  export function cartReducer(state: any,action: any){
+  export function cartReducer(state: CartState,action: any){
     switch(action.type){
         // case "ADD_TO_CART":
         //                         const cartItems=state.cartCourses
@@ -67,7 +83,7 @@ export function courseReducer(state: any,action: any){
        }
   }
 
-  export function EmailReducer(state:any,action:any){
+  export function EmailReducer(state: any,action:any){
     switch(action.type){
         case "EMAIL_LOADING":return{
                           ...state,isEmailLoading:true
