@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react"
+import { createContext, useCallback, useEffect, useReducer } from "react"
 import { EmailReducer } from "./reducer"
 import axios from "axios"
 
@@ -22,14 +22,23 @@ const EmailContextProvider=({children}:{children: React.ReactNode })=>{
         }
 
     }
-    const updateEmailStatus=(email:string|null)=>{  // we can use useCallback here as well
-      dispatch({type:"EMAIL_LOADING"})
-      if(email){
-        dispatch({type:"EMAIL_VALUE",payload:email})
-      }else{
-        dispatch({type:"EMAIL_NULL",payload:null})
+    // const updateEmailStatus=(email:string|null)=>{  // we can use useCallback here as well
+    //   dispatch({type:"EMAIL_LOADING"})
+    //   if(email){
+    //     dispatch({type:"EMAIL_VALUE",payload:email})
+    //   }else{
+    //     dispatch({type:"EMAIL_NULL",payload:null})
+    //   }
+    // }
+
+    const updateEmailStatus = useCallback((email: string | null) => {
+      dispatch({ type: "EMAIL_LOADING" });
+      if (email) {
+        dispatch({ type: "EMAIL_VALUE", payload: email });
+      } else {
+        dispatch({ type: "EMAIL_NULL", payload: null });
       }
-    }
+    }, [dispatch]);
     return(
 <emailContext.Provider value={{emailState,updateEmailStatus}}>{children}</emailContext.Provider>
     )
