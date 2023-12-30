@@ -11,7 +11,8 @@ import Sidebar from "./sideBar";
 import { CourseContext } from "../AppContextProvider";
 import { emailContext } from "../EmailContextProvider";
 import { cartContext } from "../CartContextProvider";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setCart } from "@/features/cart/cartSlice";
 
 
 
@@ -23,6 +24,7 @@ function Navbar() {
   const{updateEmailStatus}=useContext(emailContext)
   const cart=useSelector((state:any)=>state.cartCourses)
  // console.log(emailState.email)
+ const dispatch=useDispatch()
   function sidebar() {
     setBar((prev) => !prev);
   }
@@ -34,6 +36,7 @@ function Navbar() {
   async function logout() {
    const res=await axios.get(`/api/user/logout`)
    updateEmailStatus(null)
+   dispatch(setCart([]))
       router.push("/");
     closeSidebar();
   }
