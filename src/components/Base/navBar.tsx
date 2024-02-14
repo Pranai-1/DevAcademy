@@ -22,7 +22,7 @@ function Navbar() {
   const [bar, setBar] = useState<boolean>(false);
   const {emailState} = useContext(emailContext);
   const{updateEmailStatus}=useContext(emailContext)
-  const cart=useSelector((state:any)=>state.cartCourses)
+  const cart=useSelector((state:any)=>state.cart.cartCourses)
  // console.log(emailState.email)
  const dispatch=useDispatch()
   function sidebar() {

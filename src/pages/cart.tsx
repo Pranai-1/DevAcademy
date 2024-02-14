@@ -13,56 +13,60 @@ import { cartContext } from "@/components/CartContextProvider";
 import { useSelector,useDispatch } from "react-redux";
 
 
-export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
-  let id:number | undefined,email:string | null
-  try {
-    await auth(req, res);
-    id=Number(req.headers["userId"])
-  } catch (error) {
-    id = undefined; 
-  }
-  if(id){
-    email = await getEmail(id)
- }else{
-  return {
-    redirect: {
-      destination: "/",
-      permanent: false,
-    },
-  };
- }
-   return{
-    props:{
-      email
+// export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextApiResponse}){
+//   let id:number | undefined,email:string | null
+//   try {
+//     await auth(req, res);
+//     id=Number(req.headers["userId"])
+//   } catch (error) {
+//     id = undefined; 
+//   }
+//   if(id){
+//     email = await getEmail(id)
+//  }else{
+//   return {
+//     redirect: {
+//       destination: "/",
+//       permanent: false,
+//     },
+//   };
+//  }
+//    return{
+//     props:{
+//       email
     
-    }}
-  }
+//     }}
+//   }
 
-  export default function cartCourses({email}:{email:string}) { 
+  export default function cartCourses(props:any) { 
+    console.log(props)
     const[cartCourses,setCartCourses]=useState<course[]>();
     const[loading,setLoading]=useState<boolean>(true);
     const [length,setLength]=useState<number>(0)
     // const{cart}=useContext(cartContext)
     // console.log(cart.cartCourses)
-    const cart=useSelector((state:any)=>state.cartCourses)
+    const cart=useSelector((state:any)=>state.cart.cartCourses)//right way of subscribing
+    const entireStore=useSelector((state:any)=>state)//wrong way of subscribing because here entireStore is subscribed fully
+    //with our store,any changes in our store will make this page to re-render in case of multiple slices,this is in efficient
+    const coursesFromEntireStore=entireStore.cart.courses
     console.log(cart)
-    useEffect(()=>{
-     // console.log("Hello")
-      const getCourses=async()=>{
-       let courses:course[]=[]
-       try{
-        const response=await axios.get("/api/courses/cartCourses")
-        courses=response.data.courses
-        }catch{
-      courses=[]
-        }
-        setLength(courses.length)
+  //   useEffect(()=>{
+  //    // console.log("Hello")
+  //     const getCourses=async()=>{
+  //      let courses:course[]=[]
+  //      try{
+  //       const response=await axios.get("/api/courses/cartCourses")
+  //       courses=response.data.courses
+  //       }catch{
+  //     courses=[]
+  //       }
+  //       setLength(courses.length)
     
-        setCartCourses(courses)
-         setLoading(false)
-      }
-   getCourses();
-     },[])
+  //       setCartCourses(courses)
+  //        setLoading(false)
+  //     }
+  //  getCourses();
+  //    },[])
   return(
         <div className=" bg-black w-full p-2">
           <p className="text-2xl text-orange-600 font-bold  pt-5  flex justify-center">
@@ -73,7 +77,7 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
           courses you've added to your cart.
       </p>
           <div className="h-max flex flex-wrap justify-center gap-10 overflow-auto mt-5">
-          {loading ? (
+          {/* {loading ? (
             <LoadingIndicator /> 
         ) : (
           cart.length > 0 ? (
@@ -81,7 +85,14 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
           ) : (
             <NoCoursesFoundMessage type="cart" /> 
           )
-        )}
+        )} */}
+        {
+          cart.length > 0 ? (
+            <CourseParameters courses={cart} type='cart'/>
+            ) : (
+              <NoCoursesFoundMessage type="cart" /> 
+            )
+        }
           </div>
           <p className="text-gray-400 mb-4 flex justify-center">
         Don't hesitate to reach out if you have any questions or need guidance

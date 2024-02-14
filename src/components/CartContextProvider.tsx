@@ -17,6 +17,7 @@ const CartContextProvider=({children}:{children:any})=>{
     const[cart,dispatch11]=useReducer(cartReducer,initialState)
    
     const dispatch=useDispatch()
+    // const x=useDispatch()//This will also work
     const {state}=useContext(emailContext)
     useEffect(()=>{
      getCartCourses()
