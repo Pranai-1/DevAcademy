@@ -11,13 +11,8 @@ interface CourseState {
     isSingleCourseLoading: boolean;
     isSingleCourseError: boolean;
   }
-  interface CartState {
-    cartCourses: course[];
-    isLoading: boolean;
-    isError: boolean;
-}
+
 export function courseReducer(state: CourseState,action: any){
-    //console.log("HI")
    switch(action.type){
     case "ALL_COURSES_LOADING":
                             return{

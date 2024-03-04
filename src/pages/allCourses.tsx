@@ -1,28 +1,13 @@
-
-import Navbar from "@/components/Base/navBar";
-import { body, course } from "./api/user/interface";
-import CourseCard from "@/components/Course/CourseCard";
-import Footer from "@/components/Base/Footer";
-import axios from "axios";
-import {  NextApiRequest, NextApiResponse } from "next";
-import InitUser from "@/components/InitUser";
-import auth from "./api/user/auth";
-
-import { useRouter } from "next/router";
-import { useState, useEffect, useContext } from "react";
-import getEmail from "./api/helper/getEmail";
-import LoadingIndicator from "@/components/LoadingIndicator";
+import { useContext } from "react";
 import CourseParameters from "@/components/Course/CourseParameters";
 import NoCoursesFoundMessage from "@/components/Course/NoCoursesFoundMessage";
-import { CourseContext } from "@/components/AppContextProvider";
-
+import { CourseContext } from "@/components/CourseContextProvider";
+import Shimmer from "../components/Shimmer";
 
 
 function AllCourses() {
-  const{state}=useContext(CourseContext)
+  const{courseState}=useContext(CourseContext)
  
-
-  const router = useRouter();
   return (
         <div className=" bg-black p-2">
           <p className="text-2xl text-orange-600 font-bold  pt-5  flex justify-center w-full">
@@ -33,11 +18,14 @@ function AllCourses() {
         knowledge and opportunities to learn and grow.
       </p>
           <div className="h-[1200px] flex flex-wrap justify-center gap-10 overflow-auto mt-5">
-          {state.isLoading ? (
-            <LoadingIndicator /> 
+          {courseState.isLoading ? (
+            <div>
+            <Shimmer /> 
+            <Shimmer /> 
+            </div>
         ) : (
-          state.allCourses && state.allCourses.length > 0 ? (
-          <CourseParameters courses={state.allCourses} type='all'/>
+          courseState.allCourses && courseState.allCourses.length > 0 ? (
+          <CourseParameters courses={courseState.allCourses} type='all'/>
           ) : (
             <NoCoursesFoundMessage type='all'/> 
           )
@@ -53,27 +41,6 @@ function AllCourses() {
   )
 }
 export default AllCourses;
-
-//   export const getServerSideProps = async ({ req, res }: { req: NextApiRequest, res: NextApiResponse }) => {
- 
-//   let id:number | undefined,email:string | null,courses:course[];
-//   try {
-//     await auth(req, res);
-//     id = Number(req.headers["userId"]);
-//     console.log("id")
-//   } catch (error) {
-//     id = undefined; 
-//   }
-
-//   if(id){
-//      email = await getEmail(id)
-//   }else{
-//   email=null;
-//   }
-//  console.log(email)
-//     return { props: { email } };
- 
-// };
 
 
 

@@ -10,9 +10,9 @@ export default async function handler(
 ) {
   await auth(req,res)
   try {
-    console.log(req.query)
+   // console.log(req.query)
     const courseId = Number(req.query.id);
-     console.log(courseId)
+    // console.log(courseId)
     if (!courseId) { 
       return res.status(400).json({ message: "Course ID is missing in the request" });
     }
@@ -23,7 +23,8 @@ export default async function handler(
         description: courseDetails.description,
         price: courseDetails.price,
         author: courseDetails.name ,
-        image:courseDetails.image
+        image:courseDetails.image,
+        
       };
      
       return res.status(200).json({course:requiredDetails}); // Sending the object directly without wrapping it in another object

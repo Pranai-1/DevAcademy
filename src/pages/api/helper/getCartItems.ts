@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { course } from "../user/interface";
 import { PrismaClient } from "@prisma/client";
 
@@ -8,18 +7,18 @@ export default async function handler(
 ){    
   let courses:course[]=[]
     try{
-    const userCheck = await prisma.user.findFirst({where:{
-      id
-    }});
-        if (!userCheck) {
-         return [];
-        }
- 
-        const cartCourses= await prisma.cartCourses.findMany({
-          where:{
-            userId:id
-          }
+    
+        const user = await prisma.user.findUnique({
+          where: {
+            id
+          },
+          include: {
+            cartCourses: true, 
+          },
         });
+        if(!user)
+        return courses
+      const cartCourses=user?.cartCourses
         if(cartCourses){
         for(let obj of cartCourses){
            const x=await prisma.courses.findFirst({
@@ -39,7 +38,6 @@ export default async function handler(
 finally{
   prisma.$disconnect();
 }
-
   
 }
 

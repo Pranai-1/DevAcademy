@@ -10,7 +10,8 @@ export default async function handler(
 ) {
  const token = req.cookies.token;
 if (!token) {
-    return 
+  return 
+
   }
 try {
 
@@ -22,7 +23,7 @@ try {
    if(typeof user!="string"){
    req.headers["userId"]=user.id
    }
-
+   
 } catch (error) {
   console.log(error)
     return res.status(403).json({ message: "Invalid token" });

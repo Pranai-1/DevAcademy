@@ -28,10 +28,7 @@ export default function LoggedInUserSidebar({closeSidebar}:{closeSidebar():void}
                 My Learning
               </div>
             </Link>
-          </li>
-         
-        
-        
+          </li>     
         </ul>
       </div>
     )

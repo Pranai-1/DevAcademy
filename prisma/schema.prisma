@@ -49,3 +49,6 @@ model CartCourses {
   user          User @relation(fields: [userId],references: [id])
 
 }
+//Prisma is an open-source ORM (Object-Relational Mapping) tool for Node.js and TypeScript, designed to simplify database
+// access and management in your application. It provides a type-safe 
+//and intuitive way to interact with databases, enabling you to define your data model using a simple and declarative syntax.

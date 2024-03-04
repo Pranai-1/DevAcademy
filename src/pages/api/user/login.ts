@@ -40,7 +40,6 @@ export default async function handler(
     let userToken = jwt.sign({ id: user.id }, userSecretKey, { expiresIn: '1d' });
     res.setHeader("Set-Cookie", `token=${userToken}; HttpOnly; Secure; SameSite=Strict; Path=/`);
     const cookies = req.headers.cookie || ""; //this is one of the way to get the cookie
- 
     const emailParts = user.email.split('@');
       const trimmedEmail = emailParts[0];
     return res.status(200).json({ message: "success",email:trimmedEmail});

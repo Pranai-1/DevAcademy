@@ -1,8 +1,6 @@
 import SignupForm from "@/components/SignupForm";
 import { NextApiRequest, NextApiResponse } from "next";
-import { useRouter } from "next/router";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 import auth from "./api/user/auth";
 
 
@@ -43,6 +41,9 @@ export async function getServerSideProps({req,res}:{req:NextApiRequest,res:NextA
  } return {
   props: {},
 };
-
    
   }
+
+  // This indicates that the redirect is temporary. In HTTP terms, this corresponds to a 302 status code. It tells the 
+  // browser or client that the redirect is temporary and that it should continue to use the original URL for future requests. 
+  //if you set redirect to true the browser directly visits the destination for every request to signup

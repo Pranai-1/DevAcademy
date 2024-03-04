@@ -18,16 +18,19 @@ export default async function handler(
 const userId =Number(req.headers["userId"]);
 if(!userId)
 return res.status(200).json({ courses: []});
-const userCheck = await prisma.user.findFirst({where:{id:userId}});
+const userCheck = await prisma.user.findUnique({
+  where: {
+    id:userId
+  },
+  include: {
+    cartCourses: true, 
+  },
+});
 if (!userCheck) {
      return res.status(404).json({ message: 'User not found' });
 }
 try{
- const cartItems= await prisma.cartCourses.findMany({
-  where:{
-    userId
-  }
-});
+ const cartItems=userCheck.cartCourses
 if(cartItems){
   for(let obj of cartItems){
     const x=await prisma.courses.findFirst({

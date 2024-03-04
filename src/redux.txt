@@ -15,7 +15,7 @@ while creating the slice:-
 ** the updated state which will be accessed as action.payload
 **  dispatch(setCart(cart.cartCourses))//we pass reducer function inside which we pass updated state
 
-Every slice has their own reducer functions and our app has a reducer function which contains all those reducers
+Every slice has their own reducers functions and our app has a reducer function which contains all those reducers
 In the configureStore() method pass an object with a reducer field having a value of cartReducer which has been 
 exported by cartSlice.reducer,make sure cartSlice.reducer has default export in cartSlice.js file
 

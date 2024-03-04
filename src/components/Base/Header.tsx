@@ -1,15 +1,15 @@
-import { useRecoilValue } from "recoil";
-import { UserEmail } from "@/store/selectors/userDetails";
 import image1 from "@/components/images/header-img1.png" ;
 import image2 from "@/components/images/header-img2.png";
 import image3 from "@/components/images/header-img3.png";
 import image4 from "@/components/images/header-img4.png";
 import image5 from "@/components/images/header-img5.png";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { emailContext } from "../EmailContextProvider";
 
 function Header() {
-  const userEmail = useRecoilValue(UserEmail);
-  const name = userEmail?.split("@")[0];
+  const {emailState} = useContext(emailContext);
+  const userEmail=emailState?.email
+  const name =userEmail?.split("@")[0];
 
   const images = [image4, image5, image3, image2, image1];
 

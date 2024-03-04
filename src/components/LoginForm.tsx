@@ -1,9 +1,9 @@
-import React, { useContext, useState } from "react";
-import { toast } from "react-toastify";
+import React, { useCallback, useContext, useState } from "react";
 import axios from "axios";
 import { z } from "zod";
 import { useRouter } from "next/router";
 import { emailContext } from "./EmailContextProvider";
+import { failed, success } from "../../public/toast";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -17,7 +17,7 @@ const{updateEmailStatus}=useContext(emailContext)
     password: z.string().min(6).max(25),
   });
 
-  const handleChange = (value: React.SetStateAction<string>, type: string) => {
+  const handleChange = useCallback((value: string, type: string) => {
     switch (type) {
       case "Email":
         setEmail(value);
@@ -26,9 +26,9 @@ const{updateEmailStatus}=useContext(emailContext)
         setPassword(value);
         break;
     }
-  };
+  },[]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (email.length < 11) {
       setEmailErrorMessage("Invalid Email");
       return;
@@ -50,7 +50,7 @@ const{updateEmailStatus}=useContext(emailContext)
     const parsedInput = userInput.safeParse(body);
 
     if (!parsedInput.success) {
-      toast.error("Login failed");
+     failed("Login failed")
     } else {
       const { email: parsedEmail, password: parsedPassword } = parsedInput.data;
 
@@ -64,20 +64,20 @@ const{updateEmailStatus}=useContext(emailContext)
         if (response?.status === 200) {
           router.push("/");
           updateEmailStatus(email)
-          toast.success("Login success");
+          success("Login success");
           
         } else {
           updateEmailStatus(null)
-          toast.error("Login failed");
+          failed("Login failed")
        
         }
       } catch (error) {
         updateEmailStatus(null)
         console.log(error);
-        toast.error("Login failed");
+        failed("Login failed")
       }
     }
-  };
+  },[email,password]);
 
   return (
     <>

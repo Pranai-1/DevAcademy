@@ -1,16 +1,11 @@
-import { UserState } from "@/store/atoms/user";
-import { UserEmail } from "@/store/selectors/userDetails";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
 import LoggedInUser from "../User/LoggedInUser";
 import LoggedOutUser from "../User/LoggedOutUser";
 import Sidebar from "./sideBar";
-import { CourseContext } from "../AppContextProvider";
 import { emailContext } from "../EmailContextProvider";
-import { cartContext } from "../CartContextProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { setCart } from "@/features/cart/cartSlice";
 
@@ -22,8 +17,11 @@ function Navbar() {
   const [bar, setBar] = useState<boolean>(false);
   const {emailState} = useContext(emailContext);
   const{updateEmailStatus}=useContext(emailContext)
-  const cart=useSelector((state:any)=>state.cart.cartCourses)
- // console.log(emailState.email)
+
+  const cart=useSelector((state:any)=>{
+    return state.cart.cartCourses
+  })
+ 
  const dispatch=useDispatch()
   function sidebar() {
     setBar((prev) => !prev);

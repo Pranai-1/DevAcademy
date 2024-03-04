@@ -1,8 +1,12 @@
 import axios from "axios";
-import router, { useRouter } from "next/router";
-import { useState } from "react";
+import  { useRouter } from "next/router";
+import { useCallback, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { failed, success, warning } from "../../public/toast";
+
+
 
 export default function SignupForm(){
 
@@ -14,7 +18,7 @@ export default function SignupForm(){
     const[captcha,setCaptcha]=useState<string|null>();
     const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
   
-    const handleChange = (value: string, type: string) => {
+    const handleChange = useCallback((value: string, type: string) => {
       switch (type) {     
         case "Email":
           setEmail(value);
@@ -25,9 +29,9 @@ export default function SignupForm(){
         default:
           break;
       }
-    };
+      },[]);
   
-    const HandleSubmit = async () => {
+    const HandleSubmit = useCallback(async () => {
       if (email.length <11) {
         setEmailErrorMessage("Invalid Email");
         return
@@ -42,19 +46,23 @@ export default function SignupForm(){
       }
  
       if(!captcha)
-      return
+      {
+       warning("captcha failed")
+        return
+      }
+
         const body = {
           email,
           password,
         };
         try {
           const response = await axios.post("/api/user/signup", body);
-          toast.success("signup successful");
-      router.push("/login");
+         success("signup successful!")
+        router.push("/login");
         } catch {
-          toast.error("signup failed");
+          failed("signup failed")
         }
-    };
+    },[email,password,captcha]);//we need to re-create the function to get updated email and password and captcha
 
     return(
         <>

@@ -5,9 +5,10 @@ import axios from "axios";
 
 
 
+
 const CourseContext=createContext<any>([])
 
-function AppContextProvider({children}:{children: React.ReactNode }){
+function CourseContextProvider({children}:{children: React.ReactNode }){
     const initialState={
         isLoading:false,
         allCourses:[],
@@ -19,7 +20,7 @@ function AppContextProvider({children}:{children: React.ReactNode }){
         isSingleCourseError:false,
     }
 
-    const[state,dispatch]=useReducer(courseReducer,initialState)
+    const[courseState,dispatch]=useReducer(courseReducer,initialState)
  
 
     async function getAllCourses() {
@@ -28,7 +29,7 @@ function AppContextProvider({children}:{children: React.ReactNode }){
         try{
          const response=await axios.get("/api/courses/all")
          courses=response.data.courses
-        
+        // const data=allCourses()//we cannot do this,reason behind
          dispatch({type:"ALL_COURSES",payload:courses})
          }catch{
          dispatch({type:"ALL_COURSES_ERROR",payload:[]})
@@ -54,13 +55,12 @@ function AppContextProvider({children}:{children: React.ReactNode }){
   },[])
 
     return(
-        <CourseContext.Provider value={{state,getSingleCourse}}>{children}</CourseContext.Provider>
+        <CourseContext.Provider value={{courseState,getSingleCourse}}>{children}</CourseContext.Provider>
     )
 }
 
-const useCoursesContext=()=>{
-    return useContext(CourseContext);
-}
 
-export {AppContextProvider,CourseContext}
+export {CourseContextProvider,CourseContext}
 
+// /PrismaClient code is only used in server-side Node.js environments, such as in an API route or a backend server script. 
+//PrismaClient should not be imported or used in client-side JavaScript code that runs in the browser.

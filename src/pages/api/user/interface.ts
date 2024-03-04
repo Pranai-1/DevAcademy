@@ -7,7 +7,8 @@ export interface course {
       published: boolean;
       adminId: number;
       name: string;
-      key?:number
+      key?:number;
+      
     }
     
     
