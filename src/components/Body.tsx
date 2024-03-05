@@ -3,7 +3,7 @@ import CourseParameters from "./Course/CourseParameters";
 import LoadingIndicator from "./LoadingIndicator";
 import NoCoursesFoundMessage from "./Course/NoCoursesFoundMessage";
 import { CourseContext } from "./CourseContextProvider";
-import Shimmer from "@/components/Shimmer";
+import Shimmer from "@/components/Shimmer/Shimmer";
 
 export default function Body(){
   const{courseState}=useContext(CourseContext)

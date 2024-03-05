@@ -12,8 +12,9 @@ export default async function handler(
   try {
     await auth(req,res)
    const id = Number(req.headers["userId"]);
-   console.log(id+"id")
-
+  
+if(!id)
+return
 const user = await prisma.user.findFirst({where:{ id} });
 console.log(user)
  if (user) {

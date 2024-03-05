@@ -16,6 +16,8 @@ export default async function handler(
     return res.status(404).json({ message: 'User not found' });
   }
 const userId =Number(req.headers.userId);
+if(!userId)
+return
 const userCheck = await prisma.user.findFirst({where:{
   id:userId
 },
@@ -25,7 +27,7 @@ const userCheck = await prisma.user.findFirst({where:{
 });
 
 if (!userCheck) {
-     return res.status(404).json({ message: 'User not found' });
+     return 
 }
 try{
 const purchasedItems=userCheck.purchasedCourses

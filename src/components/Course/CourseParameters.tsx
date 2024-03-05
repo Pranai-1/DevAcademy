@@ -3,7 +3,7 @@ import CourseCard from "./CourseCard";
 
 export default function CourseParameters({courses,type}:{courses:course[],type:string}){
     return(
-        <>
+        <div className="h-max w-screen flex flex-wrap justify-center  gap-16 items-center">
         {courses.map((course:course) => (
             <CourseCard
               key={course.id}
@@ -16,6 +16,6 @@ export default function CourseParameters({courses,type}:{courses:course[],type:s
               price={course.price}
             />
           ))}
-          </>
+          </div>
     )
 }

@@ -5,7 +5,7 @@ import image4 from "@/components/images/header-img4.png";
 import image5 from "@/components/images/header-img5.png";
 import { useContext, useState } from "react";
 import { emailContext } from "../EmailContextProvider";
-
+import Image from "next/image"
 function Header() {
   const {emailState} = useContext(emailContext);
   const userEmail=emailState?.email
@@ -40,19 +40,21 @@ function Header() {
       <div className="relative flex justify-center pt-4 z-0">
         <button
           className=" bg-gray-800 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold 
-       absolute top-16 md:top-28  left-12 md:left-56 hover:bg-gray-600"
+       absolute top-36  md:top-60  left-0 md:left-56 hover:bg-gray-600"
           onClick={handleLeftClick}
         >
           &lt;
         </button>
-        <img
+        <Image
           src={images[imageIndex].src}
+          width={760}
+          height={620}
           alt="header-image1"
-          className="h-[140px] w-1/2 md:h-[320px] flex justify-center items-center"
+          
         />
         <button
           className=" bg-gray-800 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold 
-       absolute top-16 md:top-28  right-12 md:right-56 hover:bg-gray-600"
+       absolute top-36 md:top-60  right-0 md:right-56 hover:bg-gray-600"
           onClick={handleRightClick}
         >
           &gt;

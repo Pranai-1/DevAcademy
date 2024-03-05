@@ -85,13 +85,8 @@ return(
                    >
                      Remove
                    </button>
-                 </div>
-                 
-            }
-               
-                
-
-               
+                </div>
+            }  
             </div>
         </>
     )

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import CourseParameters from "@/components/Course/CourseParameters";
 import NoCoursesFoundMessage from "@/components/Course/NoCoursesFoundMessage";
 import { CourseContext } from "@/components/CourseContextProvider";
-import Shimmer from "../components/Shimmer";
+import Shimmer from "../components/Shimmer/Shimmer";
 
 
 function AllCourses() {
