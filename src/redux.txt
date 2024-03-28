@@ -3,6 +3,15 @@ create a store and then export it,wrap the store inside Provider with the whole 
 configureStore() is the method which helps to create the store,and that is imported from @reduxjs/toolkit 
 while Provider is imported from react-redux
 
+
+configureStore is a utility function provided by @reduxjs/toolkit.
+It is used to create a Redux store with additional middleware and default options.
+It internally uses createStore and adds some enhancements such as middleware setup and devtools configuration.
+
+In summary, if you're using plain Redux without any additional configuration or middleware, you can use createStore. 
+If you're using @reduxjs/toolkit or need additional configuration for your store, you can use configureStore.
+
+
 step 2:-
 create the slice using createSlice() method and it is imported from @reduxjs/toolkit
 while creating the slice:-
